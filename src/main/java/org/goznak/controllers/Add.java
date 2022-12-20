@@ -1,6 +1,5 @@
 package org.goznak.controllers;
 
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.goznak.dao.AuthorityDAO;
 import org.goznak.models.User;
@@ -15,9 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 @Controller
 @RequestMapping("/add")
