@@ -1,5 +1,6 @@
 package org.goznak;
 
+import org.goznak.dao.AuthorityDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,4 +23,8 @@ public class PassChestApplication {
         dataSourceBuilder.password("1");
         return dataSourceBuilder.build();
     }
+//    @Bean
+//    AuthorityDAO authorityDAO(){
+//        return new
+//    }
 }

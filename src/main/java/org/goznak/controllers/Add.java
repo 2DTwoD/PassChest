@@ -33,7 +33,7 @@ public class Add {
         User user = new User();
         model.addAttribute("roles", Roles.getRolesNameList());
         model.addAttribute("user", user);
-        return "add_new_user";
+        return "add/user";
     }
     @PostMapping("/user")
     public String newUser(@ModelAttribute @Valid User user, BindingResult bindingResult, Model model){
@@ -41,7 +41,7 @@ public class Add {
         model.addAttribute("roles", Roles.getRolesNameList());
         user.setUserDAO(userDAO);
         if(bindingResult.hasErrors() || user.passwordNotMatch() || user.userExist()){
-            return "add_new_user";
+            return "add/user";
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
@@ -49,4 +49,5 @@ public class Add {
         authorityDAO.save(user.getAuthority());
         return "redirect:/search";
     }
+
 }

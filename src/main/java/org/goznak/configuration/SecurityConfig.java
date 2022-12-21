@@ -26,15 +26,18 @@ public class SecurityConfig {
                         .permitAll().anyRequest().authenticated()
                 )
                 .formLogin(form -> form.
-                        loginPage("/login").permitAll()
+                        loginPage("/login")
+                        .defaultSuccessUrl("/search")
+                        .permitAll()
                 )
-                .logout()
-                .logoutSuccessUrl("/search");
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"));
         return http.build();
     }
     @Bean
     public UserDetailsService userDetailsService(DataSource dataSource){
-        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-        return users;
+        return new JdbcUserDetailsManager(dataSource);
     }
 }
