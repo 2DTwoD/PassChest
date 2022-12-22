@@ -3,9 +3,8 @@ package org.goznak.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.goznak.dao.UserDAO;
+import org.goznak.services.UserService;
 import org.goznak.utils.Roles;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Data
@@ -20,7 +19,7 @@ public class User {
     private String password;
     private boolean enabled;
     @Transient
-    UserDAO userDAO;
+    UserService userService;
     @Transient
     private String role;
     @Transient
@@ -35,10 +34,10 @@ public class User {
         return !isNullUser() && !password.equals(passwordConfirm);
     }
     public boolean userExist(){
-        return !isNullUser() && userDAO.findFaceByUsername(username).size() > 0;
+        return !isNullUser() && userService.findById(username) != null;
     }
     private boolean isNullUser(){
         return password == null || passwordConfirm == null ||
-                username == null || userDAO == null || role == null;
+                username == null || userService == null || role == null;
     }
 }

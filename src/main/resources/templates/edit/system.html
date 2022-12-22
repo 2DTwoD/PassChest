@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование системы</title>
+</head>
+<body>
+<div>Редактировать систему:</div>
+<input list="brow">
+<datalist id="brow">
+    <option value="Internet Explorer">
+    <option value="Firefox">
+    <option value="Chrome">
+    <option value="Opera">
+    <option value="Safari">
+</datalist>
+<!--@thymesVar id="system" type="org.goznak.models.System"-->
+<form id="system" th:action="@{/edit/system/{id}(id=${system.id})}" th:object="${system}" th:method="patch">
+    <div>
+        <label for="name">Название:</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Название">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+    <div th:text="*{systemExist() == true} ? 'Система с таким названием уже есть': ''"></div>
+    <div>
+        <input type="submit" value="Редактировать">
+    </div>
+</form>
+<form th:action="@{/edit/system/{id}(id=${system.id})}" th:method="delete">
+    <div>
+        <input type="submit" value="Удалить">
+    </div>
+</form>
+<a th:href="@{/search/systems}"><input type="button" value="Назад"></a>
+</body>
+</html>

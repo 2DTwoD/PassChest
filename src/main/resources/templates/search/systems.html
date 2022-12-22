@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Системы:</title>
+</head>
+<body>
+<div>Список систем:</div>
+<ul>
+    <th:block th:each="system: ${systems}">
+        <a th:text="*{system.name}" th:href="@{/edit/system/{id}(id=${system.id})}">Система</a>
+        <br/>
+    </th:block>
+    <a th:href="@{/add/system}">Добавить</a>
+</ul>
+</body>
+</html>

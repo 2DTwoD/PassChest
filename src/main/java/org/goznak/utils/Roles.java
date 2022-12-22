@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 
 public enum Roles {
     ROLE_ADMIN("Администратор"),
-    ROLE_USER("Пользователь");
+    ROLE_USER("Пользователь"),
+    ROLE_GUEST("Гость");
     private final String name;
 
     Roles(String name) {
@@ -18,7 +19,7 @@ public enum Roles {
                 return roles;
             }
         }
-        return ROLE_USER;
+        return ROLE_GUEST;
     }
     public static List<String> getRolesNameList(){
         return Arrays.stream(Roles.values()).map(p -> p.name).collect(Collectors.toList());

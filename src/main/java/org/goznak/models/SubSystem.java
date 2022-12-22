@@ -2,6 +2,9 @@ package org.goznak.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.goznak.dao.SubSystemDAO;
+import org.goznak.services.SubSystemService;
+import org.goznak.services.SystemService;
 
 import java.util.Set;
 
@@ -20,4 +23,9 @@ public class SubSystem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "system_id", insertable=false, updatable=false)
     private System system;
+    @Transient
+    SubSystemService subSystemService;
+    public boolean subSystemExist(){
+        return subSystemService != null && subSystemService.findByName(name).size() > 0;
+    }
 }

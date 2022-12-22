@@ -8,14 +8,14 @@
 </head>
 <body>
 <div>Добавить Систему:</div>
-<!--@thymesVar id="user" type="org.goznak.models.System"-->
-<form th:action="@{/add/system}" th:object="${system}" method="post">
+<!--@thymesVar id="system" type="org.goznak.models.System"-->
+<form id="system" th:action="@{/add/system}" th:object="${system}" method="post">
     <div>
-        <label for="username">Название:</label>
-        <input type="text" th:field="*{name}" id="username" placeholder="Имя">
+        <label for="name">Название:</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Название">
         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
     </div>
-<!--    <div th:text="*{userExist() == true} ? 'Такой пользователь уже существует': ''"></div>-->
+    <div th:text="*{systemExist() == true} ? 'Такая система уже существует': ''"></div>
     <div>
         <input type="submit" value="Добавить">
     </div>
