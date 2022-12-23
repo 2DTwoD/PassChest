@@ -7,11 +7,19 @@
 <body>
 <div>Список систем:</div>
 <ul>
-    <th:block th:each="system: ${systems}">
+    <div th:each="system: ${systems}">
         <a th:text="*{system.name}" th:href="@{/edit/system/{id}(id=${system.id})}">Система</a>
         <br/>
-    </th:block>
+    </div>
+    <hr/>
     <a th:href="@{/add/system}">Добавить</a>
+    <hr/>
+    <div>
+        <a th:href="@{/search/systems?page={p}(p=${page-1})}"><<</a>
+        ---
+        <a th:href="@{/search/systems?page={p}(p=${page+1})}">>></a>
+        <span th:text="${'Страница '+page+' из '+numOfPages}"></span>
+    </div>
 </ul>
 </body>
 </html>
