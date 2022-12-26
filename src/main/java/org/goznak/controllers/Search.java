@@ -32,18 +32,22 @@ public class Search {
     public String systemSearch(Model model, HttpSession session, HttpServletRequest request){
         int page;
         List<System> systems;
-        String pageStr = request.getParameter("page");
-        if(pageStr == null){
-            systems = systemService.findAll();
+        String pagePar = request.getParameter("page");
+        String filter = request.getParameter("filter");
+        if(pagePar == null){
+            if(filter == null) {
+                systems = systemService.findAll();
+            } else {
+                systems = systemService.findByName(filter);
+            }
             session.setAttribute("systems", systems);
             page = 1;
         } else {
-
             systems = (List<System>) session.getAttribute("systems");
             if(systems == null){
                 return "redirect:/search/systems";
             }
-            page = Integer.parseInt(pageStr);
+            page = Integer.parseInt(pagePar);
         }
         int numOfPages = (int) Math.round((double) systems.size() / NUM_OF_VISIBLE_ROWS);
         page = Math.max(page, 1);

@@ -7,6 +7,12 @@
 <body>
 <div>Список систем:</div>
 <ul>
+    <div>
+        <input id="filter" th:type="text"/>
+    </div>
+    <div>
+        <a th:href="@{/search/systems?filter={f}(f=${page+1})}"></a>
+    </div>
     <div th:each="system: ${systems}">
         <a th:text="*{system.name}" th:href="@{/edit/system/{id}(id=${system.id})}">Система</a>
         <br/>
