@@ -27,6 +27,10 @@ public class SystemService extends CommonService<System, Integer> {
         return systemDAO.findSystemByName(name);
     }
 
+    public List<System> findByFilter(String filter) {
+        return systemDAO.findByNameContainsIgnoreCaseOrderByName(filter);
+    }
+
     @Override
     public void save(System system) {
         systemDAO.save(system);

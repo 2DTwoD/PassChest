@@ -8,14 +8,6 @@
 </head>
 <body>
 <div>Редактировать систему:</div>
-<input list="brow">
-<datalist id="brow">
-    <option value="Internet Explorer">
-    <option value="Firefox">
-    <option value="Chrome">
-    <option value="Opera">
-    <option value="Safari">
-</datalist>
 <!--@thymesVar id="system" type="org.goznak.models.System"-->
 <form id="system" th:action="@{/edit/system/{id}(id=${system.id})}" th:object="${system}" th:method="patch">
     <div>

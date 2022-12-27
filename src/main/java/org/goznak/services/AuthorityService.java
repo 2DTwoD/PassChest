@@ -28,6 +28,11 @@ public class AuthorityService extends CommonService<Authority, String> {
     }
 
     @Override
+    public List<Authority> findByFilter(String filter) {
+        return null;
+    }
+
+    @Override
     public void save(Authority authority) {
         authorityDAO.save(authority);
     }

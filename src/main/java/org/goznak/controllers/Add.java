@@ -1,9 +1,11 @@
 package org.goznak.controllers;
 
 import jakarta.validation.Valid;
+import org.goznak.models.SubSystem;
 import org.goznak.models.System;
 import org.goznak.models.User;
 import org.goznak.services.AuthorityService;
+import org.goznak.services.SubSystemService;
 import org.goznak.services.SystemService;
 import org.goznak.services.UserService;
 import org.goznak.utils.Roles;
@@ -24,11 +26,14 @@ public class Add {
     final
     SystemService systemService;
     final
+    SubSystemService subSystemService;
+    final
     AuthorityService authorityService;
     final
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Add(UserService userService, SystemService systemService, AuthorityService authorityService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public Add(UserService userService, SystemService systemService, SubSystemService subSystemService, AuthorityService authorityService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.subSystemService = subSystemService;
         this.authorityService = authorityService;
         this.userService = userService;
         this.systemService = systemService;
@@ -71,5 +76,22 @@ public class Add {
         }
         systemService.save(system);
         return "redirect:/search/systems";
+    }
+    @GetMapping("/sub_system")
+    public String addSubSystem(Model model){
+        SubSystem subSystem = new SubSystem();
+        model.addAttribute("subSystem", subSystem);
+        model.addAttribute("systems", systemService.findAll());
+        return "add/sub_system";
+    }
+    @PostMapping("/sub_system")
+    public String newSubSystem(@ModelAttribute @Valid SubSystem subSystem, BindingResult bindingResult, Model model){
+        model.addAttribute("subSystem", subSystem);
+        subSystem.setSubSystemService(subSystemService);
+        if(bindingResult.hasErrors() || subSystem.subSystemExist()){
+            return "add/sub_system";
+        }
+        subSystemService.save(subSystem);
+        return "redirect:/search/sub_systems";
     }
 }

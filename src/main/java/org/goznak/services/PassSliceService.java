@@ -2,6 +2,7 @@ package org.goznak.services;
 
 import org.goznak.dao.*;
 import org.goznak.dao.SystemDAO;
+import org.goznak.models.Authority;
 import org.goznak.models.PassSlice;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,10 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     public void save(PassSlice passSlice) {
         passSliceDAO.save(passSlice);
     }
-
+    @Override
+    public List<PassSlice> findByFilter(String filter) {
+        return null;
+    }
     @Override
     public void delete(PassSlice passSlice) {
         passSliceDAO.delete(passSlice);

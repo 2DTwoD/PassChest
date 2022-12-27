@@ -1,6 +1,7 @@
 package org.goznak.services;
 
 import org.goznak.dao.*;
+import org.goznak.models.Authority;
 import org.goznak.models.User;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,10 @@ public class UserService extends CommonService<User, String>{
         userDAO.save(user);
     }
 
+    @Override
+    public List<User> findByFilter(String filter) {
+        return null;
+    }
     @Override
     public void delete(User user) {
         userDAO.delete(user);

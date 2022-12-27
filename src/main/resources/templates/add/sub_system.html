@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление подсистем</title>
+</head>
+<body>
+<div>Добавить подсистему:</div>
+<!--@thymesVar id="subSystem" type="org.goznak.models.SubSystem"-->
+<form id="subSystem" th:action="@{/add/sub_system}" th:object="${subSystem}" method="post">
+    <div>
+        <label for="system">Входит в систему:</label>
+        <input list="systemList" id="system">
+        <datalist id="systemList" placeholder="Название относящейся системы">
+            <option th:each="s: ${systems}" th:value="${s.name}">
+        </datalist>
+    </div>
+    <div>
+        <label for="name">Название:</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Название">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+    <div th:text="*{subSystemExist() == true} ? 'Такая система уже существует': ''"></div>
+    <div>
+        <input type="submit" value="Добавить">
+    </div>
+</form>
+</body>
+</html>

@@ -1,17 +1,33 @@
 function main(){
-    const filterSearch = document.getElementById("filter");
-    let pars = new Map();
-    pars.set("filter", filterSearch.value);
-    filter.addEventListener("click", () => {
-        window.location.replace(getGetRequest("/search/systems", pars));
-    })
+    const filterText = document.getElementById("filterText");
+    const filterButton = document.getElementById("filterButton");
+    const selectPage = document.getElementById("selectPage");
+    const prevPage = document.getElementById("prevPage");
+    const nextPage = document.getElementById("nextPage");
+    const pars = new Map();
+    filterButton.addEventListener("click", () => {
+        pars.set("filter", filterText.value);
+        location.href = getGetRequest("/search/systems", pars);
+    });
+    selectPage.addEventListener("change", () => {
+        pars.set("page", selectPage.value);
+        location.href = getGetRequest("/search/systems", pars);
+    });
+    prevPage.addEventListener("click", () => {
+        pars.set("page", page - 1);
+        location.href = getGetRequest("/search/systems", pars);
+    });
+    nextPage.addEventListener("click", () => {
+        pars.set("page", page + 1);
+        location.href = getGetRequest("/search/systems", pars);
+    });
 }
 function getGetRequest(href, pars){
-    let result;
+    let result = "";
     result += href + "?";
     for(let [key, value] of pars){
         result += key + "=" + value + "&";
     }
     return result;
 }
-document.onload = main;
+window.onload = main;
