@@ -9,7 +9,7 @@
 <body>
 <div>Редактировать систему:</div>
 <!--@thymesVar id="system" type="org.goznak.models.System"-->
-<form id="system" th:action="@{/edit/system/{id}(id=${system.id})}" th:object="${system}" th:method="patch">
+<form id="system" th:action="@{/edit/system/{id}(id=${system.id})}" th:object="${system}" th:method="patch" autocomplete="off">
     <div>
         <label for="name">Название:</label>
         <input type="text" th:field="*{name}" id="name" placeholder="Название">

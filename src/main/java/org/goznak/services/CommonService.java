@@ -26,6 +26,7 @@ public abstract class CommonService<T, ID> {
 
     abstract public List<T> findAll();
     abstract public T findById(ID id);
+    abstract public T findFirstByName(String name);
     abstract public List<T> findByName(String name);
     abstract public List<T> findByFilter(String name);
     abstract public void save(T t);

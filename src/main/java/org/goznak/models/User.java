@@ -40,4 +40,15 @@ public class User {
         return password == null || passwordConfirm == null ||
                 username == null || userService == null || role == null;
     }
+    @Override
+    public boolean equals(Object o){
+        if (getClass() != o.getClass()) {
+            return false;
+        }
+        return ((User) o).getUsername().equals(username);
+    }
+    @Override
+    public String toString(){
+        return String.format("User with name: %s", username);
+    }
 }

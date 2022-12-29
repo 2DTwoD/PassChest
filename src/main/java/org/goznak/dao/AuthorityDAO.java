@@ -10,4 +10,5 @@ public interface AuthorityDAO extends CrudRepository<Authority, String> {
     List<Authority> findAllByOrderByAuthority();
     List<Authority> findAuthoritiesByAuthority(Roles role);
     Authority findFirstByAuthority(Roles role);
+    Authority findFirstByUsername(String name);
 }

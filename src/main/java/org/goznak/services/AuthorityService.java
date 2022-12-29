@@ -19,6 +19,11 @@ public class AuthorityService extends CommonService<Authority, String> {
 
     @Override
     public Authority findById(String name) {
+        return authorityDAO.findFirstByUsername(name);
+    }
+
+    @Override
+    public Authority findFirstByName(String name) {
         return authorityDAO.findFirstByAuthority(Roles.getRoleFromName(name));
     }
 

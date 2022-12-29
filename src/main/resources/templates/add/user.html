@@ -9,7 +9,7 @@
 <body>
 <div>Добавить пользователя:</div>
 <!--@thymesVar id="user" type="org.goznak.models.User"-->
-<form th:action="@{/add/user}" th:object="${user}" method="post">
+<form th:action="@{/add/user}" th:object="${user}" method="post" autocomplete="off">
     <div>
         <label for="username">Имя пользователя:</label>
         <input type="text" th:field="*{username}" id="username" placeholder="Имя">
@@ -27,8 +27,8 @@
     </div>
     <div>
         <label for="role">Пароль пользователя:</label>
-            <select id="role" name="role">
-                <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:value="${roleTxt}">text</option>
+            <select id="role" name="role" th:value="*{role}">
+                <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:value="${roleTxt}" th:selected="${#strings.equals(roleTxt, user.role)}">text</option>
             </select>
     </div>
     <div th:text="*{userExist() == true} ? 'Такой пользователь уже существует': ''"></div>

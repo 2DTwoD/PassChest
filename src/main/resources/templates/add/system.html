@@ -9,7 +9,7 @@
 <body>
 <div>Добавить систему:</div>
 <!--@thymesVar id="system" type="org.goznak.models.System"-->
-<form id="system" th:action="@{/add/system}" th:object="${system}" method="post">
+<form id="system" th:action="@{/add/system}" th:object="${system}" method="post" autocomplete="off">
     <div>
         <label for="name">Название:</label>
         <input type="text" th:field="*{name}" id="name" placeholder="Название">

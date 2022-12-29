@@ -7,19 +7,19 @@ function main(){
     const pars = new Map();
     filterButton.addEventListener("click", () => {
         pars.set("filter", filterText.value);
-        location.href = getGetRequest("/search/systems", pars);
+        location.href = getGetRequest(path, pars);
     });
     selectPage.addEventListener("change", () => {
         pars.set("page", selectPage.value);
-        location.href = getGetRequest("/search/systems", pars);
+        location.href = getGetRequest(path, pars);
     });
     prevPage.addEventListener("click", () => {
         pars.set("page", page - 1);
-        location.href = getGetRequest("/search/systems", pars);
+        location.href = getGetRequest(path, pars);
     });
     nextPage.addEventListener("click", () => {
         pars.set("page", page + 1);
-        location.href = getGetRequest("/search/systems", pars);
+        location.href = getGetRequest(path, pars);
     });
 }
 function getGetRequest(href, pars){

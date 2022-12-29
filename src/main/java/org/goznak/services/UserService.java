@@ -23,6 +23,11 @@ public class UserService extends CommonService<User, String>{
     }
 
     @Override
+    public User findFirstByName(String name) {
+        return null;
+    }
+
+    @Override
     public List<User> findByName(String name) {
         return userDAO.findUserByUsername(name);
     }

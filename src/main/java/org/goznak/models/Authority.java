@@ -12,4 +12,15 @@ public class Authority {
     String username;
     @Enumerated(EnumType.STRING)
     Roles authority;
+    @Override
+    public boolean equals(Object o){
+        if (getClass() != o.getClass()) {
+            return false;
+        }
+        return ((Authority) o).getUsername().equals(username);
+    }
+    @Override
+    public String toString(){
+        return String.format("Username: %s, authority: %s",username, authority.toString());
+    }
 }

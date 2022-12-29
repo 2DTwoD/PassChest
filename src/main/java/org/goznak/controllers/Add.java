@@ -43,8 +43,8 @@ public class Add {
     @GetMapping("/user")
     public String addUser(Model model){
         User user = new User();
-        model.addAttribute("roles", Roles.getRolesNameList());
         model.addAttribute("user", user);
+        model.addAttribute("roles", Roles.getRolesNameList());
         return "add/user";
     }
     @PostMapping("/user")
@@ -59,7 +59,7 @@ public class Add {
         user.setEnabled(true);
         userService.save(user);
         authorityService.save(user.getAuthority());
-        return "redirect:/search";
+        return "redirect:/search/users";
     }
     @GetMapping("/system")
     public String addSystem(Model model){
@@ -87,10 +87,13 @@ public class Add {
     @PostMapping("/sub_system")
     public String newSubSystem(@ModelAttribute @Valid SubSystem subSystem, BindingResult bindingResult, Model model){
         model.addAttribute("subSystem", subSystem);
+        model.addAttribute("systems", systemService.findAll());
         subSystem.setSubSystemService(subSystemService);
-        if(bindingResult.hasErrors() || subSystem.subSystemExist()){
+        subSystem.setSystemService(systemService);
+        if(bindingResult.hasErrors() || subSystem.subSystemExist() || subSystem.systemNotExist()){
             return "add/sub_system";
         }
+        subSystem.setSystem(systemService.findFirstByName(subSystem.getSystemName()));
         subSystemService.save(subSystem);
         return "redirect:/search/sub_systems";
     }

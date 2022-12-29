@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать пользователя</title>
+</head>
+<body>
+<div>Редактировать пользователя:</div>
+<!--@thymesVar id="user" type="org.goznak.models.User"-->
+<form th:action="@{/edit/user/{username}(username=${user.username})}" th:object="${user}" th:method="patch" autocomplete="off">
+    <div>
+        <th:block th:text="*{'Имя пользователя: ' + username}"></th:block>
+    </div>
+    <div>
+        <label for="password">Пароль пользователя:</label>
+        <input type="password" th:field="*{password}" id="password" placeholder="Пароль">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    </div>
+    <div>
+        <label for="passwordConfirm">Повторите пароль:</label>
+        <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Подтвердите пароль">
+        <span th:text="*{passwordNotMatch() == true} ? 'Поле пароля и поле подтверждения пароля не совпадают': ''"></span>
+    </div>
+    <div>
+        <label for="role">Права пользователя:</label>
+        <select id="role" name="role" th:value="*{role}">
+            <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:selected="${#strings.equals(roleTxt, user.role)}">Роль</option>
+        </select>
+    </div>
+    <input type="submit" value="Редактировать">
+</form>
+<form th:action="@{/edit/user/{username}(username=${user.username})}" th:method="delete">
+    <div>
+        <input type="submit" value="Удалить">
+    </div>
+</form>
+<a th:href="@{/search/users}"><input type="button" value="Назад"></a>
+</body>
+</html>

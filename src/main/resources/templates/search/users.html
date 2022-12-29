@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Системы:</title>
+    <title>Пользователи:</title>
     <script type="text/javascript" th:src="@{/js/search.js}"></script>
     <script th:inline="javascript">
         const page = [[${page}]];
-        const path = "/search/systems";
+        const path = "/search/users";
     </script>
 </head>
 <body>
-<div>Список систем:</div>
+<div>Список пользователей:</div>
 <hr/>
 <div>
     <input th:id="filterText" th:type="text" th:value="${session.filter}"/>
@@ -23,11 +23,11 @@
         Список пуст
     </div>
     <div th:each="target: ${targets}">
-        <a th:text="*{target.name}" th:href="@{/edit/system/{id}(id=${target.id})}">Система</a>
+        <a th:text="*{target.username}" th:href="@{/edit/user/{username}(username=${target.username})}">Пользователь</a>
         <br/>
     </div>
     <hr/>
-    <a th:href="@{/add/system}">Добавить</a>
+    <a th:href="@{/add/user}">Добавить</a>
 </ul>
 <hr/>
 <div>

@@ -21,7 +21,10 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     public PassSlice findById(Long id) {
         return passSliceDAO.findFirstById(id);
     }
-
+    @Override
+    public PassSlice findFirstByName(String name) {
+        return null;
+    }
     @Override
     public List<PassSlice> findByName(String name) {
         return null;

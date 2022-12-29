@@ -4,17 +4,17 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Добавление подсистем</title>
+    <title>Редактирование подсистем</title>
 </head>
 <body>
-<div>Добавить подсистему:</div>
+<div>Редактировать подсистему:</div>
 <!--@thymesVar id="subSystem" type="org.goznak.models.SubSystem"-->
-<form id="subSystem" th:action="@{/add/sub_system}" th:object="${subSystem}" method="post" autocomplete="off">
+<form id="subSystem" th:action="@{/edit/sub_system/{id}(id=${subSystem.id})}" th:object="${subSystem}" th:method="patch" autocomplete="off">
     <div>
         <label for="systemName">Входит в систему:</label>
-        <input list="systemList" id="systemName" th:field="*{systemName}"ы>
+        <input list="systemList" id="systemName" th:field="*{systemName}" placeholder="Название системы">
         <datalist id="systemList" placeholder="Название родительской системы">
-            <option th:each="system: ${systems}" th:text="${system.name}" th:selected="*{systemName}"></option>
+            <option th:each="system: ${systems}" th:value="${system.name}" th:selected="*{systemName}">
         </datalist>
         <span th:text="*{systemNotExist() == true} ? 'Введите имя системы, которая занесена в БД': ''"></span>
     </div>
@@ -25,8 +25,14 @@
     </div>
     <div th:text="*{subSystemExist() == true} ? 'Такая подсистема уже существует': ''"></div>
     <div>
-        <input type="submit" value="Добавить">
+        <input type="submit" value="Редактировать">
     </div>
 </form>
+<form th:action="@{/edit/sub_system/{id}(id=${subSystem.id})}" th:method="delete">
+    <div>
+        <input type="submit" value="Удалить">
+    </div>
+</form>
+<a th:href="@{/search/sub_systems}"><input type="button" value="Назад"></a>
 </body>
 </html>

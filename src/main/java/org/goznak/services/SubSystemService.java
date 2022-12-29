@@ -2,6 +2,7 @@ package org.goznak.services;
 
 import org.goznak.dao.*;
 import org.goznak.models.Authority;
+import org.goznak.models.PassSlice;
 import org.goznak.models.SubSystem;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +25,12 @@ public class SubSystemService extends CommonService<SubSystem, Integer> {
     }
 
     @Override
+    public SubSystem findFirstByName(String name) {
+        return subSystemDAO.findFirstByNameIgnoreCase(name);
+    }
+    @Override
     public List<SubSystem> findByName(String name) {
-        return subSystemDAO.findSubSystemByName(name);
+        return subSystemDAO.findSubSystemByNameIgnoreCaseOrderByName(name);
     }
     @Override
     public List<SubSystem> findByFilter(String filter) {
