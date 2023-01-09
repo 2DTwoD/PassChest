@@ -29,6 +29,10 @@
             <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:selected="${#strings.equals(roleTxt, user.role)}">Роль</option>
         </select>
     </div>
+    <div>
+        <label for="enabled">Разрешение для авторизации:</label>
+        <input type="checkbox" id="enabled" th:field="*{enabled}">
+    </div>
     <input type="submit" value="Редактировать">
 </form>
 <form th:action="@{/edit/user/{username}(username=${user.username})}" th:method="delete">

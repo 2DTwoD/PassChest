@@ -1,22 +1,21 @@
 package org.goznak.controllers;
 
 import jakarta.validation.Valid;
+import org.goznak.models.PassSlice;
 import org.goznak.models.SubSystem;
 import org.goznak.models.System;
 import org.goznak.models.User;
-import org.goznak.services.AuthorityService;
-import org.goznak.services.SubSystemService;
-import org.goznak.services.SystemService;
-import org.goznak.services.UserService;
+import org.goznak.services.*;
 import org.goznak.utils.Roles;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.Authenticator;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/add")
@@ -28,11 +27,14 @@ public class Add {
     final
     SubSystemService subSystemService;
     final
+    PassSliceService passSliceService;
+    final
     AuthorityService authorityService;
     final
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Add(UserService userService, SystemService systemService, SubSystemService subSystemService, AuthorityService authorityService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public Add(UserService userService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, AuthorityService authorityService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.passSliceService = passSliceService;
         this.subSystemService = subSystemService;
         this.authorityService = authorityService;
         this.userService = userService;
@@ -56,7 +58,6 @@ public class Add {
             return "add/user";
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
         userService.save(user);
         authorityService.save(user.getAuthority());
         return "redirect:/search/users";
@@ -96,5 +97,27 @@ public class Add {
         subSystem.setSystem(systemService.findFirstByName(subSystem.getSystemName()));
         subSystemService.save(subSystem);
         return "redirect:/search/sub_systems";
+    }
+    @GetMapping("/soft/{subSystemId}")
+    public String addSoft(Model model, @PathVariable int subSystemId){
+        PassSlice passSlice = new PassSlice();
+        model.addAttribute("subSystemId", subSystemId);
+        model.addAttribute("passSlice", passSlice);
+        return "add/soft";
+    }
+    @PostMapping("/soft/{subSystemId}")
+    public String newSoft(@ModelAttribute @Valid PassSlice passSlice, BindingResult bindingResult, Model model, @PathVariable int subSystemId, Authentication authentication){
+        model.addAttribute("passSlice", passSlice);
+        model.addAttribute("subSystemId", subSystemId);
+        passSlice.setPassSliceService(passSliceService);
+        if(bindingResult.hasErrors() || passSlice.softExist()){
+            return "add/soft";
+        }
+        passSlice.setSubSystem(subSystemService.findById(subSystemId));
+        passSlice.setLastChange(new Date());
+        passSlice.setUser(userService.getCurrentUser(authentication));
+        passSlice.setActual(true);
+        passSliceService.save(passSlice);
+        return "redirect:/search/" + subSystemId;
     }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${system.name + ', ' + subSystem.name}"></title>
+    <script type="text/javascript" th:src="@{/js/getRequest.js}"></script>
+    <script type="text/javascript" th:src="@{/js/page_script.js}"></script>
+    <script th:inline="javascript">
+        const page = [[${page}]];
+    </script>
+</head>
+<body>
+<div th:text="${'Список паролей для системы ' + system.name + ', ' + subSystem.name + ':'}"></div>
+<hr/>
+<ul>
+    <div th:if="${passSlices.isEmpty()}">
+        Список пуст
+    </div>
+    <div th:each="passSlice: ${passSlices}">
+        <a th:text="${passSlice.softName + ' - Логин:' + passSlice.login + ' - Пароль:' + passSlice.password}" th:href="@{/edit/soft/{id}(id=${passSlice.id})}">Оборудование</a>
+        <br/>
+    </div>
+    <hr/>
+    <a th:href="@{/add/soft/{id}(id=${subSystem.id})}">Добавить</a>
+</ul>
+<hr/>
+<div>
+    <button id="prevPage"><<</button>
+    ---
+    <button id="nextPage">>></button>
+    <span>Страница
+        <select id="selectPage">
+            <option th:selected="${page == i}" th:each="i : ${#numbers.sequence(1, numOfPages)}" th:text="${i}"></option>
+        </select>
+        <span th:text="${' из ' + numOfPages}"></span>
+    </span>
+</div>
+</body>
+</html>

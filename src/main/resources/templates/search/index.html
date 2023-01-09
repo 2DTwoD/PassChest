@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск паролей:</title>
+    <script type="text/javascript" th:src="@{/js/search.js}"></script>
+    <script th:inline="javascript">
+        const page = [[${page}]];
+        const path = "/search";
+    </script>
+</head>
+<body>
+<div>Список оборудования:</div>
+<hr/>
+<div>
+    <input th:id="filterText" th:type="text" th:value="${session.filter}"/>
+    <input th:id="filterButton" th:type="button" value="Поиск"/>
+</div>
+<div th:if="${!#strings.isEmpty(session.filter)}" th:text="${'Результат поиска по запросу ''' + session.filter + ''':'}"></div>
+<hr/>
+<ul>
+    <div th:if="${targets.isEmpty()}">
+        Список пуст
+    </div>
+    <div th:each="target: ${targets}">
+        <a th:text="*{target.system.name + ', ' + target.name}" th:href="@{/search/{id}(id=${target.id})}">Оборудование</a>
+        <br/>
+    </div>
+    <hr/>
+</ul>
+<hr/>
+<div>
+    <button id="prevPage"><<</button>
+    ---
+    <button id="nextPage">>></button>
+    <span>Страница
+        <select id="selectPage">
+            <option th:selected="${page == i}" th:each="i : ${#numbers.sequence(1, numOfPages)}" th:text="${i}"></option>
+        </select>
+        <span th:text="${' из ' + numOfPages}"></span>
+    </span>
+</div>
+</body>
+</html>

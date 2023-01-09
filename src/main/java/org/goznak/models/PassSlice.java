@@ -1,9 +1,12 @@
 package org.goznak.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.goznak.services.PassSliceService;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,10 +18,13 @@ public class PassSlice {
     @Column(name = "sub_system_id", insertable=false, updatable=false)
     private int subSystemId;
     @Column(name = "soft_name")
+    @Size(min = 1, max = 100, message = "Название программы должно содержать от 1 до 100 символов")
     private String softName;
     @Column(name = "login")
+    @Size(min = 0, max = 50, message = "Логин должен содержать от 0 до 50 символов")
     private String login;
     @Column(name = "password")
+    @Size(min = 0, max = 100, message = "Пароль должен содержать от 0 до 100 символов")
     private String password;
     @Column(name = "last_change")
     private Date lastChange;
@@ -32,6 +38,8 @@ public class PassSlice {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "who_change")
     private User user;
+    @Transient
+    private PassSliceService passSliceService;
     @Override
     public boolean equals(Object o){
         if (getClass() != o.getClass()) {
@@ -43,5 +51,17 @@ public class PassSlice {
     public String toString(){
         return String.format("PassSlice(System name:%s, SubSystem name: %s, login: %s, password: %s)", subSystem.getSystem().getName(),
                 subSystem.getName(), login, password);
+    }
+    public boolean softExist(){
+        if(passSliceService == null){
+            return false;
+        }
+        List<PassSlice> passSlices = passSliceService.findByName(softName);
+        for(PassSlice passSlice:passSlices){
+            if(passSlice.getLogin().equals(login)){
+                return true;
+            }
+        }
+        return false;
     }
 }

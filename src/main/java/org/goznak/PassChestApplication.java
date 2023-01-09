@@ -1,7 +1,5 @@
 package org.goznak;
 
-import org.goznak.dao.AuthorityDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -11,6 +9,7 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 public class PassChestApplication {
+    final public static String INFINITY_USER = "Dmitry";
     public static void main(String[] args) {
         SpringApplication.run(PassChestApplication.class, args);
     }

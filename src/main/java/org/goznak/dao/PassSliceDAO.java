@@ -10,6 +10,7 @@ public interface PassSliceDAO extends CrudRepository<PassSlice, Long> {
 
     List<PassSlice> findAllByOrderById();
     List<PassSlice> findPassSliceBySubSystemId(Integer id);
+    List<PassSlice> findPassSliceBySoftName(String softName);
     PassSlice findFirstById(long id);
     PassSlice findFirstBySubSystem(SubSystem subSystem);
 }

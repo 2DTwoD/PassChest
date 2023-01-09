@@ -21,20 +21,25 @@
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     </div>
     <div>
-        <label for="passwordConfirm">Пароль пользователя:</label>
+        <label for="passwordConfirm">Повторите пароль:</label>
         <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Подтвердите пароль">
         <span th:text="*{passwordNotMatch() == true} ? 'Поле пароля и поле подтверждения пароля не совпадают': ''"></span>
     </div>
     <div>
-        <label for="role">Пароль пользователя:</label>
+        <label for="role">Права пользователя:</label>
             <select id="role" name="role" th:value="*{role}">
                 <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:value="${roleTxt}" th:selected="${#strings.equals(roleTxt, user.role)}">text</option>
             </select>
+    </div>
+    <div>
+        <label for="enabled">Разрешение для авторизации:</label>
+        <input type="checkbox" id="enabled" th:field="*{enabled}">
     </div>
     <div th:text="*{userExist() == true} ? 'Такой пользователь уже существует': ''"></div>
     <div>
         <input type="submit" value="Добавить">
     </div>
 </form>
+<a th:href="@{/search/users}"><input type="button" value="Назад"></a>
 </body>
 </html>

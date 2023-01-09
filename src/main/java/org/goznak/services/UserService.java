@@ -3,11 +3,14 @@ package org.goznak.services;
 import org.goznak.dao.*;
 import org.goznak.models.Authority;
 import org.goznak.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 @Component
 public class UserService extends CommonService<User, String>{
+
     public UserService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO) {
         super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO);
     }
@@ -39,10 +42,17 @@ public class UserService extends CommonService<User, String>{
 
     @Override
     public List<User> findByFilter(String filter) {
-        return null;
+        return userDAO.findByUsernameContainsIgnoreCaseOrderByUsername(filter);
     }
     @Override
     public void delete(User user) {
         userDAO.delete(user);
+    }
+    public User getCurrentUser(Authentication authentication){
+        if (authentication != null) {
+            return findById(authentication.getName());
+        } else {
+            return findById("Guest");
+        }
     }
 }

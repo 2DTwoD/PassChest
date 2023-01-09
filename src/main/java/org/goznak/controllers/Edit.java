@@ -1,6 +1,7 @@
 package org.goznak.controllers;
 
 import jakarta.validation.Valid;
+import org.goznak.PassChestApplication;
 import org.goznak.models.Authority;
 import org.goznak.models.SubSystem;
 import org.goznak.models.System;
@@ -103,23 +104,23 @@ public class Edit {
     }
     @PatchMapping("/user/{username}")
     public String updateUser(@ModelAttribute @Valid User user, BindingResult bindingResult,
-                             Model model, @PathVariable String username){
+                             Model model){
         model.addAttribute("user", user);
         model.addAttribute("roles", Roles.getRolesNameList());
         user.setUserService(userService);
         if(bindingResult.hasErrors() || user.passwordNotMatch()){
             return "edit/user";
         }
-        User userForUpdate = userService.findById(username);
-        userForUpdate.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userForUpdate.setEnabled(user.isEnabled());
-        userForUpdate.setRole(user.getRole());
-        userService.save(userForUpdate);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userService.save(user);
         authorityService.save(user.getAuthority());
         return "redirect:/search/users";
     }
     @DeleteMapping("/user/{username}")
     public String deleteUser(@PathVariable String username){
+        if(username.equals(PassChestApplication.INFINITY_USER)){
+            return "redirect:/search/users";
+        }
         User userForDelete = userService.findById(username);
         Authority authorityForDelete = authorityService.findById(userForDelete.getUsername());
         authorityService.delete(authorityForDelete);

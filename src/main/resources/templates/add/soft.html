@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление программы</title>
+</head>
+<body>
+<div>Добавление программы:</div>
+<hr/>
+<!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
+<form id="passSlice" th:action="@{/add/soft/{id}(id=${subSystemId})}" th:object="${passSlice}" method="post" autocomplete="off">
+    <div>
+        <label for="softName">Название программы для авторизации:</label>
+        <input id="softName" th:field="*{softName}"  placeholder="Название программы">
+        <span th:if="${#fields.hasErrors('softName')}" th:errors="*{softName}"></span>
+    </div>
+    <div>
+        <label for="login">Логин:</label>
+        <input type="text" th:field="*{login}" id="login" placeholder="Логин">
+        <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+    </div>
+    <div>
+        <label for="password">Пароль:</label>
+        <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    </div>
+    <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
+    <div>
+        <input type="submit" value="Добавить">
+    </div>
+</form>
+<a th:href="@{/search/{id}(id=${subSystemId})}"><input type="button" value="Назад"></a>
+</body>
+</html>
