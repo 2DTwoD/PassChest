@@ -2,20 +2,18 @@ package org.goznak.controllers;
 
 import jakarta.validation.Valid;
 import org.goznak.PassChestApplication;
-import org.goznak.models.Authority;
-import org.goznak.models.SubSystem;
+import org.goznak.models.*;
 import org.goznak.models.System;
-import org.goznak.models.User;
-import org.goznak.services.AuthorityService;
-import org.goznak.services.SubSystemService;
-import org.goznak.services.SystemService;
-import org.goznak.services.UserService;
+import org.goznak.services.*;
 import org.goznak.utils.Roles;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @Controller
 @RequestMapping("/edit")
@@ -29,12 +27,15 @@ public class Edit {
     final
     SubSystemService subSystemService;
     final
+    PassSliceService passSliceService;
+    final
     BCryptPasswordEncoder bCryptPasswordEncoder;
-    public Edit(UserService userService, AuthorityService authorityService, SystemService systemService, SubSystemService subSystemService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public Edit(UserService userService, AuthorityService authorityService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.authorityService = authorityService;
         this.systemService = systemService;
         this.subSystemService = subSystemService;
+        this.passSliceService = passSliceService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -126,5 +127,40 @@ public class Edit {
         authorityService.delete(authorityForDelete);
         userService.delete(userForDelete);
         return "redirect:/search/users";
+    }
+    @GetMapping("/soft/{id}")
+    public String editSoft(@PathVariable long id, Model model){
+        PassSlice passSlice = passSliceService.findById(id);
+        model.addAttribute("passSlice", passSlice);
+        return "edit/soft";
+    }
+    @PatchMapping("/soft/{id}")
+    public String updateSoft(@ModelAttribute @Valid PassSlice passSlice, BindingResult bindingResult,
+                             Model model, @PathVariable long id, Authentication authentication){
+        model.addAttribute("passSLice", passSlice);
+        passSlice.setPassSliceService(passSliceService);
+        if(bindingResult.hasErrors() || passSlice.softExist(true)){
+            return "edit/soft";
+        }
+        PassSlice oldPassSlice = passSliceService.findById(id);
+        PassSlice newPassSlice = new PassSlice();
+        oldPassSlice.setActual(false);
+        SubSystem subSystem = oldPassSlice.getSubSystem();
+        newPassSlice.setSubSystem(subSystem);
+        newPassSlice.setSoftName(passSlice.getSoftName());
+        newPassSlice.setLogin(passSlice.getLogin());
+        newPassSlice.setPassword(passSlice.getPassword());
+        newPassSlice.setLastChange(new Date());
+        newPassSlice.setUser(userService.getCurrentUser(authentication));
+        newPassSlice.setActual(true);
+        passSliceService.save(oldPassSlice);
+        passSliceService.save(newPassSlice);
+        return "redirect:/search/" + subSystem.getId();
+    }
+    @DeleteMapping("/soft/{id}")
+    public String deleteSoft(@PathVariable long id){
+        PassSlice passSliceForDelete = passSliceService.findById(id);
+        passSliceService.delete(passSliceForDelete);
+        return "redirect:/search/" + passSliceForDelete.getSubSystemId();
     }
 }

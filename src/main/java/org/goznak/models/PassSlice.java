@@ -14,7 +14,7 @@ import java.util.List;
 public class PassSlice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(name = "sub_system_id", insertable=false, updatable=false)
     private int subSystemId;
     @Column(name = "soft_name")
@@ -32,10 +32,10 @@ public class PassSlice {
     private String whoChange;
     @Column(name = "actual")
     private boolean actual;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sub_system_id")
     private SubSystem subSystem;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "who_change")
     private User user;
     @Transient
@@ -52,13 +52,16 @@ public class PassSlice {
         return String.format("PassSlice(System name:%s, SubSystem name: %s, login: %s, password: %s)", subSystem.getSystem().getName(),
                 subSystem.getName(), login, password);
     }
-    public boolean softExist(){
+    public boolean softExist(boolean fullCheck){
         if(passSliceService == null){
             return false;
         }
         List<PassSlice> passSlices = passSliceService.findByName(softName);
-        for(PassSlice passSlice:passSlices){
-            if(passSlice.getLogin().equals(login)){
+        boolean condition;
+        for(PassSlice passSlice: passSlices){
+            condition = fullCheck? passSlice.getLogin().equals(login) && passSlice.getPassword().equals(password):
+                    passSlice.getLogin().equals(login);
+            if(condition){
                 return true;
             }
         }

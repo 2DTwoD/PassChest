@@ -26,7 +26,7 @@
         <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     </div>
-    <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
+    <div th:text="*{softExist(false) == true} ? 'Программа с таким логином уже существует': ''"></div>
     <div>
         <input type="submit" value="Добавить">
     </div>

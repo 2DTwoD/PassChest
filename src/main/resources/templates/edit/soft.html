@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактирование программы</title>
+</head>
+<body>
+<div>Редактирование программы:</div>
+<hr/>
+<!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
+<form id="passSlice" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:object="${passSlice}" th:method="patch" autocomplete="off">
+  <div th:text="${'Название программы: ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ', ' + passSlice.softName + ':'}">
+  </div>
+  <div>
+    <label for="login">Логин:</label>
+    <input type="text" th:field="*{login}" id="login" placeholder="Логин">
+    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+  </div>
+  <div>
+    <label for="password">Пароль:</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+  </div>
+  <div th:text="*{softExist(true) == true} ? 'Вы не внесли никаких изменений': ''"></div>
+  <div>
+    <input type="submit" value="Редактировать">
+  </div>
+</form>
+<form th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
+  <div>
+    <input type="submit" value="Удалить">
+  </div>
+</form>
+<a th:href="@{/search/{id}(id=${passSlice.subSystemId})}"><input type="button" value="Назад"></a>
+</body>
+</html>

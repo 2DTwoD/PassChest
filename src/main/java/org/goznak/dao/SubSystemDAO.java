@@ -1,6 +1,7 @@
 package org.goznak.dao;
 
 import org.goznak.models.SubSystem;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

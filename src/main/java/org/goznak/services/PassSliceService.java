@@ -26,7 +26,7 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     }
     @Override
     public List<PassSlice> findByName(String name) {
-        return passSliceDAO.findPassSliceBySoftName(name);
+        return passSliceDAO.findPassSliceBySoftNameOrderBySoftName(name);
     }
     @Override
     public void save(PassSlice passSlice) {
@@ -34,7 +34,7 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     }
     @Override
     public List<PassSlice> findByFilter(String filter) {
-        return null;
+        return passSliceDAO.findBySoftNameContainsIgnoreCaseOrderBySoftName(filter);
     }
     @Override
     public void delete(PassSlice passSlice) {
