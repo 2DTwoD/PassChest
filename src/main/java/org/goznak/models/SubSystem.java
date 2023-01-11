@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "sub_systems")
-public class SubSystem {
+public class SubSystem implements Comparable<SubSystem> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -63,5 +63,14 @@ public class SubSystem {
     @Override
     public String toString(){
         return String.format("Subsystem with system name: %s, name: %s",system.getName(), name);
+    }
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public int compareTo(SubSystem subSystem) {
+        return subSystem.getId() - id;
     }
 }

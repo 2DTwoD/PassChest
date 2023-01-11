@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/edit")
@@ -147,7 +148,7 @@ public class Edit {
         oldPassSlice.setActual(false);
         SubSystem subSystem = oldPassSlice.getSubSystem();
         newPassSlice.setSubSystem(subSystem);
-        newPassSlice.setSoftName(passSlice.getSoftName());
+        newPassSlice.setSoftName(oldPassSlice.getSoftName());
         newPassSlice.setLogin(passSlice.getLogin());
         newPassSlice.setPassword(passSlice.getPassword());
         newPassSlice.setLastChange(new Date());
@@ -160,7 +161,7 @@ public class Edit {
     @DeleteMapping("/soft/{id}")
     public String deleteSoft(@PathVariable long id){
         PassSlice passSliceForDelete = passSliceService.findById(id);
-        passSliceService.delete(passSliceForDelete);
+        passSliceService.deleteAll(passSliceForDelete.getSoftName(), passSliceForDelete.getSubSystemId());
         return "redirect:/search/" + passSliceForDelete.getSubSystemId();
     }
 }

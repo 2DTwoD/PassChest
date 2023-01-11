@@ -5,9 +5,7 @@ import org.goznak.models.SubSystem;
 import org.goznak.models.System;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Component
 public class SubSystemService extends CommonService<SubSystem, Integer> {
@@ -32,15 +30,18 @@ public class SubSystemService extends CommonService<SubSystem, Integer> {
     }
     @Override
     public List<SubSystem> findByFilter(String filter) {
-        List<SubSystem> result = new ArrayList<>();
+        String[] splitFilterArray = filter.split(" ");
+        Set<SubSystem> result = new TreeSet<>();
         List<SubSystem> subSystems = subSystemDAO.findAllByOrderByName();
         for(SubSystem subSystem: subSystems){
-            if(subSystem.getName().toLowerCase().contains(filter) ||
-                    subSystem.getSystem().getName().toLowerCase().contains(filter)){
-                result.add(subSystem);
+            for(String splitFilter: splitFilterArray) {
+                if (subSystem.getName().toLowerCase().contains(splitFilter) ||
+                        subSystem.getSystem().getName().toLowerCase().contains(splitFilter)) {
+                    result.add(subSystem);
+                }
             }
         }
-        return result;
+        return result.stream().toList();
     }
     @Override
     public void save(SubSystem subSystem) {

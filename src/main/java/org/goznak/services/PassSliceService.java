@@ -40,7 +40,13 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     public void delete(PassSlice passSlice) {
         passSliceDAO.delete(passSlice);
     }
+    public List<PassSlice> findByFilter(String filter, int id) {
+        return passSliceDAO.findBySoftNameContainsIgnoreCaseAndSubSystemIdAndActualOrderBySoftName(filter, id, true);
+    }
     public List<PassSlice> findBySubSystemId(Integer id) {
-        return passSliceDAO.findPassSliceBySubSystemId(id);
+        return passSliceDAO.findPassSliceBySubSystemIdAndActual(id, true);
+    }
+    public void deleteAll(String softName, int id){
+        passSliceDAO.deleteBySoftNameAndSubSystemId(softName, id);
     }
 }

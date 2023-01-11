@@ -23,8 +23,9 @@
     <div th:if="${targets.isEmpty()}">
         Список пуст
     </div>
-    <div th:each="passSlice: ${targets}" th:if="${passSlice.actual == true}">
+    <div th:if="${passSlice.actual == true}" th:each="passSlice: ${targets}">
         <a th:text="${passSlice.softName + ' - Логин: ' + passSlice.login + ' - Пароль: ' + passSlice.password}" th:href="@{/edit/soft/{id}(id=${passSlice.id})}">Оборудование</a>
+        <a th:href="@{/search/history/{id}(id=${passSlice.id})}"><input type="button" value="История изменений"></a>
         <br/>
     </div>
     <hr/>
