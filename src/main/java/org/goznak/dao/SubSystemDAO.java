@@ -7,8 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface SubSystemDAO extends CrudRepository<SubSystem, Integer> {
-    List<SubSystem> findAllByOrderByName();
-    List<SubSystem> findSubSystemByNameIgnoreCaseOrderByName(String name);
+    List<SubSystem> findAllByOrderBySystemAscNameAsc();
+    List<SubSystem> findSubSystemByNameIgnoreCaseOrderByNameAsc(String name);
     List<SubSystem> findByNameContainsIgnoreCaseOrderByName(String filter);
     SubSystem findFirstById(int id);
     SubSystem findFirstByNameIgnoreCase(String name);

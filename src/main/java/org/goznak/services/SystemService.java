@@ -1,9 +1,11 @@
 package org.goznak.services;
 
 import org.goznak.dao.*;
+import org.goznak.models.SubSystem;
 import org.goznak.models.System;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 public class SystemService extends CommonService<System, Integer> {
@@ -31,7 +33,20 @@ public class SystemService extends CommonService<System, Integer> {
     }
 
     public List<System> findByFilter(String filter) {
-        return systemDAO.findByNameContainsIgnoreCaseOrderByName(filter);
+        String[] splitFilterArray = filter.split(" ");
+        ArrayList<System> result = new ArrayList<>();
+        List<System> systems = systemDAO.findAllByOrderByName();
+        for(System system: systems){
+            for(String splitFilter: splitFilterArray) {
+                splitFilter = splitFilter.toLowerCase();
+                if (system.getName().toLowerCase().contains(splitFilter)) {
+                    if(!result.contains(system)) {
+                        result.add(system);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     @Override

@@ -71,6 +71,6 @@ public class SubSystem implements Comparable<SubSystem> {
 
     @Override
     public int compareTo(SubSystem subSystem) {
-        return subSystem.getId() - id;
+        return (system.getName() + name).compareTo(subSystem.getSystem().getName() + subSystem.getName());
     }
 }

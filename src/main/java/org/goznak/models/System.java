@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "systems")
-public class System {
+public class System implements Comparable<System> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -37,5 +37,13 @@ public class System {
     @Override
     public String toString(){
         return String.format("System with name: %s", name);
+    }
+    @Override
+    public int hashCode() {
+        return id;
+    }
+    @Override
+    public int compareTo(System system) {
+        return name.compareTo(system.getName());
     }
 }

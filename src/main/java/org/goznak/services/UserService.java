@@ -2,11 +2,13 @@ package org.goznak.services;
 
 import org.goznak.dao.*;
 import org.goznak.models.Authority;
+import org.goznak.models.System;
 import org.goznak.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 public class UserService extends CommonService<User, String>{
@@ -42,7 +44,20 @@ public class UserService extends CommonService<User, String>{
 
     @Override
     public List<User> findByFilter(String filter) {
-        return userDAO.findByUsernameContainsIgnoreCaseOrderByUsername(filter);
+        String[] splitFilterArray = filter.split(" ");
+        ArrayList<User> result = new ArrayList<>();
+        List<User> users = userDAO.findAllByOrderByUsername();
+        for(User user: users){
+            for(String splitFilter: splitFilterArray) {
+                splitFilter = splitFilter.toLowerCase();
+                if (user.getUsername().toLowerCase().contains(splitFilter)) {
+                    if(!result.contains(user)) {
+                        result.add(user);
+                    }
+                }
+            }
+        }
+        return result;
     }
     @Override
     public void delete(User user) {

@@ -13,7 +13,7 @@ import java.util.List;
 public interface PassSliceDAO extends CrudRepository<PassSlice, Long> {
 
     List<PassSlice> findAllByOrderById();
-    List<PassSlice> findPassSliceBySubSystemIdAndActual(Integer id, boolean actual);
+    List<PassSlice> findPassSliceBySubSystemIdAndActualOrderBySoftName(Integer id, boolean actual);
     List<PassSlice> findPassSliceBySoftNameOrderBySoftName(String softName);
     List<PassSlice> findBySoftNameContainsIgnoreCaseOrderBySoftName(String filter);
     @Transactional

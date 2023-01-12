@@ -23,7 +23,7 @@
         Список пуст
     </div>
     <div th:each="target: ${targets}">
-        <a th:text="*{target.system.name + ', ' + target.name}" th:href="@{/search/{id}(id=${target.id})}">Оборудование</a>
+        <a th:text="*{target.system.name + ', ' + target.name}" th:href="@{/search/{id}(id=${target.id}, resetParameters=true)}">Оборудование</a>
         <br/>
     </div>
     <hr/>

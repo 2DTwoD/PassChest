@@ -3,8 +3,10 @@ package org.goznak.services;
 import org.goznak.dao.*;
 import org.goznak.dao.SystemDAO;
 import org.goznak.models.PassSlice;
+import org.goznak.models.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 public class PassSliceService extends CommonService<PassSlice, Long> {
@@ -41,10 +43,23 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
         passSliceDAO.delete(passSlice);
     }
     public List<PassSlice> findByFilter(String filter, int id) {
-        return passSliceDAO.findBySoftNameContainsIgnoreCaseAndSubSystemIdAndActualOrderBySoftName(filter, id, true);
+        String[] splitFilterArray = filter.split(" ");
+        ArrayList<PassSlice> result = new ArrayList<>();
+        List<PassSlice> passSlices = passSliceDAO.findPassSliceBySubSystemIdAndActualOrderBySoftName(id, true);
+        for(PassSlice passSlice: passSlices){
+            for(String splitFilter: splitFilterArray) {
+                splitFilter = splitFilter.toLowerCase();
+                if (passSlice.getSoftName().toLowerCase().contains(splitFilter)) {
+                    if(!result.contains(passSlice)) {
+                        result.add(passSlice);
+                    }
+                }
+            }
+        }
+        return result;
     }
     public List<PassSlice> findBySubSystemId(Integer id) {
-        return passSliceDAO.findPassSliceBySubSystemIdAndActual(id, true);
+        return passSliceDAO.findPassSliceBySubSystemIdAndActualOrderBySoftName(id, true);
     }
     public void deleteAll(String softName, int id){
         passSliceDAO.deleteBySoftNameAndSubSystemId(softName, id);

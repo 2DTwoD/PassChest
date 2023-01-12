@@ -2,10 +2,8 @@ package org.goznak.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.goznak.models.PassSlice;
+import org.goznak.models.*;
 import org.goznak.models.System;
-import org.goznak.models.SubSystem;
-import org.goznak.models.User;
 import org.goznak.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +22,7 @@ public class Search {
     private final int TF_MAIN = 3;
     private final int TF_SOFT = 4;
     private final int TF_HISTORY = 5;
-    final
-    int NUM_OF_VISIBLE_ROWS = 5;
+    private final int NUM_OF_VISIBLE_ROWS = 2;
     final
     UserService userService;
     final
@@ -50,9 +47,8 @@ public class Search {
             subSystems = subSystemService.findAll();
         } else {
             subSystems = subSystemService.findByFilter(filter);
-            session.setAttribute("filter", filter);
         }
-        return commonSearch(model, session, request, subSystems, "search/index", "search");
+        return searchEngine(model, session, request, subSystems, "search/index", TF_MAIN);
     }
     @GetMapping("/users")
     public String userSearch(Model model, HttpSession session, HttpServletRequest request){
@@ -62,9 +58,8 @@ public class Search {
             users = userService.findAll();
         } else {
             users = userService.findByFilter(filter);
-            session.setAttribute("filter", filter);
         }
-        return commonSearch(model, session, request, users, "search/users", "search/users");
+        return searchEngine(model, session, request, users, "search/users", TF_USER);
     }
     @GetMapping("/systems")
     public String systemSearch(Model model, HttpSession session, HttpServletRequest request){
@@ -74,9 +69,8 @@ public class Search {
             systems = systemService.findAll();
         } else {
             systems = systemService.findByFilter(filter);
-            session.setAttribute("filter", filter);
         }
-        return commonSearch(model, session, request, systems, "search/systems", "search/systems");
+        return searchEngine(model, session, request, systems, "search/systems", TF_SYSTEM);
     }
     @GetMapping("/sub_systems")
     public String subSystemSearch(Model model, HttpSession session, HttpServletRequest request){
@@ -86,22 +80,24 @@ public class Search {
             subSystems = subSystemService.findAll();
         } else {
             subSystems = subSystemService.findByFilter(filter);
-            session.setAttribute("filter", filter);
         }
-        return commonSearch(model, session, request, subSystems, "search/sub_systems", "search/sub_systems");
+        return searchEngine(model, session, request, subSystems, "search/sub_systems", TF_SUB_SYSTEM);
     }
     @GetMapping("/{id}")
     public String softSearch(Model model, HttpSession session, HttpServletRequest request, @PathVariable int id){
         model.addAttribute("subSystem", subSystemService.findById(id));
+        if(request.getParameter("resetParameters") != null){
+            session.setAttribute("filter" + TF_SOFT, null);
+            session.setAttribute("page" + TF_SOFT, 0);
+        }
         String filter = getFilter(session, request, TF_SOFT);
         List<PassSlice> passSlices;
         if(filter == null) {
             passSlices = passSliceService.findBySubSystemId(id);
         } else {
             passSlices = passSliceService.findByFilter(filter, id);
-            session.setAttribute("filter", filter);
         }
-        return commonSearch(model, session, request, passSlices, "search/softs", "search/" + id);
+        return searchEngine(model, session, request, passSlices, "search/softs", TF_SOFT);
     }
     @GetMapping("/history/{id}")
     public String softHistorySearch(Model model, HttpSession session, HttpServletRequest request, @PathVariable long id){
@@ -109,39 +105,20 @@ public class Search {
         model.addAttribute("subSystem", passSlice.getSubSystem());
         List<PassSlice> passSlices;
         passSlices = passSliceService.findByName(passSlice.getSoftName());
-        return commonSearch(model, session, request, passSlices, "search/history", "search/history/" + id);
+        return searchEngine(model, session, request, passSlices, "search/history", TF_HISTORY);
     }
-    private String commonSearch(Model model, HttpSession session, HttpServletRequest request,
-                                CommonService<?, ?> commonService, String templatePath, String path, int targetFlag) {
-        int page;
-        List<?> targets;
+    private String searchEngine(Model model, HttpSession session, HttpServletRequest request,
+                                List<?> targets, String templatePath, int pageId) {
+        session.setAttribute("targets", targets);
         String pagePar = request.getParameter("page");
-        String filter = request.getParameter("filter");
-        if(filter == null) {
-            Object tf = session.getAttribute("targetFlag");
-            if(tf == null || (int) tf != targetFlag){
-                session.setAttribute("targetFlag", targetFlag);
-                session.setAttribute("filter", null);
-            } else {
-                filter = (String) session.getAttribute("filter");
-            }
-        }
+        int page;
         if(pagePar == null){
-            if(filter == null) {
-                targets = commonService.findAll();
-            } else {
-                targets = commonService.findByFilter(filter);
-                session.setAttribute("filter", filter);
-            }
-            session.setAttribute("targets", targets);
-            page = 1;
+            Object sessionPage = session.getAttribute("page" + pageId);
+            page = sessionPage == null? 1:(int) sessionPage;
         } else {
-            targets = (List<?>) session.getAttribute("targets");
-            if(targets == null){
-                return "redirect:/" + path;
-            }
             page = Integer.parseInt(pagePar);
         }
+        session.setAttribute("page" + pageId, page);
         int numOfPages = getNumOfPages(targets.size());
         page = limit(page, 1, numOfPages);
         int offset = (page - 1) * NUM_OF_VISIBLE_ROWS;
@@ -158,48 +135,16 @@ public class Search {
         model.addAttribute("numOfPages", numOfPages);
         return templatePath;
     }
-    private String commonSearch(Model model, HttpSession session, HttpServletRequest request,
-                                List<?> targets, String templatePath, String path) {
-        int page;
-        String pagePar = request.getParameter("page");
-        if(pagePar == null){
-            session.setAttribute("targets", targets);
-            page = 1;
-        } else {
-            targets = (List<?>) session.getAttribute("targets");
-            if(targets == null){
-                return "redirect:/" + path;
-            }
-            page = Integer.parseInt(pagePar);
-        }
-        int numOfPages = getNumOfPages(targets.size());
-        page = limit(page, 1, numOfPages);
-        int offset = (page - 1) * NUM_OF_VISIBLE_ROWS;
-        int end = offset + NUM_OF_VISIBLE_ROWS;
-        end = Math.min(end, targets.size());
-        List<?> sublist;
-        if(targets.isEmpty()){
-            sublist = targets;
-        } else {
-            sublist = targets.subList(offset, end);
-        }
-        model.addAttribute("targets", sublist);
-        model.addAttribute("page", page);
-        model.addAttribute("numOfPages", numOfPages);
-        return templatePath;
-    }
-    private String getFilter(HttpSession session, HttpServletRequest request, int targetFlag){
+    private String getFilter(HttpSession session, HttpServletRequest request, int pageId){
         String filter = request.getParameter("filter");
         if(filter == null) {
-            Object tf = session.getAttribute("targetFlag");
-            if(tf == null || (int) tf != targetFlag){
-                session.setAttribute("targetFlag", targetFlag);
-                session.setAttribute("filter", null);
-                return null;
-            } else {
-                return (String) session.getAttribute("filter");
-            }
+            Object objFilter = session.getAttribute("filter" + pageId);
+            filter = objFilter == null? null: (String) objFilter;
+        } else {
+            session.setAttribute("page" + pageId, 1);
         }
+        session.setAttribute("filter", filter);
+        session.setAttribute("filter" + pageId, filter);
         return filter;
     }
     private int getNumOfPages(int size){

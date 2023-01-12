@@ -14,7 +14,7 @@ public class SubSystemService extends CommonService<SubSystem, Integer> {
     }
     @Override
     public List<SubSystem> findAll() {
-        return subSystemDAO.findAllByOrderByName();
+        return subSystemDAO.findAllByOrderBySystemAscNameAsc();
     }
     @Override
     public SubSystem findById(Integer id) {
@@ -26,22 +26,25 @@ public class SubSystemService extends CommonService<SubSystem, Integer> {
     }
     @Override
     public List<SubSystem> findByName(String name) {
-        return subSystemDAO.findSubSystemByNameIgnoreCaseOrderByName(name);
+        return subSystemDAO.findSubSystemByNameIgnoreCaseOrderByNameAsc(name);
     }
     @Override
     public List<SubSystem> findByFilter(String filter) {
         String[] splitFilterArray = filter.split(" ");
-        Set<SubSystem> result = new TreeSet<>();
-        List<SubSystem> subSystems = subSystemDAO.findAllByOrderByName();
+        ArrayList<SubSystem> result = new ArrayList<>();
+        List<SubSystem> subSystems = subSystemDAO.findAllByOrderBySystemAscNameAsc();
         for(SubSystem subSystem: subSystems){
             for(String splitFilter: splitFilterArray) {
+                splitFilter = splitFilter.toLowerCase();
                 if (subSystem.getName().toLowerCase().contains(splitFilter) ||
                         subSystem.getSystem().getName().toLowerCase().contains(splitFilter)) {
-                    result.add(subSystem);
+                    if(!result.contains(subSystem)) {
+                        result.add(subSystem);
+                    }
                 }
             }
         }
-        return result.stream().toList();
+        return result;
     }
     @Override
     public void save(SubSystem subSystem) {
