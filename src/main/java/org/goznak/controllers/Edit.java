@@ -101,16 +101,22 @@ public class Edit {
         user.setPassword("");
         user.setRole(authority.getAuthority().toString());
         model.addAttribute("user", user);
+        model.addAttribute("oldUser", null);
         model.addAttribute("roles", Roles.getRolesNameList());
         return "edit/user";
     }
     @PatchMapping("/user/{username}")
     public String updateUser(@ModelAttribute @Valid User user, BindingResult bindingResult,
-                             Model model){
+                             Model model, Authentication authentication, @PathVariable String username){
+        User oldUser = userService.findById(username);
+        Authority authority = authorityService.findById(username);
+        oldUser.setRole(authority.getAuthority().toString());
         model.addAttribute("user", user);
+        model.addAttribute("oldUser", oldUser);
         model.addAttribute("roles", Roles.getRolesNameList());
         user.setUserService(userService);
-        if(bindingResult.hasErrors() || user.passwordNotMatch()){
+        user.setAuthentication(authentication);
+        if(bindingResult.hasErrors() || user.passwordNotMatch() || user.noEditUser(oldUser)){
             return "edit/user";
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -119,14 +125,22 @@ public class Edit {
         return "redirect:/search/users";
     }
     @DeleteMapping("/user/{username}")
-    public String deleteUser(@PathVariable String username){
-        if(username.equals(PassChestApplication.INFINITY_USER)){
-            return "redirect:/search/users";
+    public String deleteUser(@PathVariable String username, Model model, Authentication authentication){
+        User user = userService.findById(username);
+        Authority authority = authorityService.findById(username);
+        model.addAttribute("user", user);
+        model.addAttribute("oldUser", null);
+        model.addAttribute("roles", Roles.getRolesNameList());
+        user.setUserService(userService);
+        user.setAuthentication(authentication);
+        user.setPasswordConfirm("");
+        user.setRole(authority.getAuthority().toString());
+        if(user.noDeleteUser()){
+            user.setPassword("");
+            return "edit/user";
         }
-        User userForDelete = userService.findById(username);
-        Authority authorityForDelete = authorityService.findById(userForDelete.getUsername());
-        authorityService.delete(authorityForDelete);
-        userService.delete(userForDelete);
+        authorityService.delete(authority);
+        userService.delete(user);
         return "redirect:/search/users";
     }
     @GetMapping("/soft/{id}")

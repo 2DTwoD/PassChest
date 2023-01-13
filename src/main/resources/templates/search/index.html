@@ -11,34 +11,19 @@
 </head>
 <body>
 <div>Список оборудования:</div>
-<hr/>
-<div>
-    <input th:id="filterText" th:type="text" th:value="${session.filter}"/>
-    <input th:id="filterButton" th:type="button" value="Поиск"/>
-</div>
-<div th:if="${!#strings.isEmpty(session.filter)}" th:text="${'Результат поиска по запросу ''' + session.filter + ''':'}"></div>
-<hr/>
-<ul>
-    <div th:if="${targets.isEmpty()}">
-        Список пуст
-    </div>
-    <div th:each="target: ${targets}">
-        <a th:text="*{target.system.name + ', ' + target.name}" th:href="@{/search/{id}(id=${target.id}, resetParameters=true)}">Оборудование</a>
-        <br/>
-    </div>
-    <hr/>
-</ul>
-<hr/>
-<div>
-    <button id="prevPage"><<</button>
-    ---
-    <button id="nextPage">>></button>
-    <span>Страница
-        <select id="selectPage">
-            <option th:selected="${page == i}" th:each="i : ${#numbers.sequence(1, numOfPages)}" th:text="${i}"></option>
-        </select>
-        <span th:text="${' из ' + numOfPages}"></span>
-    </span>
-</div>
+<th:block th:replace="common/filter_header"></th:block>
+<table th:if="${targets.isEmpty() == false}">
+    <tr>
+        <td>Система</td>
+        <td>Подсистема</td>
+        <td>Действие</td>
+    </tr>
+    <tr th:each="target: ${targets}">
+        <td th:text="${target.system.name}">Система</td>
+        <td th:text="${target.name}">Подсистема</td>
+        <td><a th:href="@{/search/{id}(id=${target.id}, resetParameters=true)}"><input type="button" value="Просмотр"/></a></td>
+    </tr>
+</table>
+<th:block th:replace="common/page_footer"></th:block>
 </body>
 </html>

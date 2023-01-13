@@ -3,7 +3,6 @@ package org.goznak.services;
 import org.goznak.dao.*;
 import org.goznak.dao.SystemDAO;
 import org.goznak.models.PassSlice;
-import org.goznak.models.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     }
     @Override
     public List<PassSlice> findByName(String name) {
-        return passSliceDAO.findPassSliceBySoftNameOrderBySoftName(name);
+        return passSliceDAO.findPassSliceBySoftNameOrderBySoftNameAscLastChangeDesc(name);
     }
     @Override
     public void save(PassSlice passSlice) {

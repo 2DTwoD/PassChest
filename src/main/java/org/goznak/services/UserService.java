@@ -67,7 +67,7 @@ public class UserService extends CommonService<User, String>{
         if (authentication != null) {
             return findById(authentication.getName());
         } else {
-            return findById("Guest");
+            return findById("Гость");
         }
     }
 }

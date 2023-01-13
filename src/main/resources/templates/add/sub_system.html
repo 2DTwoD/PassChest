@@ -8,8 +8,9 @@
 </head>
 <body>
 <div>Добавить подсистему:</div>
+<hr/>
 <!--@thymesVar id="subSystem" type="org.goznak.models.SubSystem"-->
-<form id="subSystem" th:action="@{/add/sub_system}" th:object="${subSystem}" method="post" autocomplete="off">
+<form id="subSystem" th:action="@{/add/sub_system}" th:object="${subSystem}" th:method="post" autocomplete="off">
     <div>
         <label for="systemName">Входит в систему:</label>
         <input list="systemList" id="systemName" th:field="*{systemName}"ы>
@@ -24,10 +25,10 @@
         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
     </div>
     <div th:text="*{subSystemExist() == true} ? 'Такая подсистема уже существует': ''"></div>
-    <div>
-        <input type="submit" value="Добавить">
-    </div>
+    <hr/>
+    <input type="submit" value="Добавить">
 </form>
+<hr/>
 <a th:href="@{/search/sub_systems}"><input type="button" value="Назад"></a>
 </body>
 </html>

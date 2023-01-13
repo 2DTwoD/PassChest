@@ -11,35 +11,19 @@
 </head>
 <body>
 <div>Список пользователей:</div>
+<th:block th:replace="common/filter_header"></th:block>
+<table th:if="${targets.isEmpty() == false}">
+    <tr>
+        <td>Пользователь</td>
+        <td>Действие</td>
+    </tr>
+    <tr th:each="target: ${targets}">
+        <td th:text="${target.username}">Пользователь</td>
+        <td><a th:href="@{/edit/user/{username}(username=${target.username})}"><input type="button" value="Правка"/></a></td>
+    </tr>
+</table>
 <hr/>
-<div>
-    <input th:id="filterText" th:type="text" th:value="${session.filter}"/>
-    <input th:id="filterButton" th:type="button" value="Поиск"/>
-</div>
-<div th:if="${!#strings.isEmpty(session.filter)}" th:text="${'Результат поиска по запросу ''' + session.filter + ''':'}"></div>
-<hr/>
-<ul>
-    <div th:if="${targets.isEmpty()}">
-        Список пуст
-    </div>
-    <div th:each="target: ${targets}">
-        <a th:text="*{target.username}" th:href="@{/edit/user/{username}(username=${target.username})}">Пользователь</a>
-        <br/>
-    </div>
-    <hr/>
-    <a th:href="@{/add/user}">Добавить</a>
-</ul>
-<hr/>
-<div>
-    <button id="prevPage"><<</button>
-    ---
-    <button id="nextPage">>></button>
-    <span>Страница
-        <select id="selectPage">
-            <option th:selected="${page == i}" th:each="i : ${#numbers.sequence(1, numOfPages)}" th:text="${i}"></option>
-        </select>
-        <span th:text="${' из ' + numOfPages}"></span>
-    </span>
-</div>
+<a th:href="@{/add/user}"><input type="button" value="Добавить"/></a>
+<th:block th:replace="common/page_footer"></th:block>
 </body>
 </html>

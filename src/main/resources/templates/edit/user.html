@@ -9,7 +9,7 @@
 <body>
 <div>Редактировать пользователя:</div>
 <!--@thymesVar id="user" type="org.goznak.models.User"-->
-<form th:action="@{/edit/user/{username}(username=${user.username})}" th:object="${user}" th:method="patch" autocomplete="off">
+<form th:action="@{/edit/user/{username}(username=*{username})}" th:object="${user}" th:method="patch" autocomplete="off">
     <div>
         <th:block th:text="*{'Имя пользователя: ' + username}"></th:block>
     </div>
@@ -33,13 +33,18 @@
         <label for="enabled">Разрешение для авторизации:</label>
         <input type="checkbox" id="enabled" th:field="*{enabled}">
     </div>
+    <div th:text="${oldUser != null && user.noEditUser(oldUser) == true} ? 'Эти параметры нельзя редактировать': ''"></div>
+    <div th:text="${oldUser == null && user.noDeleteUser() == true} ? 'Этого пользователя нельзя удалить': ''"></div>
+    <hr/>
     <input type="submit" value="Редактировать">
 </form>
+<hr/>
 <form th:action="@{/edit/user/{username}(username=${user.username})}" th:method="delete">
     <div>
         <input type="submit" value="Удалить">
     </div>
 </form>
+<hr/>
 <a th:href="@{/search/users}"><input type="button" value="Назад"></a>
 </body>
 </html>

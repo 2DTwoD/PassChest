@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page footer</title>
+</head>
+<body>
+<hr/>
+<div>
+    <button id="prevPage"><<</button>
+    <select id="selectPage">
+        <option th:selected="${page == i}" th:each="i : ${#numbers.sequence(1, numOfPages)}" th:text="${i}"></option>
+    </select>
+    <span th:text="${' из ' + numOfPages}"></span>
+    <button id="nextPage">>></button>
+</div>
+</body>
+</html>

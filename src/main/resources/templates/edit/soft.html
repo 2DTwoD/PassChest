@@ -11,8 +11,7 @@
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
 <form id="passSlice" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:object="${passSlice}" th:method="patch" autocomplete="off">
-  <div th:text="${'Название программы: ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ', ' + passSlice.softName + ':'}">
-  </div>
+  <div th:text="${'Название программы: ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ', ' + passSlice.softName + ':'}"></div>
   <div>
     <label for="login">Логин:</label>
     <input type="text" th:field="*{login}" id="login" placeholder="Логин">
@@ -24,15 +23,14 @@
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
   </div>
   <div th:text="*{softExist(true) == true} ? 'Вы не внесли никаких изменений': ''"></div>
-  <div>
-    <input type="submit" value="Редактировать">
-  </div>
+  <hr/>
+  <input type="submit" value="Редактировать">
 </form>
+<hr/>
 <form th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
-  <div>
-    <input type="submit" value="Удалить">
-  </div>
+  <input type="submit" value="Удалить">
 </form>
+<hr/>
 <a th:href="@{/search/{id}(id=${passSlice.subSystemId})}"><input type="button" value="Назад"></a>
 </body>
 </html>

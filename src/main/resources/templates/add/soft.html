@@ -10,9 +10,9 @@
 <div>Добавление программы:</div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
-<form id="passSlice" th:action="@{/add/soft/{id}(id=${subSystemId})}" th:object="${passSlice}" method="post" autocomplete="off">
+<form id="passSlice" th:action="@{/add/soft/{id}(id=${subSystemId})}" th:object="${passSlice}" th:method="post" autocomplete="off">
     <div>
-        <label for="softName">Название программы для авторизации:</label>
+        <label for="softName">Название программы:</label>
         <input id="softName" th:field="*{softName}"  placeholder="Название программы">
         <span th:if="${#fields.hasErrors('softName')}" th:errors="*{softName}"></span>
     </div>
@@ -27,10 +27,10 @@
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     </div>
     <div th:text="*{softExist(false) == true} ? 'Программа с таким логином уже существует': ''"></div>
-    <div>
-        <input type="submit" value="Добавить">
-    </div>
+    <hr/>
+    <input type="submit" value="Добавить">
 </form>
+<hr/>
 <a th:href="@{/search/{id}(id=${subSystemId})}"><input type="button" value="Назад"></a>
 </body>
 </html>

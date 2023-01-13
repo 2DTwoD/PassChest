@@ -22,7 +22,7 @@ public class Search {
     private final int TF_MAIN = 3;
     private final int TF_SOFT = 4;
     private final int TF_HISTORY = 5;
-    private final int NUM_OF_VISIBLE_ROWS = 2;
+    private final int NUM_OF_VISIBLE_ROWS = 15;
     final
     UserService userService;
     final
@@ -97,6 +97,7 @@ public class Search {
         } else {
             passSlices = passSliceService.findByFilter(filter, id);
         }
+        starPassword(passSlices);
         return searchEngine(model, session, request, passSlices, "search/softs", TF_SOFT);
     }
     @GetMapping("/history/{id}")
@@ -105,7 +106,25 @@ public class Search {
         model.addAttribute("subSystem", passSlice.getSubSystem());
         List<PassSlice> passSlices;
         passSlices = passSliceService.findByName(passSlice.getSoftName());
+        starPassword(passSlices);
         return searchEngine(model, session, request, passSlices, "search/history", TF_HISTORY);
+    }
+    private void starPassword(List<PassSlice> list){
+        for(PassSlice passSlice: list){
+            passSlice.setPassword("******");
+        }
+    }
+    private String getFilter(HttpSession session, HttpServletRequest request, int pageId){
+        String filter = request.getParameter("filter");
+        if(filter == null) {
+            Object objFilter = session.getAttribute("filter" + pageId);
+            filter = objFilter == null? null: (String) objFilter;
+        } else {
+            session.setAttribute("page" + pageId, 1);
+        }
+        session.setAttribute("filter", filter);
+        session.setAttribute("filter" + pageId, filter);
+        return filter;
     }
     private String searchEngine(Model model, HttpSession session, HttpServletRequest request,
                                 List<?> targets, String templatePath, int pageId) {
@@ -134,18 +153,6 @@ public class Search {
         model.addAttribute("page", page);
         model.addAttribute("numOfPages", numOfPages);
         return templatePath;
-    }
-    private String getFilter(HttpSession session, HttpServletRequest request, int pageId){
-        String filter = request.getParameter("filter");
-        if(filter == null) {
-            Object objFilter = session.getAttribute("filter" + pageId);
-            filter = objFilter == null? null: (String) objFilter;
-        } else {
-            session.setAttribute("page" + pageId, 1);
-        }
-        session.setAttribute("filter", filter);
-        session.setAttribute("filter" + pageId, filter);
-        return filter;
     }
     private int getNumOfPages(int size){
         int increment = size % NUM_OF_VISIBLE_ROWS > 0? 1: 0;

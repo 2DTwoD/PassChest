@@ -8,8 +8,9 @@
 </head>
 <body>
 <div>Добавить пользователя:</div>
+<hr/>
 <!--@thymesVar id="user" type="org.goznak.models.User"-->
-<form th:action="@{/add/user}" th:object="${user}" method="post" autocomplete="off">
+<form th:action="@{/add/user}" th:object="${user}" th:method="post" autocomplete="off">
     <div>
         <label for="username">Имя пользователя:</label>
         <input type="text" th:field="*{username}" id="username" placeholder="Имя">
@@ -36,10 +37,10 @@
         <input type="checkbox" id="enabled" th:field="*{enabled}">
     </div>
     <div th:text="*{userExist() == true} ? 'Такой пользователь уже существует': ''"></div>
-    <div>
-        <input type="submit" value="Добавить">
-    </div>
+    <hr/>
+    <input type="submit" value="Добавить">
 </form>
+<hr/>
 <a th:href="@{/search/users}"><input type="button" value="Назад"></a>
 </body>
 </html>

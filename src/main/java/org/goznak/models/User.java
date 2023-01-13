@@ -3,8 +3,10 @@ package org.goznak.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.goznak.PassChestApplication;
 import org.goznak.services.UserService;
 import org.goznak.utils.Roles;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 @Data
@@ -21,6 +23,8 @@ public class User {
     @Transient
     UserService userService;
     @Transient
+    Authentication authentication;
+    @Transient
     private String role;
     @Transient
     private String passwordConfirm;
@@ -35,6 +39,30 @@ public class User {
     }
     public boolean userExist(){
         return !isNullUser() && userService.findById(username) != null;
+    }
+    public boolean noDeleteUser(){
+        if(isNullUser() || authentication == null){
+            return false;
+        }
+        if(userService.getCurrentUser(authentication).getUsername().equals(username)){
+            return true;
+        }
+        for(String infinityUser: PassChestApplication.INFINITY_USERS){
+            if(infinityUser.equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean noEditUser(User oldUser){
+        if(isNullUser() || authentication == null){
+            return false;
+        }
+        String currentUser = userService.getCurrentUser(authentication).getUsername();
+        if(currentUser.equals(username) || PassChestApplication.INFINITY_USERS[1].equals(username)){
+            return !oldUser.getRole().equals(role) || oldUser.isEnabled() != enabled;
+        }
+        return PassChestApplication.INFINITY_USERS[0].equals(username);
     }
     private boolean isNullUser(){
         return password == null || passwordConfirm == null ||
