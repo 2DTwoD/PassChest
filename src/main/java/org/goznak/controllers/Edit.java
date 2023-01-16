@@ -1,7 +1,6 @@
 package org.goznak.controllers;
 
 import jakarta.validation.Valid;
-import org.goznak.PassChestApplication;
 import org.goznak.models.*;
 import org.goznak.models.System;
 import org.goznak.services.*;
@@ -14,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/edit")
@@ -39,7 +37,10 @@ public class Edit {
         this.passSliceService = passSliceService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
+    @GetMapping
+    public String edit(){
+        return "edit/index";
+    }
     @GetMapping("/system/{id}")
     public String editSystem(@PathVariable int id, Model model){
         model.addAttribute("system", systemService.findById(id));

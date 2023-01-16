@@ -5,6 +5,7 @@
     <title>Авторизация</title>
 </head>
 <body>
+<th:block th:replace="common/menu_header"></th:block>
 <form th:action="@{/login}" th:method="post">
     <div th:if="${param.error}" th:text="${session.error}" th:unless="${session == null}"></div>
         <label>
@@ -16,9 +17,13 @@
             Пароль: <input type="password" name="password">
         </label>
     </div>
+    <hr/>
     <div>
         <input type="submit" value="Авторизоваться">
     </div>
 </form>
+<hr/>
+<a th:href="@{/}"><input type="button" value="Назад"></a>
+<th:block th:replace="common/slip_tongue_footer"></th:block>
 </body>
 </html>

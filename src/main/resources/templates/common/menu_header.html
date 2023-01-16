@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu header</title>
+<!--    <link th:href="@{/css/common.css}" rel="stylesheet"/>-->
+</head>
+<body>
+    <div>Сундук с секретами</div>
+    <hr/>
+    <form th:method="post" th:action="@{/logout}">
+        <a th:href="@{/login}" sec:authorize="isAnonymous()">Авторизация</a>
+        <span sec:authentication="name" sec:authorize="isAuthenticated()"></span>
+        <input class="link-button" type="submit" value="(Выйти)" sec:authorize="isAuthenticated()"/>
+        <span sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"><a th:href="@{/search}">Поиск паролей</a></span>
+        <span sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"><a th:href="@{/edit}">Администрирование</a></span>
+    </form>
+    <hr/>
+</body>
+</html>

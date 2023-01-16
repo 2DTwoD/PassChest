@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 public class PassChestApplication {
-    final public static String[] INFINITY_USERS = {"Dmitry", "Гость"};
+    final public static String[] INFINITY_USERS = {"Демьяненко Д.С.", "Гость"};
     public static void main(String[] args) {
         SpringApplication.run(PassChestApplication.class, args);
     }

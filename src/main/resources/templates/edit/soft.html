@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Редактирование программы</title>
 </head>
 <body>
+<th:block th:replace="common/menu_header"></th:block>
 <div>Редактирование программы:</div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
@@ -27,10 +28,11 @@
   <input type="submit" value="Редактировать">
 </form>
 <hr/>
-<form th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
+<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
   <input type="submit" value="Удалить">
 </form>
-<hr/>
+<hr sec:authorize="hasRole('ROLE_ADMIN')"/>
 <a th:href="@{/search/{id}(id=${passSlice.subSystemId})}"><input type="button" value="Назад"></a>
+<th:block th:replace="common/slip_tongue_footer"></th:block>
 </body>
 </html>

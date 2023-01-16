@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+    <th:block th:replace="common/menu_header"></th:block>
+    <div><a th:href="@{/search/systems}"><button>Редактировать системы</button></a></div>
+    <hr/>
+    <div><a th:href="@{/search/sub_systems}"><button>Редактировать подсистемы</button></a></div>
+    <hr/>
+    <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/search/users}"><button>Редактировать пользователей</button></a></div>
+    <hr sec:authorize="hasRole('ROLE_ADMIN')"/>
+    <a th:href="@{/}"><input type="button" value="Назад"></a>
+    <th:block th:replace="common/slip_tongue_footer"></th:block>
+</body>
+</html>

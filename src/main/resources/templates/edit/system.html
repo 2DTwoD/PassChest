@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Редактирование системы</title>
 </head>
 <body>
+<th:block th:replace="common/menu_header"></th:block>
 <div>Редактировать систему:</div>
 <!--@thymesVar id="system" type="org.goznak.models.System"-->
 <form id="system" th:action="@{/edit/system/{id}(id=${system.id})}" th:object="${system}" th:method="patch" autocomplete="off">
@@ -16,15 +17,17 @@
         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
     </div>
     <div th:text="*{systemExist() == true} ? 'Система с таким названием уже есть': ''"></div>
+    <hr/>
     <div>
         <input type="submit" value="Редактировать">
     </div>
 </form>
-<form th:action="@{/edit/system/{id}(id=${system.id})}" th:method="delete">
-    <div>
-        <input type="submit" value="Удалить">
-    </div>
+<hr/>
+<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/system/{id}(id=${system.id})}" th:method="delete">
+    <input type="submit" value="Удалить">
 </form>
+<hr/>
 <a th:href="@{/search/systems}"><input type="button" value="Назад"></a>
+<th:block th:replace="common/slip_tongue_footer"></th:block>
 </body>
 </html>
