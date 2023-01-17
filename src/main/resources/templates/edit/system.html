@@ -23,7 +23,8 @@
     </div>
 </form>
 <hr/>
-<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/system/{id}(id=${system.id})}" th:method="delete">
+<!--sec:authorize="hasRole('ROLE_ADMIN')"-->
+<form th:action="@{/edit/system/{id}(id=${system.id})}" th:method="delete">
     <input type="submit" value="Удалить">
 </form>
 <hr/>

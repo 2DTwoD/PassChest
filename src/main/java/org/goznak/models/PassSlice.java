@@ -32,6 +32,9 @@ public class PassSlice {
     private String whoChange;
     @Column(name = "actual")
     private boolean actual;
+    @Column(name = "role")
+    @Size(min = 1, max = 100, message = "Роль пользователя должна содержать от 1 до 50 символов")
+    private String role;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sub_system_id")
     private SubSystem subSystem;
@@ -52,17 +55,26 @@ public class PassSlice {
         return String.format("PassSlice(System name:%s, SubSystem name: %s, login: %s, password: %s)", subSystem.getSystem().getName(),
                 subSystem.getName(), login, password);
     }
-    public boolean softExist(boolean fullCheck){
+    public boolean softExist(){
         if(passSliceService == null){
             return false;
         }
-        List<PassSlice> passSlices = passSliceService.findByName(softName);
-        boolean condition;
+        List<PassSlice> passSlices = passSliceService.findBySubSystemAndSoftName(subSystem, softName);
         for(PassSlice passSlice: passSlices){
-            condition = fullCheck? passSlice.getLogin().equals(login) && passSlice.getPassword().equals(password):
-                    passSlice.getLogin().equals(login);
-            if(condition){
+            if(passSlice.getId() != id && passSlice.isActual() && passSlice.getLogin().equals(login)){
                 return true;
+            }
+        }
+        return false;
+    }
+    public boolean noChange(){
+        if(passSliceService == null){
+            return false;
+        }
+        List<PassSlice> passSlices = passSliceService.findBySubSystemAndSoftName(subSystem, softName);
+        for(PassSlice passSlice: passSlices) {
+            if(passSlice.isActual()) {
+                return passSlice.getLogin().equals(login) && passSlice.getPassword().equals(password);
             }
         }
         return false;

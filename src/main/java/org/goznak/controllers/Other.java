@@ -35,7 +35,7 @@ public class Other {
         return "index";
     }
     @ResponseBody
-    @GetMapping("/get_pass{id}")
+    @GetMapping("/get_pass/{id}")
     String getPassword(@PathVariable long id){
         PassSlice passSlice = passSliceService.findById(id);
         return passSlice.getPassword();

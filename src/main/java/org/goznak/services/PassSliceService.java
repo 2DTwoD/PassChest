@@ -3,6 +3,7 @@ package org.goznak.services;
 import org.goznak.dao.*;
 import org.goznak.dao.SystemDAO;
 import org.goznak.models.PassSlice;
+import org.goznak.models.SubSystem;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,6 +29,12 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     @Override
     public List<PassSlice> findByName(String name) {
         return passSliceDAO.findPassSliceBySoftNameOrderBySoftNameAscLastChangeDesc(name);
+    }
+    public List<PassSlice> findBySubSystemAndSoftName(SubSystem subSystem, String name) {
+        return passSliceDAO.findPassSliceBySubSystemAndSoftNameOrderBySoftNameAscLastChangeDesc(subSystem, name);
+    }
+    public List<PassSlice> findBySoftNameAndRole(String softName, String role) {
+        return passSliceDAO.findPassSliceBySoftNameAndRoleOrderBySoftNameAscLastChangeDesc(softName, role);
     }
     @Override
     public void save(PassSlice passSlice) {

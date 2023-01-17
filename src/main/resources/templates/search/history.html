@@ -19,6 +19,7 @@
         <td>Программа</td>
         <td>Логин</td>
         <td>Пароль</td>
+        <td>Роль</td>
         <td>Действие</td>
         <td>Кто менял</td>
         <td>Дата и время</td>
@@ -27,12 +28,13 @@
         <td th:text="${passSlice.softName}">Программа</td>
         <td th:text="${passSlice.login}">Логин</td>
         <td th:id="'password' + ${passSlice.id}" th:text="${passSlice.password}">Пароль</td>
+        <td th:text="${passSlice.role}">Роль</td>
         <td><input class="showButton" th:id="${passSlice.id}" type="button" value="Показать пароль"/></td>
         <td th:text="${passSlice.whoChange}">Кто менял</td>
         <td th:text="${passSlice.lastChange}">Дата и время</td>
     </tr>
     <tr>
-        <td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td>
         <td><input id="showAllButton" type="button" value="Показать все пароли"/></td>
         <td></td><td></td>
     </tr>

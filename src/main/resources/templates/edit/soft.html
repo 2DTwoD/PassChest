@@ -8,11 +8,11 @@
 </head>
 <body>
 <th:block th:replace="common/menu_header"></th:block>
-<div>Редактирование программы:</div>
+<div th:text="${'Редактирование программы для системы' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
 <form id="passSlice" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:object="${passSlice}" th:method="patch" autocomplete="off">
-  <div th:text="${'Название программы: ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ', ' + passSlice.softName + ':'}"></div>
+  <div th:text="${'Название программы: ' + passSlice.softName}"></div>
   <div>
     <label for="login">Логин:</label>
     <input type="text" th:field="*{login}" id="login" placeholder="Логин">
@@ -23,16 +23,19 @@
     <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
   </div>
-  <div th:text="*{softExist(true) == true} ? 'Вы не внесли никаких изменений': ''"></div>
+  <div th:text="${'Роль пользователя: ' + passSlice.role}"></div>
+  <div th:text="*{noChange() == true} ? 'Вы не внесли никаких изменений': ''"></div>
+  <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
   <hr/>
   <input type="submit" value="Редактировать">
 </form>
 <hr/>
-<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
+<!--sec:authorize="hasRole('ROLE_ADMIN')"-->
+<form th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
   <input type="submit" value="Удалить">
 </form>
 <hr sec:authorize="hasRole('ROLE_ADMIN')"/>
-<a th:href="@{/search/{id}(id=${passSlice.subSystemId})}"><input type="button" value="Назад"></a>
+<a th:href="@{/search/{id}(id=${passSlice.subSystem.id})}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
 </body>
 </html>

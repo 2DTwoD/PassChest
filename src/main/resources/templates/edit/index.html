@@ -10,7 +10,8 @@
     <hr/>
     <div><a th:href="@{/search/sub_systems}"><button>Редактировать подсистемы</button></a></div>
     <hr/>
-    <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/search/users}"><button>Редактировать пользователей</button></a></div>
+<!--    sec:authorize="hasRole('ROLE_ADMIN')"-->
+    <div><a th:href="@{/search/users}"><button>Редактировать пользователей</button></a></div>
     <hr sec:authorize="hasRole('ROLE_ADMIN')"/>
     <a th:href="@{/}"><input type="button" value="Назад"></a>
     <th:block th:replace="common/slip_tongue_footer"></th:block>

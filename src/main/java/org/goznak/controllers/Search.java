@@ -105,7 +105,7 @@ public class Search {
         PassSlice passSlice = passSliceService.findById(id);
         model.addAttribute("subSystem", passSlice.getSubSystem());
         List<PassSlice> passSlices;
-        passSlices = passSliceService.findByName(passSlice.getSoftName());
+        passSlices = passSliceService.findBySoftNameAndRole(passSlice.getSoftName(), passSlice.getRole());
         starPassword(passSlices);
         return searchEngine(model, session, request, passSlices, "search/history", TF_HISTORY);
     }

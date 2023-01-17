@@ -34,6 +34,6 @@ function showPassword(buttonWithId, buttonWithText, showAllButton){
     }
 }
 async function getPassword(element){
-    return await fetch("/get_pass" + element.id).then(response => response.text());
+    return await fetch("/get_pass/" + element.id).then(response => response.text());
 }
 window.addEventListener("load", main);

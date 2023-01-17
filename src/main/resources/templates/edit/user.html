@@ -41,9 +41,7 @@
 </form>
 <hr/>
 <form th:action="@{/edit/user/{username}(username=${user.username})}" th:method="delete">
-    <div>
-        <input type="submit" value="Удалить">
-    </div>
+    <input type="submit" value="Удалить">
 </form>
 <hr/>
 <a th:href="@{/search/users}"><input type="button" value="Назад"></a>

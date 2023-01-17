@@ -109,10 +109,10 @@ public class Add {
         model.addAttribute("passSlice", passSlice);
         model.addAttribute("subSystemId", subSystemId);
         passSlice.setPassSliceService(passSliceService);
-        if(bindingResult.hasErrors() || passSlice.softExist(false)){
+        passSlice.setSubSystem(subSystemService.findById(subSystemId));
+        if(bindingResult.hasErrors() || passSlice.softExist()){
             return "add/soft";
         }
-        passSlice.setSubSystem(subSystemService.findById(subSystemId));
         passSlice.setLastChange(new Date());
         passSlice.setUser(userService.getCurrentUser(authentication));
         passSlice.setActual(true);

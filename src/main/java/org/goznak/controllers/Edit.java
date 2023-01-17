@@ -153,22 +153,26 @@ public class Edit {
     @PatchMapping("/soft/{id}")
     public String updateSoft(@ModelAttribute @Valid PassSlice passSlice, BindingResult bindingResult,
                              Model model, @PathVariable long id, Authentication authentication){
+        PassSlice oldPassSlice = passSliceService.findById(id);
+        SubSystem subSystem = oldPassSlice.getSubSystem();
         model.addAttribute("passSLice", passSlice);
         passSlice.setPassSliceService(passSliceService);
-        if(bindingResult.hasErrors() || passSlice.softExist(true)){
+        passSlice.setSoftName(oldPassSlice.getSoftName());
+        passSlice.setSubSystem(subSystem);
+        passSlice.setRole(oldPassSlice.getRole());
+        if(bindingResult.hasErrors() || passSlice.softExist() || passSlice.noChange()){
             return "edit/soft";
         }
-        PassSlice oldPassSlice = passSliceService.findById(id);
         PassSlice newPassSlice = new PassSlice();
-        oldPassSlice.setActual(false);
-        SubSystem subSystem = oldPassSlice.getSubSystem();
         newPassSlice.setSubSystem(subSystem);
-        newPassSlice.setSoftName(oldPassSlice.getSoftName());
         newPassSlice.setLogin(passSlice.getLogin());
         newPassSlice.setPassword(passSlice.getPassword());
         newPassSlice.setLastChange(new Date());
         newPassSlice.setUser(userService.getCurrentUser(authentication));
+        newPassSlice.setSoftName(oldPassSlice.getSoftName());
+        newPassSlice.setRole(oldPassSlice.getRole());
         newPassSlice.setActual(true);
+        oldPassSlice.setActual(false);
         passSliceService.save(oldPassSlice);
         passSliceService.save(newPassSlice);
         return "redirect:/search/" + subSystem.getId();

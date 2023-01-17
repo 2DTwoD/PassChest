@@ -27,7 +27,12 @@
         <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     </div>
-    <div th:text="*{softExist(false) == true} ? 'Программа с таким логином уже существует': ''"></div>
+    <div>
+        <label for="role">Роль пользователя:</label>
+        <input type="text" th:field="*{role}" id="role" placeholder="Роль пользователя">
+        <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+    </div>
+    <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
     <hr/>
     <input type="submit" value="Добавить">
 </form>

@@ -12,8 +12,10 @@
         <a th:href="@{/login}" sec:authorize="isAnonymous()">Авторизация</a>
         <span sec:authentication="name" sec:authorize="isAuthenticated()"></span>
         <input class="link-button" type="submit" value="(Выйти)" sec:authorize="isAuthenticated()"/>
-        <span sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"><a th:href="@{/search}">Поиск паролей</a></span>
-        <span sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"><a th:href="@{/edit}">Администрирование</a></span>
+<!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_GUEST')"-->
+        <span><a th:href="@{/search}">Поиск паролей</a></span>
+<!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"-->
+        <span><a th:href="@{/edit}">Администрирование</a></span>
     </form>
     <hr/>
 </body>
