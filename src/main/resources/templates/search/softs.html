@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:text="${subSystem.system.name + ', ' + subSystem.name}"></title>
-    <script type="text/javascript" th:src="@{/js/getRequest.js}"></script>
+    <script type="text/javascript" th:src="@{/js/get_request.js}"></script>
     <script type="text/javascript" th:src="@{/js/page_script.js}"></script>
     <script type="text/javascript" th:src="@{/js/filter_script.js}"></script>
     <script type="text/javascript" th:src="@{/js/show_script.js}"></script>
@@ -23,7 +23,7 @@
         <td>Роль</td>
         <td>Действие</td>
         <td>Действие</td>
-        <td>Действие</td>
+        <td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')">Действие</td>
     </tr>
     <tr th:each="passSlice: ${targets}" th:if="${passSlice.actual == true}">
         <td th:text="${passSlice.softName}">Программа</td>
@@ -32,16 +32,16 @@
         <td th:text="${passSlice.role}">Роль</td>
         <td><input class="showButton" th:id="${passSlice.id}" type="button" value="Показать пароль"/></td>
         <td><a th:href="@{/search/history/{id}(id=${passSlice.id})}"><input type="button" value="История изменений"/></a></td>
-        <td><a th:href="@{/edit/soft/{id}(id=${passSlice.id})}"><input type="button" value="Правка"/></a></td>
+        <td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"><a th:href="@{/edit/soft/{id}(id=${passSlice.id})}"><input type="button" value="Правка"/></a></td>
     </tr>
     <tr>
         <td></td><td></td><td></td><td></td>
         <td><input id="showAllButton" type="button" value="Показать все пароли"/></td>
-        <td></td><td></td>
+        <td></td><td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"></td>
     </tr>
 </table>
 <hr/>
-<a th:href="@{/add/soft/{id}(id=${subSystem.id})}"><input type="button" value="Добавить"/></a>
+<a sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')" th:href="@{/add/soft/{id}(id=${subSystem.id})}"><input type="button" value="Добавить"/></a>
 <th:block th:replace="common/page_footer"></th:block>
 <a th:href="@{/search}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>

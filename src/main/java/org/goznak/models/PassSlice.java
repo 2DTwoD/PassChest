@@ -21,7 +21,7 @@ public class PassSlice {
     @Size(min = 1, max = 100, message = "Название программы должно содержать от 1 до 100 символов")
     private String softName;
     @Column(name = "login")
-    @Size(min = 0, max = 50, message = "Логин должен содержать от 0 до 50 символов")
+    @Size(min = 1, max = 50, message = "Логин должен содержать от 1 до 50 символов")
     private String login;
     @Column(name = "password")
     @Size(min = 0, max = 100, message = "Пароль должен содержать от 0 до 100 символов")
@@ -35,12 +35,17 @@ public class PassSlice {
     @Column(name = "role")
     @Size(min = 1, max = 100, message = "Роль пользователя должна содержать от 1 до 50 символов")
     private String role;
+    @Column(name = "credentials_id", insertable=false, updatable=false)
+    private Integer credentialsId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sub_system_id")
     private SubSystem subSystem;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "who_change")
     private User user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "credentials_id")
+    private CredentialsIds credentialsIds;
     @Transient
     private PassSliceService passSliceService;
     @Override
@@ -74,7 +79,8 @@ public class PassSlice {
         List<PassSlice> passSlices = passSliceService.findBySubSystemAndSoftName(subSystem, softName);
         for(PassSlice passSlice: passSlices) {
             if(passSlice.isActual()) {
-                return passSlice.getLogin().equals(login) && passSlice.getPassword().equals(password);
+                return passSlice.getLogin().equals(login) && passSlice.getPassword().equals(password) &&
+                        passSlice.getRole().equals(role);
             }
         }
         return false;

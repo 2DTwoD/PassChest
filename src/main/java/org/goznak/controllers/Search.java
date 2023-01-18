@@ -16,12 +16,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/search")
 public class Search {
-    private final int TF_USER = 0;
-    private final int TF_SYSTEM = 1;
-    private final int TF_SUB_SYSTEM = 2;
-    private final int TF_MAIN = 3;
-    private final int TF_SOFT = 4;
-    private final int TF_HISTORY = 5;
+    private final int USER = 0;
+    private final int SYSTEM = 1;
+    private final int SUB_SYSTEM = 2;
+    private final int MAIN = 3;
+    private final int SOFT = 4;
+    private final int HISTORY = 5;
     private final int NUM_OF_VISIBLE_ROWS = 15;
     final
     UserService userService;
@@ -41,56 +41,57 @@ public class Search {
 
     @GetMapping()
     public String search(Model model, HttpSession session, HttpServletRequest request){
-        String filter = getFilter(session, request, TF_MAIN);
+        resetParameters(session, request, MAIN);
+        String filter = getFilter(session, request, MAIN);
         List<SubSystem> subSystems;
         if(filter == null) {
             subSystems = subSystemService.findAll();
         } else {
             subSystems = subSystemService.findByFilter(filter);
         }
-        return searchEngine(model, session, request, subSystems, "search/index", TF_MAIN);
+        return searchEngine(model, session, request, subSystems, "search/index", MAIN);
     }
     @GetMapping("/users")
     public String userSearch(Model model, HttpSession session, HttpServletRequest request){
-        String filter = getFilter(session, request, TF_USER);
+        resetParameters(session, request, USER);
+        String filter = getFilter(session, request, USER);
         List<User> users;
         if(filter == null) {
             users = userService.findAll();
         } else {
             users = userService.findByFilter(filter);
         }
-        return searchEngine(model, session, request, users, "search/users", TF_USER);
+        return searchEngine(model, session, request, users, "search/users", USER);
     }
     @GetMapping("/systems")
     public String systemSearch(Model model, HttpSession session, HttpServletRequest request){
-        String filter = getFilter(session, request, TF_SYSTEM);
+        resetParameters(session, request, SYSTEM);
+        String filter = getFilter(session, request, SYSTEM);
         List<System> systems;
         if(filter == null) {
             systems = systemService.findAll();
         } else {
             systems = systemService.findByFilter(filter);
         }
-        return searchEngine(model, session, request, systems, "search/systems", TF_SYSTEM);
+        return searchEngine(model, session, request, systems, "search/systems", SYSTEM);
     }
     @GetMapping("/sub_systems")
     public String subSystemSearch(Model model, HttpSession session, HttpServletRequest request){
-        String filter = getFilter(session, request, TF_SUB_SYSTEM);
+        resetParameters(session, request, SUB_SYSTEM);
+        String filter = getFilter(session, request, SUB_SYSTEM);
         List<SubSystem> subSystems;
         if(filter == null) {
             subSystems = subSystemService.findAll();
         } else {
             subSystems = subSystemService.findByFilter(filter);
         }
-        return searchEngine(model, session, request, subSystems, "search/sub_systems", TF_SUB_SYSTEM);
+        return searchEngine(model, session, request, subSystems, "search/sub_systems", SUB_SYSTEM);
     }
     @GetMapping("/{id}")
     public String softSearch(Model model, HttpSession session, HttpServletRequest request, @PathVariable int id){
+        resetParameters(session, request, SOFT);
         model.addAttribute("subSystem", subSystemService.findById(id));
-        if(request.getParameter("resetParameters") != null){
-            session.setAttribute("filter" + TF_SOFT, null);
-            session.setAttribute("page" + TF_SOFT, 0);
-        }
-        String filter = getFilter(session, request, TF_SOFT);
+        String filter = getFilter(session, request, SOFT);
         List<PassSlice> passSlices;
         if(filter == null) {
             passSlices = passSliceService.findBySubSystemId(id);
@@ -98,20 +99,27 @@ public class Search {
             passSlices = passSliceService.findByFilter(filter, id);
         }
         starPassword(passSlices);
-        return searchEngine(model, session, request, passSlices, "search/softs", TF_SOFT);
+        return searchEngine(model, session, request, passSlices, "search/softs", SOFT);
     }
     @GetMapping("/history/{id}")
     public String softHistorySearch(Model model, HttpSession session, HttpServletRequest request, @PathVariable long id){
+        resetParameters(session, request, HISTORY);
         PassSlice passSlice = passSliceService.findById(id);
         model.addAttribute("subSystem", passSlice.getSubSystem());
         List<PassSlice> passSlices;
-        passSlices = passSliceService.findBySoftNameAndRole(passSlice.getSoftName(), passSlice.getRole());
+        passSlices = passSliceService.findBySoftNameAndRole(passSlice.getSoftName(), passSlice.getCredentialsIds());
         starPassword(passSlices);
-        return searchEngine(model, session, request, passSlices, "search/history", TF_HISTORY);
+        return searchEngine(model, session, request, passSlices, "search/history", HISTORY);
     }
     private void starPassword(List<PassSlice> list){
         for(PassSlice passSlice: list){
             passSlice.setPassword("******");
+        }
+    }
+    private void resetParameters(HttpSession session, HttpServletRequest request, int pageId){
+        if(request.getParameter("resetParameters") != null){
+            session.setAttribute("filter" + pageId, null);
+            session.setAttribute("page" + pageId, 0);
         }
     }
     private String getFilter(HttpSession session, HttpServletRequest request, int pageId){

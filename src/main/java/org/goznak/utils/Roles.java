@@ -8,6 +8,12 @@ public enum Roles {
     ROLE_ADMIN("Администратор"),
     ROLE_USER("Пользователь"),
     ROLE_GUEST("Гость");
+    public static final String[] rolesForCredentials = {
+            "Гость",
+            "Пользователь",
+            "Администратор",
+            "Супер пользователь"
+    };
     private final String name;
 
     Roles(String name) {

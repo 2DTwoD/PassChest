@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 @Component
 public class AuthorityService extends CommonService<Authority, String> {
-    public AuthorityService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO) {
-        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO);
+    public AuthorityService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO, CredentialsIdsDAO credentialsIdsDAO) {
+        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO, credentialsIdsDAO);
     }
 
     @Override

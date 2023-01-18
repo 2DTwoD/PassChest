@@ -2,15 +2,14 @@ package org.goznak.services;
 
 import org.goznak.dao.*;
 import org.goznak.models.SubSystem;
-import org.goznak.models.System;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
 public class SubSystemService extends CommonService<SubSystem, Integer> {
-    public SubSystemService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO) {
-        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO);
+    public SubSystemService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO, CredentialsIdsDAO credentialsIdsDAO) {
+        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO, credentialsIdsDAO);
     }
     @Override
     public List<SubSystem> findAll() {

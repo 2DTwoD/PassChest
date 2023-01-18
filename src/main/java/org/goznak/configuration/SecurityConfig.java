@@ -45,7 +45,7 @@ public class SecurityConfig {
 
                                 .requestMatchers("/edit", "/search/systems", "/add/system", "/edit/system/*",
                                         "/search/sub_systems", "/add/sub_system", "/edit/sub_system/*",
-                                        "/edit/soft/*", "/add/soft/*", "/search/*")
+                                        "/edit/soft/*", "/add/soft/*")
                                 .hasAnyRole("ADMIN", "USER")
 
                                 .requestMatchers(HttpMethod.PATCH)
@@ -54,7 +54,7 @@ public class SecurityConfig {
                                 .requestMatchers("/search", "/search/*", "/search/history/*", "/get_pass/*", "/css/**", "/js/**")
                                 .hasAnyRole("ADMIN", "USER", "GUEST")
 
-                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/*").permitAll()
                 )
                 .formLogin(form -> form.
                         loginPage("/login")

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Component
 public class TongueSlipInterceptor implements HandlerInterceptor {
-    private final String[] tongueSlips = {
+    private static final String[] tongueSlips = {
                 "Жизнь отдавай, а тайны не выдавай",
                 "Кто открывает тайну, тот нарушает верность",
                 "Тайное слово в своих устах держи",

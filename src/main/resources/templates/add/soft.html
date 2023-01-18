@@ -8,10 +8,10 @@
 </head>
 <body>
 <th:block th:replace="common/menu_header"></th:block>
-<div>Добавление программы:</div>
+<div th:text="${'Добавление программы для системы ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
-<form id="passSlice" th:action="@{/add/soft/{id}(id=${subSystemId})}" th:object="${passSlice}" th:method="post" autocomplete="off">
+<form id="passSlice" th:action="@{/add/soft/{id}(id=*{subSystem.id})}" th:object="${passSlice}" th:method="post" autocomplete="off">
     <div>
         <label for="softName">Название программы:</label>
         <input id="softName" th:field="*{softName}"  placeholder="Название программы">
@@ -29,7 +29,10 @@
     </div>
     <div>
         <label for="role">Роль пользователя:</label>
-        <input type="text" th:field="*{role}" id="role" placeholder="Роль пользователя">
+        <input list="roleList" type="text" th:field="*{role}" id="role" placeholder="Роль пользователя">
+        <datalist id="roleList" placeholder="Роль пользователя">
+            <option th:each="role: ${rolesForCredentials}" th:text="${role}"></option>
+        </datalist>
         <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
     </div>
     <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
@@ -37,7 +40,7 @@
     <input type="submit" value="Добавить">
 </form>
 <hr/>
-<a th:href="@{/search/{id}(id=${subSystemId})}"><input type="button" value="Назад"></a>
+<a th:href="@{/search/{id}(id=${passSlice.subSystem.id})}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
 </body>
 </html>

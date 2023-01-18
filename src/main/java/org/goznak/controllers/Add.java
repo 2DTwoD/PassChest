@@ -1,10 +1,8 @@
 package org.goznak.controllers;
 
 import jakarta.validation.Valid;
-import org.goznak.models.PassSlice;
-import org.goznak.models.SubSystem;
+import org.goznak.models.*;
 import org.goznak.models.System;
-import org.goznak.models.User;
 import org.goznak.services.*;
 import org.goznak.utils.Roles;
 import org.springframework.security.core.Authentication;
@@ -30,14 +28,17 @@ public class Add {
     final
     AuthorityService authorityService;
     final
+    CredentialsIdsService credentialsIdsService;
+    final
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Add(UserService userService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, AuthorityService authorityService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public Add(UserService userService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, AuthorityService authorityService, CredentialsIdsService credentialsIdsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.passSliceService = passSliceService;
         this.subSystemService = subSystemService;
         this.authorityService = authorityService;
         this.userService = userService;
         this.systemService = systemService;
+        this.credentialsIdsService = credentialsIdsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -100,14 +101,16 @@ public class Add {
     @GetMapping("/soft/{subSystemId}")
     public String addSoft(Model model, @PathVariable int subSystemId){
         PassSlice passSlice = new PassSlice();
-        model.addAttribute("subSystemId", subSystemId);
+        passSlice.setSubSystem(subSystemService.findById(subSystemId));
         model.addAttribute("passSlice", passSlice);
+        model.addAttribute("rolesForCredentials", Roles.rolesForCredentials);
         return "add/soft";
     }
     @PostMapping("/soft/{subSystemId}")
     public String newSoft(@ModelAttribute @Valid PassSlice passSlice, BindingResult bindingResult, Model model, @PathVariable int subSystemId, Authentication authentication){
         model.addAttribute("passSlice", passSlice);
         model.addAttribute("subSystemId", subSystemId);
+        model.addAttribute("rolesForCredentials", Roles.rolesForCredentials);
         passSlice.setPassSliceService(passSliceService);
         passSlice.setSubSystem(subSystemService.findById(subSystemId));
         if(bindingResult.hasErrors() || passSlice.softExist()){
@@ -116,6 +119,9 @@ public class Add {
         passSlice.setLastChange(new Date());
         passSlice.setUser(userService.getCurrentUser(authentication));
         passSlice.setActual(true);
+        CredentialsIds credentialsIds = new CredentialsIds();
+        credentialsIdsService.save(credentialsIds);
+        passSlice.setCredentialsIds(credentialsIds);
         passSliceService.save(passSlice);
         return "redirect:/search/" + subSystemId;
     }

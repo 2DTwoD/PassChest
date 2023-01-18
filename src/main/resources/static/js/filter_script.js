@@ -1,9 +1,14 @@
 function main(){
     const filterText = document.getElementById("filterText");
-    const filterButton = document.getElementById("filterButton");
+    const searchButton = document.getElementById("searchButton");
+    const resetButton = document.getElementById("resetButton");
     const pars = new Map();
-    filterButton.addEventListener("click", () => {
+    searchButton.addEventListener("click", () => {
         pars.set("filter", filterText.value);
+        location.href = getGetRequest(location.origin + location.pathname, pars);
+    });
+    resetButton.addEventListener("click", () => {
+        pars.set("resetParameters", true);
         location.href = getGetRequest(location.origin + location.pathname, pars);
     });
 }

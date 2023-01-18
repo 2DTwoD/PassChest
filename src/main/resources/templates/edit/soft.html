@@ -8,7 +8,7 @@
 </head>
 <body>
 <th:block th:replace="common/menu_header"></th:block>
-<div th:text="${'Редактирование программы для системы' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
+<div th:text="${'Редактирование программы для системы ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
 <form id="passSlice" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:object="${passSlice}" th:method="patch" autocomplete="off">
@@ -23,15 +23,21 @@
     <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
   </div>
-  <div th:text="${'Роль пользователя: ' + passSlice.role}"></div>
+  <div>
+    <label for="role">Роль пользователя:</label>
+    <input list="roleList" type="text" th:field="*{role}" id="role" placeholder="Роль пользователя">
+    <datalist id="roleList" placeholder="Роль пользователя">
+      <option th:each="role: ${rolesForCredentials}" th:text="${role}"></option>
+    </datalist>
+    <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+  </div>
   <div th:text="*{noChange() == true} ? 'Вы не внесли никаких изменений': ''"></div>
   <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
   <hr/>
   <input type="submit" value="Редактировать">
 </form>
 <hr/>
-<!--sec:authorize="hasRole('ROLE_ADMIN')"-->
-<form th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
+<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
   <input type="submit" value="Удалить">
 </form>
 <hr sec:authorize="hasRole('ROLE_ADMIN')"/>

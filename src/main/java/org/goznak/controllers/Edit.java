@@ -148,6 +148,7 @@ public class Edit {
     public String editSoft(@PathVariable long id, Model model){
         PassSlice passSlice = passSliceService.findById(id);
         model.addAttribute("passSlice", passSlice);
+        model.addAttribute("rolesForCredentials", Roles.rolesForCredentials);
         return "edit/soft";
     }
     @PatchMapping("/soft/{id}")
@@ -156,10 +157,10 @@ public class Edit {
         PassSlice oldPassSlice = passSliceService.findById(id);
         SubSystem subSystem = oldPassSlice.getSubSystem();
         model.addAttribute("passSLice", passSlice);
+        model.addAttribute("rolesForCredentials", Roles.rolesForCredentials);
         passSlice.setPassSliceService(passSliceService);
         passSlice.setSoftName(oldPassSlice.getSoftName());
         passSlice.setSubSystem(subSystem);
-        passSlice.setRole(oldPassSlice.getRole());
         if(bindingResult.hasErrors() || passSlice.softExist() || passSlice.noChange()){
             return "edit/soft";
         }
@@ -170,8 +171,9 @@ public class Edit {
         newPassSlice.setLastChange(new Date());
         newPassSlice.setUser(userService.getCurrentUser(authentication));
         newPassSlice.setSoftName(oldPassSlice.getSoftName());
-        newPassSlice.setRole(oldPassSlice.getRole());
+        newPassSlice.setRole(passSlice.getRole());
         newPassSlice.setActual(true);
+        newPassSlice.setCredentialsIds(oldPassSlice.getCredentialsIds());
         oldPassSlice.setActual(false);
         passSliceService.save(oldPassSlice);
         passSliceService.save(newPassSlice);

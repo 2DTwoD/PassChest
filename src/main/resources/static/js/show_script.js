@@ -1,36 +1,46 @@
 function main(){
+    const hideAllText = "Скрыть все пароли";
+    const showAllText = "Показать все пароли";
+    const hideCurrentText = "Скрыть пароль";
+    const showCurrentText = "Показать пароль";
+    const secretTemplate= "******";
     const showButtons = document.getElementsByClassName("showButton");
     const showAllButton = document.getElementById("showAllButton");
     for(let button of showButtons){
         button.addEventListener("click", e => {
-            showPassword(e.target, e.target, showAllButton);
-        })
+            showPassword(e.target, e.target, showAllButton, hideAllText, hideCurrentText, showCurrentText, secretTemplate);
+            for (let button of showButtons) {
+                if (button.value[0] !== showAllText[0]) {
+                    return;
+                }
+            }
+            showAllButton.value = showAllText;
+        });
     }
     if(showAllButton !== null){
         showAllButton.addEventListener("click", () => {
             for(let button of showButtons) {
-                showPassword(button, showAllButton, showAllButton);
+                showPassword(button, showAllButton, showAllButton, hideAllText, hideCurrentText, showCurrentText, secretTemplate);
             }
-            if(showAllButton.value[0] === 'П'){
-                showAllButton.value = "Скрыть все пароли";
+            if(showAllButton.value[0] === showAllText[0]){
+                showAllButton.value = hideAllText;
             } else {
-                showAllButton.value = "Показать все пароли";
+                showAllButton.value = showAllText;
             }
         });
     }
 }
-function showPassword(buttonWithId, buttonWithText, showAllButton){
+function showPassword(buttonWithId, buttonWithText, showAllButton, hideAllText, hideCurrentText, showCurrentText, secretTemplate){
     const passwordField = document.getElementById("password" + buttonWithId.id)
-    if(buttonWithText.value[0] === 'П') {
-        const passwordPromise = getPassword(buttonWithId);
-        passwordPromise.then(password => {
+    if(buttonWithText.value[0] === showCurrentText[0]) {
+        getPassword(buttonWithId).then(password => {
             passwordField.textContent = password;
-            buttonWithId.value = "Скрыть пароль";
-            showAllButton.value = "Скрыть все пароли";
+            buttonWithId.value = hideCurrentText;
+            showAllButton.value = hideAllText;
         });
     } else {
-        passwordField.textContent = "******";
-        buttonWithId.value = "Показать пароль";
+        passwordField.textContent = secretTemplate;
+        buttonWithId.value = showCurrentText;
     }
 }
 async function getPassword(element){

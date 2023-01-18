@@ -23,11 +23,10 @@
     </div>
 </form>
 <hr/>
-<!--sec:authorize="hasRole('ROLE_ADMIN')"-->
-<form th:action="@{/edit/system/{id}(id=${system.id})}" th:method="delete">
+<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/system/{id}(id=${system.id})}" th:method="delete">
     <input type="submit" value="Удалить">
 </form>
-<hr/>
+<hr sec:authorize="hasRole('ROLE_ADMIN')"/>
 <a th:href="@{/search/systems}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
 </body>

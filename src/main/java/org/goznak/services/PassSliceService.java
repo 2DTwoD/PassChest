@@ -2,6 +2,7 @@ package org.goznak.services;
 
 import org.goznak.dao.*;
 import org.goznak.dao.SystemDAO;
+import org.goznak.models.CredentialsIds;
 import org.goznak.models.PassSlice;
 import org.goznak.models.SubSystem;
 import org.springframework.stereotype.Component;
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 @Component
 public class PassSliceService extends CommonService<PassSlice, Long> {
-    public PassSliceService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO) {
-        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO);
+    public PassSliceService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO, CredentialsIdsDAO credentialsIdsDAO) {
+        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO, credentialsIdsDAO);
     }
     @Override
     public List<PassSlice> findAll() {
@@ -33,8 +34,8 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     public List<PassSlice> findBySubSystemAndSoftName(SubSystem subSystem, String name) {
         return passSliceDAO.findPassSliceBySubSystemAndSoftNameOrderBySoftNameAscLastChangeDesc(subSystem, name);
     }
-    public List<PassSlice> findBySoftNameAndRole(String softName, String role) {
-        return passSliceDAO.findPassSliceBySoftNameAndRoleOrderBySoftNameAscLastChangeDesc(softName, role);
+    public List<PassSlice> findBySoftNameAndRole(String softName, CredentialsIds credentialsIds) {
+        return passSliceDAO.findPassSliceBySoftNameAndCredentialsIdsOrderBySoftNameAscLastChangeDesc(softName, credentialsIds);
     }
     @Override
     public void save(PassSlice passSlice) {
@@ -51,7 +52,7 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     public List<PassSlice> findByFilter(String filter, int id) {
         String[] splitFilterArray = filter.split(" ");
         ArrayList<PassSlice> result = new ArrayList<>();
-        List<PassSlice> passSlices = passSliceDAO.findPassSliceBySubSystemIdAndActualOrderBySoftName(id, true);
+        List<PassSlice> passSlices = passSliceDAO.findPassSliceBySubSystemIdAndActualOrderBySoftNameAscLoginAsc(id, true);
         for(PassSlice passSlice: passSlices){
             for(String splitFilter: splitFilterArray) {
                 splitFilter = splitFilter.toLowerCase();
@@ -65,7 +66,7 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
         return result;
     }
     public List<PassSlice> findBySubSystemId(Integer id) {
-        return passSliceDAO.findPassSliceBySubSystemIdAndActualOrderBySoftName(id, true);
+        return passSliceDAO.findPassSliceBySubSystemIdAndActualOrderBySoftNameAscLoginAsc(id, true);
     }
     public void deleteAll(String softName, int id){
         passSliceDAO.deleteBySoftNameAndSubSystemId(softName, id);

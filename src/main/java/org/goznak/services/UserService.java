@@ -1,10 +1,7 @@
 package org.goznak.services;
 
 import org.goznak.dao.*;
-import org.goznak.models.Authority;
-import org.goznak.models.System;
 import org.goznak.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +10,8 @@ import java.util.List;
 @Component
 public class UserService extends CommonService<User, String>{
 
-    public UserService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO) {
-        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO);
+    public UserService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO, CredentialsIdsDAO credentialsIdsDAO) {
+        super(authorityDAO, passSliceDAO, subSystemDAO, systemDAO, userDAO, credentialsIdsDAO);
     }
 
     @Override

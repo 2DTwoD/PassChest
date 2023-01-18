@@ -2,6 +2,7 @@ package org.goznak.dao;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Size;
+import org.goznak.models.CredentialsIds;
 import org.goznak.models.PassSlice;
 import org.goznak.models.SubSystem;
 import org.springframework.data.jpa.repository.Query;
@@ -13,9 +14,9 @@ import java.util.List;
 public interface PassSliceDAO extends CrudRepository<PassSlice, Long> {
 
     List<PassSlice> findAllByOrderById();
-    List<PassSlice> findPassSliceBySubSystemIdAndActualOrderBySoftName(Integer id, boolean actual);
+    List<PassSlice> findPassSliceBySubSystemIdAndActualOrderBySoftNameAscLoginAsc(Integer id, boolean actual);
     List<PassSlice> findPassSliceBySoftNameOrderBySoftNameAscLastChangeDesc(String softName);
-    List<PassSlice> findPassSliceBySoftNameAndRoleOrderBySoftNameAscLastChangeDesc(String softName, String role);
+    List<PassSlice> findPassSliceBySoftNameAndCredentialsIdsOrderBySoftNameAscLastChangeDesc(String softName, CredentialsIds credentialsIds);
     List<PassSlice> findPassSliceBySubSystemAndSoftNameOrderBySoftNameAscLastChangeDesc(SubSystem subSystem ,String softName);
     List<PassSlice> findBySoftNameContainsIgnoreCaseOrderBySoftName(String filter);
     @Transactional

@@ -2,10 +2,7 @@ package org.goznak.services;
 
 import org.goznak.dao.*;
 import org.goznak.dao.SystemDAO;
-import org.goznak.models.SubSystem;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 public abstract class CommonService<T, ID> {
     final
@@ -18,12 +15,15 @@ public abstract class CommonService<T, ID> {
     SystemDAO systemDAO;
     final
     UserDAO userDAO;
-    public CommonService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO) {
+    final
+    CredentialsIdsDAO credentialsIdsDAO;
+    public CommonService(AuthorityDAO authorityDAO, PassSliceDAO passSliceDAO, SubSystemDAO subSystemDAO, SystemDAO systemDAO, UserDAO userDAO, CredentialsIdsDAO credentialsIdsDAO) {
         this.authorityDAO = authorityDAO;
         this.passSliceDAO = passSliceDAO;
         this.subSystemDAO = subSystemDAO;
         this.systemDAO = systemDAO;
         this.userDAO = userDAO;
+        this.credentialsIdsDAO = credentialsIdsDAO;
     }
 
     abstract public List<T> findAll();

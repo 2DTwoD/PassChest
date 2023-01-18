@@ -8,7 +8,8 @@
 <hr/>
 <div>
     <input th:id="filterText" th:type="text" th:value="${session.filter}"/>
-    <input th:id="filterButton" th:type="button" value="Поиск"/>
+    <input th:id="searchButton" th:type="button" value="Поиск"/>
+    <input th:id="resetButton" th:type="button" value="Сброс фильтра"/>
 </div>
 <div th:if="${!#strings.isEmpty(session.filter)}" th:text="${'Результат поиска по запросу ''' + session.filter + ''':'}"></div>
 <hr/>
