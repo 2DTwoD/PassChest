@@ -24,7 +24,7 @@ public class PassSlice {
     @Size(min = 1, max = 50, message = "Логин должен содержать от 1 до 50 символов")
     private String login;
     @Column(name = "password")
-    @Size(min = 0, max = 100, message = "Пароль должен содержать от 0 до 100 символов")
+    @Size(max = 200, message = "Пароль должен содержать от 0 до 200 символов")
     private String password;
     @Column(name = "last_change")
     private Date lastChange;

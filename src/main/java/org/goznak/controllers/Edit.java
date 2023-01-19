@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.goznak.models.*;
 import org.goznak.models.System;
 import org.goznak.services.*;
+import org.goznak.utils.CipherUtil;
 import org.goznak.utils.Roles;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidKeyException;
 import java.util.Date;
 
 @Controller
@@ -29,13 +33,16 @@ public class Edit {
     PassSliceService passSliceService;
     final
     BCryptPasswordEncoder bCryptPasswordEncoder;
-    public Edit(UserService userService, AuthorityService authorityService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    final
+    CipherUtil cipherUtil;
+    public Edit(UserService userService, AuthorityService authorityService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, BCryptPasswordEncoder bCryptPasswordEncoder, CipherUtil cipherUtil) {
         this.userService = userService;
         this.authorityService = authorityService;
         this.systemService = systemService;
         this.subSystemService = subSystemService;
         this.passSliceService = passSliceService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.cipherUtil = cipherUtil;
     }
     @GetMapping
     public String edit(){
@@ -145,15 +152,16 @@ public class Edit {
         return "redirect:/search/users";
     }
     @GetMapping("/soft/{id}")
-    public String editSoft(@PathVariable long id, Model model){
+    public String editSoft(@PathVariable long id, Model model) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         PassSlice passSlice = passSliceService.findById(id);
+        passSlice.setPassword(cipherUtil.decryptPass(passSlice.getPassword()));
         model.addAttribute("passSlice", passSlice);
         model.addAttribute("rolesForCredentials", Roles.rolesForCredentials);
         return "edit/soft";
     }
     @PatchMapping("/soft/{id}")
     public String updateSoft(@ModelAttribute @Valid PassSlice passSlice, BindingResult bindingResult,
-                             Model model, @PathVariable long id, Authentication authentication){
+                             Model model, @PathVariable long id, Authentication authentication) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         PassSlice oldPassSlice = passSliceService.findById(id);
         SubSystem subSystem = oldPassSlice.getSubSystem();
         model.addAttribute("passSLice", passSlice);
@@ -167,7 +175,7 @@ public class Edit {
         PassSlice newPassSlice = new PassSlice();
         newPassSlice.setSubSystem(subSystem);
         newPassSlice.setLogin(passSlice.getLogin());
-        newPassSlice.setPassword(passSlice.getPassword());
+        newPassSlice.setPassword(cipherUtil.encryptPass(passSlice.getPassword()));
         newPassSlice.setLastChange(new Date());
         newPassSlice.setUser(userService.getCurrentUser(authentication));
         newPassSlice.setSoftName(oldPassSlice.getSoftName());

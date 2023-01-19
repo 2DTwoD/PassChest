@@ -2,21 +2,27 @@ package org.goznak.controllers;
 
 import org.goznak.models.PassSlice;
 import org.goznak.services.PassSliceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.goznak.utils.CipherUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidKeyException;
 import java.util.Calendar;
 
 @Controller
 public class Other {
     final
     PassSliceService passSliceService;
-    public Other(PassSliceService passSliceService) {
+    final
+    CipherUtil cipherUtil;
+    public Other(PassSliceService passSliceService, CipherUtil cipherUtil) {
         this.passSliceService = passSliceService;
+        this.cipherUtil = cipherUtil;
     }
 
     @GetMapping("/")
@@ -36,8 +42,8 @@ public class Other {
     }
     @ResponseBody
     @GetMapping("/get_pass/{id}")
-    String getPassword(@PathVariable long id){
+    String getPassword(@PathVariable long id) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         PassSlice passSlice = passSliceService.findById(id);
-        return passSlice.getPassword();
+        return cipherUtil.decryptPass(passSlice.getPassword());
     }
 }

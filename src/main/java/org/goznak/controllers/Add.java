@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import org.goznak.models.*;
 import org.goznak.models.System;
 import org.goznak.services.*;
+import org.goznak.utils.CipherUtil;
 import org.goznak.utils.Roles;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidKeyException;
 import java.util.Date;
 
 @Controller
@@ -31,8 +36,10 @@ public class Add {
     CredentialsIdsService credentialsIdsService;
     final
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    final
+    CipherUtil cipherUtil;
 
-    public Add(UserService userService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, AuthorityService authorityService, CredentialsIdsService credentialsIdsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public Add(UserService userService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, AuthorityService authorityService, CredentialsIdsService credentialsIdsService, BCryptPasswordEncoder bCryptPasswordEncoder, CipherUtil cipherUtil) {
         this.passSliceService = passSliceService;
         this.subSystemService = subSystemService;
         this.authorityService = authorityService;
@@ -40,6 +47,7 @@ public class Add {
         this.systemService = systemService;
         this.credentialsIdsService = credentialsIdsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.cipherUtil = cipherUtil;
     }
 
     @GetMapping("/user")
@@ -107,7 +115,7 @@ public class Add {
         return "add/soft";
     }
     @PostMapping("/soft/{subSystemId}")
-    public String newSoft(@ModelAttribute @Valid PassSlice passSlice, BindingResult bindingResult, Model model, @PathVariable int subSystemId, Authentication authentication){
+    public String newSoft(@ModelAttribute @Valid PassSlice passSlice, BindingResult bindingResult, Model model, @PathVariable int subSystemId, Authentication authentication) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         model.addAttribute("passSlice", passSlice);
         model.addAttribute("subSystemId", subSystemId);
         model.addAttribute("rolesForCredentials", Roles.rolesForCredentials);
@@ -116,6 +124,7 @@ public class Add {
         if(bindingResult.hasErrors() || passSlice.softExist()){
             return "add/soft";
         }
+        passSlice.setPassword(cipherUtil.encryptPass(passSlice.getPassword()));
         passSlice.setLastChange(new Date());
         passSlice.setUser(userService.getCurrentUser(authentication));
         passSlice.setActual(true);

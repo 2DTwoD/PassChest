@@ -24,7 +24,7 @@
     </div>
     <div>
         <label for="password">Пароль:</label>
-        <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
+        <input type="text" th:field="*{password}" id="password" placeholder="Пароль" maxlength="50" size="50">
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     </div>
     <div>
