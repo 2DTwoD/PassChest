@@ -1,28 +1,23 @@
 package org.goznak.dao;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Size;
 import org.goznak.models.CredentialsIds;
 import org.goznak.models.PassSlice;
 import org.goznak.models.SubSystem;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface PassSliceDAO extends CrudRepository<PassSlice, Long> {
 
-    List<PassSlice> findAllByOrderById();
-    List<PassSlice> findPassSliceBySubSystemIdAndActualOrderBySoftNameAscLoginAsc(Integer id, boolean actual);
-    List<PassSlice> findPassSliceBySoftNameOrderBySoftNameAscLastChangeDesc(String softName);
+    List<PassSlice> findAllByActualOrderByIdAsc(boolean actual);
+    List<PassSlice> findPassSliceBySubSystemIdAndActual(Integer id, boolean actual);
+    List<PassSlice> findPassSliceBySoftName(String softName);
     List<PassSlice> findPassSliceBySoftNameAndCredentialsIdsOrderBySoftNameAscLastChangeDesc(String softName, CredentialsIds credentialsIds);
-    List<PassSlice> findPassSliceBySubSystemAndSoftNameOrderBySoftNameAscLastChangeDesc(SubSystem subSystem ,String softName);
+    List<PassSlice> findPassSliceBySubSystemAndSoftName(SubSystem subSystem ,String softName);
     List<PassSlice> findBySoftNameContainsIgnoreCaseOrderBySoftName(String filter);
-    @Transactional
-    List<PassSlice> findBySoftNameContainsIgnoreCaseAndSubSystemIdAndActualOrderBySoftName(String softName, int id, boolean actual);
+    PassSlice findFirstByCredentialsIdsAndLoginAndActual(CredentialsIds credentialsIds, String login, boolean actual);
     PassSlice findFirstById(long id);
-    PassSlice findFirstBySubSystem(SubSystem subSystem);
     @Transactional
     void deleteBySoftNameAndSubSystemId(String softName, int subSystemId);
 }

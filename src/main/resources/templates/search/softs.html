@@ -21,23 +21,23 @@
         <td>Логин</td>
         <td>Пароль</td>
         <td>Роль</td>
-        <td>Действие</td>
+        <td>Комментарий</td>
         <td>Действие</td>
         <td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')">Действие</td>
     </tr>
     <tr th:each="passSlice: ${targets}" th:if="${passSlice.actual == true}">
         <td th:text="${passSlice.softName}">Программа</td>
         <td th:text="${passSlice.login}">Логин</td>
-        <td th:id="'password' + ${passSlice.id}" th:text="${passSlice.password}">Пароль</td>
+        <td th:text="${passSlice.password}" class="passwordFields" th:id="${passSlice.id}">Пароль</td>
         <td th:text="${passSlice.role}">Роль</td>
-        <td><input class="showButton" th:id="${passSlice.id}" type="button" value="Показать пароль"/></td>
+        <td th:text="${passSlice.comment}">Комментарий</td>
         <td><a th:href="@{/search/history/{id}(id=${passSlice.id})}"><input type="button" value="История изменений"/></a></td>
         <td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"><a th:href="@{/edit/soft/{id}(id=${passSlice.id})}"><input type="button" value="Правка"/></a></td>
     </tr>
     <tr>
-        <td></td><td></td><td></td><td></td>
+        <td></td><td></td>
         <td><input id="showAllButton" type="button" value="Показать все пароли"/></td>
-        <td></td><td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"></td>
+        <td></td><td></td><td></td><td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"></td>
     </tr>
 </table>
 <hr/>

@@ -18,6 +18,9 @@
         <span sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')">
             <a th:href="@{/edit}">Редактирование</a>
         </span>
+        <span sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/search/print}">Версия для печати</a>
+        </span>
     </form>
     <hr/>
 </body>

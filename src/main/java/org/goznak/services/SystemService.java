@@ -5,6 +5,7 @@ import org.goznak.models.System;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 @Component
 public class SystemService extends CommonService<System, Integer> {
@@ -14,7 +15,9 @@ public class SystemService extends CommonService<System, Integer> {
     }
     @Override
     public List<System> findAll() {
-        return systemDAO.findAllByOrderByName();
+        List<System> systems = systemDAO.findAllByOrderByName();
+        Collections.sort(systems);
+        return systems;
     }
     @Override
     public System findById(Integer id) {
@@ -45,6 +48,7 @@ public class SystemService extends CommonService<System, Integer> {
                 }
             }
         }
+        Collections.sort(result);
         return result;
     }
 

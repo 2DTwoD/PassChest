@@ -5,12 +5,16 @@ import jakarta.servlet.http.HttpSession;
 import org.goznak.models.*;
 import org.goznak.models.System;
 import org.goznak.services.*;
+import org.goznak.utils.CipherUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidKeyException;
 import java.util.List;
 
 @Controller
@@ -31,12 +35,15 @@ public class Search {
     SubSystemService subSystemService;
     final
     PassSliceService passSliceService;
+    final
+    CipherUtil cipherUtil;
 
-    public Search(UserService userService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService) {
+    public Search(UserService userService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, CipherUtil cipherUtil) {
         this.userService = userService;
         this.systemService = systemService;
         this.subSystemService = subSystemService;
         this.passSliceService = passSliceService;
+        this.cipherUtil = cipherUtil;
     }
 
     @GetMapping()
@@ -107,9 +114,18 @@ public class Search {
         PassSlice passSlice = passSliceService.findById(id);
         model.addAttribute("subSystem", passSlice.getSubSystem());
         List<PassSlice> passSlices;
-        passSlices = passSliceService.findBySoftNameAndRole(passSlice.getSoftName(), passSlice.getCredentialsIds());
+        passSlices = passSliceService.findBySoftNameAndCredentialId(passSlice.getSoftName(), passSlice.getCredentialsIds());
         starPassword(passSlices);
         return searchEngine(model, session, request, passSlices, "search/history", HISTORY);
+    }
+    @GetMapping("/print")
+    public String print(Model model) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        List<PassSlice> passSlices = passSliceService.findAll();
+        for(PassSlice passSlice: passSlices){
+            passSlice.setPassword(cipherUtil.decryptPass(passSlice.getPassword()));
+        }
+        model.addAttribute("passSlices", passSlices);
+        return "search/print";
     }
     private void starPassword(List<PassSlice> list){
         for(PassSlice passSlice: list){

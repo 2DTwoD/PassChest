@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 @Component
 public class UserService extends CommonService<User, String>{
@@ -16,7 +17,9 @@ public class UserService extends CommonService<User, String>{
 
     @Override
     public List<User> findAll() {
-        return userDAO.findAllByOrderByUsername();
+        List<User> users = userDAO.findAllByOrderByUsername();
+        Collections.sort(users);
+        return users;
     }
 
     @Override
@@ -54,6 +57,7 @@ public class UserService extends CommonService<User, String>{
                 }
             }
         }
+        Collections.sort(result);
         return result;
     }
     @Override

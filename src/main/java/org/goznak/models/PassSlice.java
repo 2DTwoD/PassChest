@@ -4,14 +4,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.goznak.services.PassSliceService;
+import org.goznak.utils.CipherUtil;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.security.InvalidKeyException;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "pass_table")
-public class PassSlice {
+public class PassSlice implements Comparable<PassSlice> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -37,6 +41,9 @@ public class PassSlice {
     private String role;
     @Column(name = "credentials_id", insertable=false, updatable=false)
     private Integer credentialsId;
+    @Column(name = "comment")
+    @Size(max = 100, message = "Комментарий не должен содержать больше 100 символов")
+    private String comment;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sub_system_id")
     private SubSystem subSystem;
@@ -48,6 +55,8 @@ public class PassSlice {
     private CredentialsIds credentialsIds;
     @Transient
     private PassSliceService passSliceService;
+    @Transient
+    CipherUtil cipherUtil;
     @Override
     public boolean equals(Object o){
         if (getClass() != o.getClass()) {
@@ -72,17 +81,19 @@ public class PassSlice {
         }
         return false;
     }
-    public boolean noChange(){
+    public boolean noChange() throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         if(passSliceService == null){
             return false;
         }
-        List<PassSlice> passSlices = passSliceService.findBySubSystemAndSoftName(subSystem, softName);
-        for(PassSlice passSlice: passSlices) {
-            if(passSlice.isActual()) {
-                return passSlice.getLogin().equals(login) && passSlice.getPassword().equals(password) &&
-                        passSlice.getRole().equals(role);
-            }
-        }
-        return false;
+        PassSlice passSlice = passSliceService.findByCredentialsIdsAndLogin(credentialsIds, login);
+        return passSlice != null && passSlice.getLogin().equals(login) && cipherUtil.decryptPass(passSlice.getPassword()).equals(password) &&
+                passSlice.getRole().equals(role) && passSlice.getComment().equals(comment);
+    }
+
+    @Override
+    public int compareTo(PassSlice passSlice) {
+        return (subSystem.getSystem().getName() + subSystem.getName() + softName + login)
+                .compareTo(passSlice.getSubSystem().getSystem().getName() + passSlice.getSubSystem().getName() +
+                        passSlice.getSoftName() + passSlice.getLogin());
     }
 }

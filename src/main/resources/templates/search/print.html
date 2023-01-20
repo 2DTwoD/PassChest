@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Версия для печати</title>
+</head>
+<body>
+<div>Список паролей для печати:</div>
+<table th:if="${passSlices.isEmpty() == false}">
+    <tr>
+        <td>Система</td>
+        <td>Подсистема</td>
+        <td>Программа</td>
+        <td>Логин</td>
+        <td>Пароль</td>
+        <td>Роль</td>
+        <td>Комментарий</td>
+    </tr>
+    <tr th:each="passSlice: ${passSlices}">
+        <td th:text="${passSlice.subSystem.system.name}">Система</td>
+        <td th:text="${passSlice.subSystem.name}">Подсистема</td>
+        <td th:text="${passSlice.softName}">Программа</td>
+        <td th:text="${passSlice.login}">Логин</td>
+        <td th:text="${passSlice.password}">Пароль</td>
+        <td th:text="${passSlice.role}">Роль</td>
+        <td th:text="${passSlice.comment}">Комментарий</td>
+    </tr>
+</table>
+<div th:if="${passSlices.isEmpty() == true}">Список пуст</div>
+<th:block th:replace="common/slip_tongue_footer"></th:block>
+</body>
+</html>

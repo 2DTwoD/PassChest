@@ -168,6 +168,8 @@ public class Edit {
         model.addAttribute("rolesForCredentials", Roles.rolesForCredentials);
         passSlice.setPassSliceService(passSliceService);
         passSlice.setSoftName(oldPassSlice.getSoftName());
+        passSlice.setCredentialsIds(oldPassSlice.getCredentialsIds());
+        passSlice.setCipherUtil(cipherUtil);
         passSlice.setSubSystem(subSystem);
         if(bindingResult.hasErrors() || passSlice.softExist() || passSlice.noChange()){
             return "edit/soft";
@@ -182,6 +184,7 @@ public class Edit {
         newPassSlice.setRole(passSlice.getRole());
         newPassSlice.setActual(true);
         newPassSlice.setCredentialsIds(oldPassSlice.getCredentialsIds());
+        newPassSlice.setComment(passSlice.getComment());
         oldPassSlice.setActual(false);
         passSliceService.save(oldPassSlice);
         passSliceService.save(newPassSlice);

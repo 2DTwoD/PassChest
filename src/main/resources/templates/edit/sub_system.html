@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Редактирование подсистем</title>
+    <script type="text/javascript" th:src="@{/js/submit_script.js}"></script>
 </head>
 <body>
 <th:block th:replace="common/menu_header"></th:block>
@@ -27,7 +28,7 @@
     <div th:text="*{subSystemExist() == true} ? 'Такая подсистема уже существует': ''"></div>
     <hr/>
     <div>
-        <input type="submit" value="Редактировать">
+        <input type="submit" onclick="confirmation()" value="Редактировать">
     </div>
 </form>
 <hr/>

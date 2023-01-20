@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "users")
 @Component
-public class User {
+public class User implements Comparable<User>{
     @Id
     @Size(min = 3, max = 30, message = "Имя пользователя должно содержать от 3 до 30 символов")
     private String username;
@@ -78,5 +78,10 @@ public class User {
     @Override
     public String toString(){
         return String.format("User with name: %s", username);
+    }
+
+    @Override
+    public int compareTo(User user) {
+        return username.compareTo(user.getUsername());
     }
 }

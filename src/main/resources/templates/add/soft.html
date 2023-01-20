@@ -35,6 +35,11 @@
         </datalist>
         <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
     </div>
+    <div>
+        <label for="comment">Комментарий:</label>
+        <textarea id="comment" th:field="*{comment}" rows="5" cols="45" name="text" placeholder="Комментарий"></textarea>
+        <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
+    </div>
     <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
     <hr/>
     <input type="submit" value="Добавить">
