@@ -1,4 +1,8 @@
-button{
-    width: 10%;
-    height: 20px;
+.headerButton{
+    font-size: 20px;
+    padding: 24px;
+    color: white;
+    background-color: #8d4949;
+    border: none;
+    border-radius: 12px;
 }

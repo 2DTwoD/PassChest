@@ -3,25 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Menu header</title>
-<!--    <link th:href="@{/css/common.css}" rel="stylesheet"/>-->
+    <link th:href="@{/css/header.css}" rel="stylesheet"/>
 </head>
 <body>
     <div>Сундук с секретами</div>
     <hr/>
     <form th:method="post" th:action="@{/logout}">
-        <a th:href="@{/login}" sec:authorize="isAnonymous()">Авторизация</a>
-        <a type="submit" sec:authorize="isAuthenticated()"  onclick="return confirm('Выйти из под текущего пользователя?')">
-            <button sec:authentication="name"></button>
+<!--        sec:authorize="isAnonymous()"-->
+        <a th:href="@{/login}">
+            <button class="headerButton" sec:authentication="name">Авторизация</button>
         </a>
-        <span sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_GUEST')">
-            <a th:href="@{/search}">Поиск паролей</a>
-        </span>
-        <span sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')">
-            <a th:href="@{/edit}">Редактирование</a>
-        </span>
-        <span sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/search/print}" target="_blank">Версия для печати</a>
-        </span>
+<!--        sec:authorize="isAuthenticated()"-->
+        <a type="submit" class="headerButton" onclick="return confirm('Выйти из под текущего пользователя?')">
+            <button class="headerButton" sec:authentication="name"></button>
+        </a>
+<!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_GUEST')"-->
+        <a th:href="@{/search}">
+            <button class="headerButton">Поиск паролей</button>
+        </a>
+<!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"-->
+        <a th:href="@{/edit}">
+            <button class="headerButton">Редактирование</button>
+        </a>
+<!--        sec:authorize="hasRole('ROLE_ADMIN')"-->
+        <a th:href="@{/search/print}" target="_blank">
+            <button class="headerButton">Версия для печати</button>
+        </a>
     </form>
     <hr/>
 </body>

@@ -15,15 +15,11 @@ public class PassChestApplication {
     }
     @Bean
     public DataSource getDataSource() {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
         dataSourceBuilder.url("jdbc:postgresql://localhost:5433/password_chest_db");
         dataSourceBuilder.username("postgres");
         dataSourceBuilder.password("1");
         return dataSourceBuilder.build();
     }
-//    @Bean
-//    AuthorityDAO authorityDAO(){
-//        return new
-//    }
 }
