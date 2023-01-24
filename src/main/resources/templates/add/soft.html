@@ -42,7 +42,7 @@
     </div>
     <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
     <hr/>
-    <input type="submit" value="Добавить">
+    <input type="submit" value="Добавить" onclick="return confirm('Подтвердить добавление программы?')">
 </form>
 <hr/>
 <a th:href="@{/search/{id}(id=${passSlice.subSystem.id})}"><input type="button" value="Назад"></a>

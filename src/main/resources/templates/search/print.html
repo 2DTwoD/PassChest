@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Версия для печати</title>
+    <script th:inline="javascript">
+        setTimeout(close, 10 * 60000);
+    </script>
 </head>
 <body>
 <div>Список паролей для печати:</div>
+<hr/>
 <table th:if="${passSlices.isEmpty() == false}">
     <tr>
         <td>Система</td>

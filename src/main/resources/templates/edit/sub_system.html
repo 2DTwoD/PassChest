@@ -5,13 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Редактирование подсистем</title>
-    <script type="text/javascript" th:src="@{/js/submit_script.js}"></script>
 </head>
 <body>
 <th:block th:replace="common/menu_header"></th:block>
 <div>Редактировать подсистему:</div>
 <!--@thymesVar id="subSystem" type="org.goznak.models.SubSystem"-->
-<form id="subSystem" th:action="@{/edit/sub_system/{id}(id=${subSystem.id})}" th:object="${subSystem}" th:method="patch" autocomplete="off">
+<form th:action="@{/edit/sub_system/{id}(id=${subSystem.id})}" th:object="${subSystem}" th:method="patch" autocomplete="off">
     <div>
         <label for="systemName">Входит в систему:</label>
         <input list="systemList" id="systemName" th:field="*{systemName}" placeholder="Название системы">
@@ -28,12 +27,12 @@
     <div th:text="*{subSystemExist() == true} ? 'Такая подсистема уже существует': ''"></div>
     <hr/>
     <div>
-        <input type="submit" onclick="confirmation()" value="Редактировать">
+        <input type="submit" onclick="return confirm('Подтвердить редактирование подсистемы?')" value="Редактировать">
     </div>
 </form>
 <hr/>
 <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/sub_system/{id}(id=${subSystem.id})}" th:method="delete">
-    <input type="submit" value="Удалить">
+    <input type="submit" value="Удалить" onclick="return confirm('Подтвердить удаление подсистемы?')">
 </form>
 <hr sec:authorize="hasRole('ROLE_ADMIN')"/>
 <a th:href="@{/search/sub_systems}"><input type="button" value="Назад"></a>

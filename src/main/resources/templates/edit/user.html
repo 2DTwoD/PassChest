@@ -37,11 +37,11 @@
     <div th:text="${oldUser != null && user.noEditUser(oldUser) == true} ? 'Эти параметры нельзя редактировать': ''"></div>
     <div th:text="${oldUser == null && user.noDeleteUser() == true} ? 'Этого пользователя нельзя удалить': ''"></div>
     <hr/>
-    <input type="submit" value="Редактировать">
+    <input type="submit" value="Редактировать" onclick="return confirm('Подтвердить редактирование пользователя?')">
 </form>
 <hr/>
 <form th:action="@{/edit/user/{username}(username=${user.username})}" th:method="delete">
-    <input type="submit" value="Удалить">
+    <input type="submit" value="Удалить" onclick="return confirm('Подтвердить удаление пользователя?')">
 </form>
 <hr/>
 <a th:href="@{/search/users}"><input type="button" value="Назад"></a>

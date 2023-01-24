@@ -39,11 +39,11 @@
   <div th:text="*{noChange() == true} ? 'Вы не внесли никаких изменений': ''"></div>
   <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
   <hr/>
-  <input type="submit" value="Редактировать">
+  <input type="submit" value="Редактировать" onclick="return confirm('Подтвердить редактирование программы?')">
 </form>
 <hr/>
 <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:method="delete">
-  <input type="submit" value="Удалить">
+  <input type="submit" value="Удалить" onclick="return confirm('Подтвердить удаление программы?')">
 </form>
 <hr sec:authorize="hasRole('ROLE_ADMIN')"/>
 <a th:href="@{/search/{id}(id=${passSlice.subSystem.id})}"><input type="button" value="Назад"></a>

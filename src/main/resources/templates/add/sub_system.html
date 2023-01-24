@@ -27,7 +27,7 @@
     </div>
     <div th:text="*{subSystemExist() == true} ? 'Такая подсистема уже существует': ''"></div>
     <hr/>
-    <input type="submit" value="Добавить">
+    <input type="submit" value="Добавить" onclick="return confirm('Подтвердить добавление подсистемы?')">
 </form>
 <hr/>
 <a th:href="@{/search/sub_systems}"><input type="button" value="Назад"></a>

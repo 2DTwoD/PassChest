@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE)
                                 .hasRole("ADMIN")
 
-                                .requestMatchers("/search/users", "/add/user", "/edit/user/*")
+                                .requestMatchers("/search/users", "/add/user", "/edit/user/*", "/search/print")
                                 .hasRole("ADMIN")
 
                                 .requestMatchers("/edit", "/search/systems", "/add/system", "/edit/system/*",

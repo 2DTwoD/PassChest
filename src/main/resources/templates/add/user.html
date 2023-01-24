@@ -39,7 +39,7 @@
     </div>
     <div th:text="*{userExist() == true} ? 'Такой пользователь уже существует': ''"></div>
     <hr/>
-    <input type="submit" value="Добавить">
+    <input type="submit" value="Добавить"onclick="return confirm('Подтвердить добавление пользователя?')">
 </form>
 <hr/>
 <a th:href="@{/search/users}"><input type="button" value="Назад"></a>
