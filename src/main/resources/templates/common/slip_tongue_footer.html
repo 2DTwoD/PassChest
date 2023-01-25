@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Common footer</title>
+    <link th:href="@{/css/slip_tongue.css}" rel="stylesheet"/>
 </head>
 <body>
 <hr/>
-<div th:text="${'Народная мудрость: ' + tongueSlip}"></div>
+<div class="slipTongStyle">
+    <span id="slipTongStyleStart">Народная мудрость: </span>
+    <span id="slipTongStyleFin" th:text="${tongueSlip}"></span>
+</div>
 </body>
 </html>

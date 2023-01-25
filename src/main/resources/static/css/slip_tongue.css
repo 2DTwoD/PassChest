@@ -1,0 +1,12 @@
+.slipTongStyle{
+    font-size: 14px;
+    font-weight: bold;
+    font-family: dsMoster, monospace;
+    text-align: center;
+}
+#slipTongStyleStart{
+    color: #da2313;
+}
+#slipTongStyleFin{
+    color: #402429;
+}

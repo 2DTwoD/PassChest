@@ -4,32 +4,35 @@
     <meta charset="UTF-8">
     <title>Menu header</title>
     <link th:href="@{/css/header.css}" rel="stylesheet"/>
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
 </head>
 <body>
-    <div>Сундук с секретами</div>
+    <div id="titleHead">Тайная страница</div>
     <hr/>
-    <form th:method="post" th:action="@{/logout}">
-<!--        sec:authorize="isAnonymous()"-->
-        <a th:href="@{/login}">
-            <button class="headerButton" sec:authentication="name">Авторизация</button>
-        </a>
-<!--        sec:authorize="isAuthenticated()"-->
-        <a type="submit" class="headerButton" onclick="return confirm('Выйти из под текущего пользователя?')">
-            <button class="headerButton" sec:authentication="name"></button>
-        </a>
-<!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_GUEST')"-->
-        <a th:href="@{/search}">
-            <button class="headerButton">Поиск паролей</button>
-        </a>
-<!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"-->
-        <a th:href="@{/edit}">
-            <button class="headerButton">Редактирование</button>
-        </a>
-<!--        sec:authorize="hasRole('ROLE_ADMIN')"-->
-        <a th:href="@{/search/print}" target="_blank">
-            <button class="headerButton">Версия для печати</button>
-        </a>
-    </form>
+    <div id="headerPanel">
+<!--        <form th:method="post" th:action="@{/logout}">-->
+    <!--        sec:authorize="isAnonymous()"-->
+            <form th:action="@{/login}" class="headerForm">
+                <button class="headerButton">Авторизация</button>
+            </form>
+    <!--        sec:authorize="isAuthenticated()"-->
+            <form th:method="post" th:action="@{/logout}" class="headerForm">
+                <button class="headerButton" onclick="return confirm('Выйти из под текущего пользователя?')">Выйти</button>
+            </form>
+    <!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_GUEST')"-->
+            <form th:action="@{/search}" class="headerForm">
+                <button class="headerButton">Поиск паролей</button>
+            </form>
+    <!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"-->
+            <form th:action="@{/edit}" class="headerForm">
+                <button class="headerButton">Редактирование</button>
+            </form>
+    <!--        sec:authorize="hasRole('ROLE_ADMIN')"-->
+            <form th:action="@{/search/print}" target="_blank" class="headerForm">
+                <button class="headerButton">Версия для печати</button>
+            </form>
+<!--        </form>-->
+    </div>
     <hr/>
 </body>
 </html>

@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'B52';
+    src: url('../fonts/B52.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'dsMoster';
+    src: url('../fonts/ds_moster.ttf') format('truetype');
+}
+hr{
+    color: lightslategrey;
+}
+body {
+    background-color: #f2db93;
+}

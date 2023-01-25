@@ -1,8 +1,42 @@
-.headerButton{
-    font-size: 20px;
-    padding: 24px;
-    color: white;
-    background-color: #8d4949;
-    border: none;
-    border-radius: 12px;
+.headerForm {
+    display: inline-block;
+}
+.headerButton {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: dsMoster, monospace;
+    padding: 18px;
+    color: #da2313;
+    /*background-color: #cc9675;*/
+    background-color: transparent;
+    border: 1px;
+}
+
+#headerPanel {
+    text-align: center;
+    margin: 0 auto;
+    background-color: #f2db93;
+    padding: 18px;
+}
+#titleHead{
+    font-size: 24px;
+    font-weight: bold;
+    font-family: dsMoster, monospace;
+    color: #da2313;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+}
+.temp {
+    color: #da2313;
+}
+.temp1 {
+    color: #cc9675;
+}
+.temp2 {
+    color: #402429;
+}
+.temp3 {
+    background-color: #f2db93;
 }
