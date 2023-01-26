@@ -12,6 +12,7 @@
     </script>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
 <div th:text="${'Список паролей для системы ' + subSystem.system.name + ', ' + subSystem.name + ':'}"></div>
 <th:block th:replace="common/filter_header"></th:block>
@@ -45,5 +46,6 @@
 <th:block th:replace="common/page_footer"></th:block>
 <a th:href="@{/search}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>

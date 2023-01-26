@@ -2,14 +2,16 @@
     display: inline-block;
 }
 .headerButton {
-    font-size: 16px;
-    font-weight: bold;
-    font-family: dsMoster, monospace;
-    padding: 18px;
+    font-size: 22px;
+    font-family: trixieCyrCameo, monospace;
+    padding: 5px;
     color: #da2313;
-    /*background-color: #cc9675;*/
     background-color: transparent;
     border: 1px;
+    transition: 0.3s;
+}
+.headerButton:hover{
+    color: #402429;
 }
 
 #headerPanel {
@@ -19,11 +21,11 @@
     padding: 18px;
 }
 #titleHead{
-    font-size: 24px;
-    font-weight: bold;
-    font-family: dsMoster, monospace;
-    color: #da2313;
+    font-size: 30px;
+    font-family: trixieCyrCameo, monospace;
+    color: #402429;
     text-align: center;
+    rotate: -1deg;
 }
 a {
     text-decoration: none;

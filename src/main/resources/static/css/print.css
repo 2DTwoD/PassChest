@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'gostA';
+    src: url('../fonts/GOST_A.woff2');
+}
+@font-face {
+    font-family: 'dsMoster';
+    src: url('../fonts/ds_moster.woff2');
+}
+body {
+    font-family: gostA, monospace;
+    font-size: 20px;
+    text-align: center;
+}
+table {
+    font-family: gostA, monospace;
+    font-size: 18px;
+    border-collapse: collapse;
+    width: 100%;
+}
+table td, table th {
+    border: 1px solid gray;
+    padding: 3px;
+}
+table tr:nth-child(even){
+    background-color: lightgray;
+}
+table tr:hover {
+    background-color: yellow;
+}
+table th {
+    text-align: center;
+    background-color: dimgray;
+    color: white;
+}
+table td {
+    text-align: left;
+}

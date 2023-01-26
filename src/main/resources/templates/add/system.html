@@ -7,22 +7,26 @@
     <title>Добавление систем</title>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div>Добавить систему:</div>
+<div class="commonText">Добавить систему:</div>
 <hr/>
 <!--@thymesVar id="system" type="org.goznak.models.System"-->
 <form id="system" th:action="@{/add/system}" th:object="${system}" th:method="post" autocomplete="off">
-    <div>
-        <label for="name">Название:</label>
-        <input type="text" th:field="*{name}" id="name" placeholder="Название">
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    </div>
-    <div th:text="*{systemExist() == true} ? 'Такая система уже существует': ''"></div>
+    <table class="formTable">
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="name">Название:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="text" th:field="*{name}" id="name" placeholder="Название"></td>
+            <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span></td>
+        </tr>
+    </table>
+    <div class="errorText" th:text="*{systemExist() == true} ? 'Такая система уже существует': ''"></div>
     <hr/>
     <input type="submit" value="Добавить"onclick="return confirm('Подтвердить добавление системы?')">
 </form>
 <hr/>
 <a th:href="@{/search/systems}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>

@@ -11,14 +11,15 @@
     </script>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
 <div>Поиск паролей:</div>
 <th:block th:replace="common/filter_header"></th:block>
 <table th:if="${targets.isEmpty() == false}">
     <tr>
-        <td>Система</td>
-        <td>Подсистема</td>
-        <td>Действие</td>
+        <th>Система</th>
+        <th>Подсистема</th>
+        <th>Действие</th>
     </tr>
     <tr th:each="target: ${targets}">
         <td th:text="${target.system.name}">Система</td>
@@ -29,5 +30,6 @@
 <th:block th:replace="common/page_footer"></th:block>
 <a th:href="@{/}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>

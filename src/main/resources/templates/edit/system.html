@@ -7,6 +7,7 @@
     <title>Редактирование системы</title>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
 <div>Редактировать систему:</div>
 <!--@thymesVar id="system" type="org.goznak.models.System"-->
@@ -29,5 +30,6 @@
 <hr sec:authorize="hasRole('ROLE_ADMIN')"/>
 <a th:href="@{/search/systems}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import java.security.InvalidKeyException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -125,6 +127,8 @@ public class Search {
             passSlice.setPassword(cipherUtil.decryptPass(passSlice.getPassword()));
         }
         model.addAttribute("passSlices", passSlices);
+        String timeStamp = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+        model.addAttribute("dateTime", timeStamp);
         return "search/print";
     }
     private void starPassword(List<PassSlice> list){

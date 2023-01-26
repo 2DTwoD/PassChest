@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import java.security.InvalidKeyException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Controller
@@ -31,7 +32,7 @@ public class Other {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         if(hour <= 4 || hour >= 23){
             model.addAttribute("greeting", "Доброй ночи");
-        } else if(hour <= 11){
+        } else if(hour <= 10){
             model.addAttribute("greeting", "Доброе утро");
         } else if(hour <= 16){
             model.addAttribute("greeting", "Добрый день");

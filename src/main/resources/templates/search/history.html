@@ -11,6 +11,7 @@
   </script>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
 <div th:text="${'История изменения паролей для системы ' + subSystem.system.name + ', ' + subSystem.name + ':'}"></div>
 <hr/>
@@ -42,5 +43,6 @@
 <th:block th:replace="common/page_footer"></th:block>
 <a th:href="@{/search/{id}(id=${subSystem.id})}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>

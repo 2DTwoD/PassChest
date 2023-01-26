@@ -1,14 +1,114 @@
 @font-face {
-    font-family: 'B52';
-    src: url('../fonts/B52.ttf') format('truetype');
+    font-family: trixieCyrCameo;
+    font-weight: normal;
+    src: url('../fonts/TrixieCyr-Cameo.woff2');
 }
 @font-face {
     font-family: 'dsMoster';
-    src: url('../fonts/ds_moster.ttf') format('truetype');
+    src: url('../fonts/ds_moster.woff2');
+}
+@font-face {
+    font-family: 'B52';
+    src: url('../fonts/B52.woff2');
+}
+@font-face {
+    font-family: 'gostA';
+    src: url('../fonts/GOST_A.woff2');
 }
 hr{
-    color: lightslategrey;
+    border-top: 1px dashed #402429;
 }
 body {
+    background-color: #cc9675;
+}
+table {
+    margin: 0 auto;
+}
+button, input {
+    font-size: 20px;
+    font-family: trixieCyrCameo, monospace;
+    padding: 10px;
+    color: #402429;
+    background-color: transparent;
+    border: transparent;
+    rotate: -1deg;
+    transition: 0.3s;
+}
+button:hover, input:hover {
+    color: #da2313;
+}
+#mainContainer {
+    width: 60%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
     background-color: #f2db93;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px #402429;
+}
+table {
+    font-family: gostA, monospace;
+    font-size: 20px;
+    font-weight: bold;
+    border-collapse: collapse;
+    width: 100%;
+}
+table td, table th {
+    border: 1px solid #402429;
+    padding: 3px;
+}
+table tr:nth-child(even){
+    background-color: #fff2d4;
+}
+table tr:hover {
+    background-color: #cc9675;
+}
+table th {
+    text-align: center;
+    background-color: #402429;
+    color: #f2db93;
+}
+table td {
+    text-align: left;
+}
+.commonText {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: B52, monospace;
+    color: #402429;
+}
+.errorText {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: dsMoster, monospace;
+    color: #da2313;
+}
+.inputText {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: gostA, monospace;
+    color: #402429;
+    rotate: 0deg;
+    border: 1px;
+    background-color: white;
+    width: 90%;
+    resize: none;
+}
+#filterText {
+    width: 50%;
+}
+.formTable td{
+    border:none;
+}
+.firstFormCol {
+    text-align: right;
+    width: 40%;
+}
+.secondFormCol {
+    text-align: left;
+    width: 30%;
+}
+.thirdFormCol {
+    text-align: left;
+    width: 30%;
 }

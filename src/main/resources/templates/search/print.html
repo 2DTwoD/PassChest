@@ -6,19 +6,19 @@
     <script th:inline="javascript">
         setTimeout(close, 10 * 60000);
     </script>
+    <link th:href="@{/css/print.css}" rel="stylesheet"/>
 </head>
 <body>
-<div>Список паролей для печати:</div>
-<hr/>
+<div th:text="${'Список паролей для печати (' + dateTime + '):'}"></div>
 <table th:if="${passSlices.isEmpty() == false}">
     <tr>
-        <td>Система</td>
-        <td>Подсистема</td>
-        <td>Программа</td>
-        <td>Логин</td>
-        <td>Пароль</td>
-        <td>Роль</td>
-        <td>Комментарий</td>
+        <th>Система</th>
+        <th>Подсистема</th>
+        <th>Программа</th>
+        <th>Логин</th>
+        <th>Пароль</th>
+        <th>Роль</th>
+        <th>Комментарий</th>
     </tr>
     <tr th:each="passSlice: ${passSlices}">
         <td th:text="${passSlice.subSystem.system.name}">Система</td>

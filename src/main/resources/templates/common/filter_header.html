@@ -7,7 +7,7 @@
 <body>
 <hr/>
 <div>
-    <input th:id="filterText" th:type="text" th:value="${session.filter}"/>
+    <input class="inputText" th:id="filterText" th:type="text" th:value="${session.filter}" placeholder="Поиск"/>
     <input th:id="searchButton" th:type="button" value="Поиск"/>
     <input th:id="resetButton" th:type="button" value="Сброс фильтра"/>
 </div>

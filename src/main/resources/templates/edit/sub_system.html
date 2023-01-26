@@ -7,6 +7,7 @@
     <title>Редактирование подсистем</title>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
 <div>Редактировать подсистему:</div>
 <!--@thymesVar id="subSystem" type="org.goznak.models.SubSystem"-->
@@ -37,5 +38,6 @@
 <hr sec:authorize="hasRole('ROLE_ADMIN')"/>
 <a th:href="@{/search/sub_systems}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>

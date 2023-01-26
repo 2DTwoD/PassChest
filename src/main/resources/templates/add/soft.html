@@ -7,45 +7,49 @@
     <title>Добавление программы</title>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div th:text="${'Добавление программы для системы ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
+<div class="commonText" th:text="${'Добавление программы для системы ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
 <form id="passSlice" th:action="@{/add/soft/{id}(id=*{subSystem.id})}" th:object="${passSlice}" th:method="post" autocomplete="off">
-    <div>
-        <label for="softName">Название программы:</label>
-        <input id="softName" th:field="*{softName}"  placeholder="Название программы">
-        <span th:if="${#fields.hasErrors('softName')}" th:errors="*{softName}"></span>
-    </div>
-    <div>
-        <label for="login">Логин:</label>
-        <input type="text" th:field="*{login}" id="login" placeholder="Логин">
-        <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-    </div>
-    <div>
-        <label for="password">Пароль:</label>
-        <input type="text" th:field="*{password}" id="password" placeholder="Пароль" maxlength="50" size="50">
-        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    </div>
-    <div>
-        <label for="role">Роль пользователя:</label>
-        <input list="roleList" type="text" th:field="*{role}" id="role" placeholder="Роль пользователя">
+    <table class="formTable">
+    <tr>
+        <td class="firstFormCol"><label class="commonText" for="softName">Название программы:</label></td>
+        <td class="secondFormCol"><input class="inputText" id="softName" th:field="*{softName}"  placeholder="Название программы"></td>
+        <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('softName')}" th:errors="*{softName}"></span></td>
+    </tr>
+    <tr>
+        <td class="firstFormCol"><label class="commonText" for="login">Логин:</label></td>
+        <td class="secondFormCol"><input class="inputText" type="text" th:field="*{login}" id="login" placeholder="Логин"></td>
+        <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span></td>
+    </tr>
+    <tr>
+        <td class="firstFormCol"><label class="commonText" for="password">Пароль:</label></td>
+        <td class="secondFormCol"><input class="inputText" type="text" th:field="*{password}" id="password" placeholder="Пароль" maxlength="50" size="50"></td>
+        <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
+    </tr>
+    <tr>
+        <td class="firstFormCol"><label class="commonText" for="role">Роль пользователя:</label></td>
+        <td class="secondFormCol"><input class="inputText" list="roleList" type="text" th:field="*{role}" id="role" placeholder="Роль пользователя"></td>
         <datalist id="roleList" placeholder="Роль пользователя">
             <option th:each="role: ${rolesForCredentials}" th:text="${role}"></option>
         </datalist>
-        <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
-    </div>
-    <div>
-        <label for="comment">Комментарий:</label>
-        <textarea id="comment" th:field="*{comment}" rows="5" cols="45" name="text" placeholder="Комментарий"></textarea>
-        <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
-    </div>
-    <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
+        <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span></td>
+    </tr>
+    <tr>
+        <td class="firstFormCol"s><label class="commonText" for="comment">Комментарий:</label></td>
+        <td class="secondFormCol"><textarea class="inputText" id="comment" th:field="*{comment}" rows="5" cols="45" name="text" placeholder="Комментарий"></textarea></td>
+        <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span></td>
+    </tr>
+    </table>
+    <div class="errorText" th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
     <hr/>
     <input type="submit" value="Добавить" onclick="return confirm('Подтвердить добавление программы?')">
 </form>
 <hr/>
 <a th:href="@{/search/{id}(id=${passSlice.subSystem.id})}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>

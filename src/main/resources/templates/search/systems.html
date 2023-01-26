@@ -11,6 +11,7 @@
     </script>
 </head>
 <body>
+<div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
 <div>Список систем:</div>
 <th:block th:replace="common/filter_header"></th:block>
@@ -29,5 +30,6 @@
 <th:block th:replace="common/page_footer"></th:block>
 <a th:href="@{/edit}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
 </body>
 </html>
