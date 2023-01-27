@@ -9,22 +9,23 @@
     <script th:inline="javascript">
         const page = [[${page}]];
     </script>
+    <link th:href="@{/css/search_table_width/index.css}" rel="stylesheet"/>
 </head>
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div>Поиск паролей:</div>
+<div class="commonText">Поиск паролей:</div>
 <th:block th:replace="common/filter_header"></th:block>
-<table th:if="${targets.isEmpty() == false}">
+<table class="searchTable" th:if="${targets.isEmpty() == false}">
     <tr>
-        <th>Система</th>
-        <th>Подсистема</th>
-        <th>Действие</th>
+        <th class="col1">Система</th>
+        <th class="col2">Подсистема</th>
+        <th class="col3">Действие</th>
     </tr>
     <tr th:each="target: ${targets}">
-        <td th:text="${target.system.name}">Система</td>
-        <td th:text="${target.name}">Подсистема</td>
-        <td><a th:href="@{/search/{id}(id=${target.id}, resetParameters=true)}"><input type="button" value="Просмотр"/></a></td>
+        <td class="col1" th:text="${target.system.name}">Система</td>
+        <td class="col2" th:text="${target.name}">Подсистема</td>
+        <td class="col3"><a th:href="@{/search/{id}(id=${target.id}, resetParameters=true)}"><input type="button" value="Просмотр"/></a></td>
     </tr>
 </table>
 <th:block th:replace="common/page_footer"></th:block>

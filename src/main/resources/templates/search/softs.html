@@ -10,35 +10,37 @@
     <script th:inline="javascript">
         const page = [[${page}]];
     </script>
+    <link th:href="@{/css/search_table_width/soft.css}" rel="stylesheet"/>
 </head>
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div th:text="${'Список паролей для системы ' + subSystem.system.name + ', ' + subSystem.name + ':'}"></div>
+<div class="commonText" th:text="${'Список паролей для системы ' + subSystem.system.name + ', ' + subSystem.name + ':'}"></div>
 <th:block th:replace="common/filter_header"></th:block>
 <table th:if="${targets.isEmpty() == false}">
     <tr>
-        <td>Программа</td>
-        <td>Логин</td>
-        <td>Пароль</td>
-        <td>Роль</td>
-        <td>Комментарий</td>
-        <td>Действие</td>
-        <td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')">Действие</td>
+        <th class="col1">Программа</th>
+        <th class="col2">Логин</th>
+        <th class="col3">Пароль</th>
+        <th class="col4">Роль</th>
+        <th class="col5">Комментарий</th>
+        <th class="col6">Действие</th>
+        <th class="col7" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')">Действие</th>
     </tr>
     <tr th:each="passSlice: ${targets}" th:if="${passSlice.actual == true}">
-        <td th:text="${passSlice.softName}">Программа</td>
-        <td th:text="${passSlice.login}">Логин</td>
-        <td th:text="${passSlice.password}" class="passwordFields" th:id="${passSlice.id}">Пароль</td>
-        <td th:text="${passSlice.role}">Роль</td>
-        <td th:text="${passSlice.comment}">Комментарий</td>
-        <td><a th:href="@{/search/history/{id}(id=${passSlice.id})}"><input type="button" value="История изменений"/></a></td>
-        <td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"><a th:href="@{/edit/soft/{id}(id=${passSlice.id})}"><input type="button" value="Правка"/></a></td>
+        <td class="col1" th:text="${passSlice.softName}">Программа</td>
+        <td class="col2" th:text="${passSlice.login}">Логин</td>
+        <td th:text="${passSlice.password}" class="passwordFields col3" th:id="${passSlice.id}">Пароль</td>
+        <td class="col4" th:text="${passSlice.role}">Роль</td>
+        <td class="col5" th:text="${passSlice.comment}">Комментарий</td>
+        <td class="col6"><a th:href="@{/search/history/{id}(id=${passSlice.id})}"><input type="button" value="История изменений"/></a></td>
+        <td class="col7" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"><a th:href="@{/edit/soft/{id}(id=${passSlice.id})}"><input type="button" value="Правка"/></a></td>
     </tr>
     <tr>
-        <td></td><td></td>
-        <td><input id="showAllButton" type="button" value="Показать все пароли"/></td>
-        <td></td><td></td><td></td><td sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"></td>
+        <td class="col1"></td><td class="col2"></td>
+        <td class="col3"><input id="showAllButton" type="button" value="Показать все"/></td>
+        <td class="col4"></td><td class="col5"></td><td class="col6"></td>
+        <td class="col7" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"></td>
     </tr>
 </table>
 <hr/>

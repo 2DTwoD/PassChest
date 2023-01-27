@@ -7,7 +7,8 @@
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div th:text="${greeting} + ', выберите пожалуйста пункт в заголовочном меню'"></div>
+<div class="commonText" th:text="${greeting} + ', выберите пожалуйста пункт в заголовочном меню'"></div>
+<img th:src="@{/img/no_speak.jpg}" alt="Не болтай!">
 <th:block th:replace="common/slip_tongue_footer"></th:block>
 </div>
 </body>

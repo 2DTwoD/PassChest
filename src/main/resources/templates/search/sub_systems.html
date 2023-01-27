@@ -9,26 +9,27 @@
   <script th:inline="javascript">
     const page = [[${page}]];
   </script>
+  <link th:href="@{/css/search_table_width/sub_system.css}" rel="stylesheet"/>
 </head>
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div>Список подсистем:</div>
+<div class="commonText">Список подсистем:</div>
 <th:block th:replace="common/filter_header"></th:block>
-<table th:if="${targets.isEmpty() == false}">
+<table class="searchTable" th:if="${targets.isEmpty() == false}">
   <tr>
-    <td>Система</td>
-    <td>Подсистема</td>
-    <td>Действие</td>
+    <th class="col1">Система</th>
+    <th class="col2">Подсистема</th>
+    <th class="col3">Действие</th>
   </tr>
   <tr th:each="target: ${targets}">
-    <td th:text="${target.system.name}">Система</td>
-    <td th:text="${target.name}">Подсистема</td>
-    <td><a th:href="@{/edit/sub_system/{id}(id=${target.id})}"><input type="button" value="Правка"/></a></td>
+    <td class="col1" th:text="${target.system.name}">Система</td>
+    <td class="col2" th:text="${target.name}">Подсистема</td>
+    <td class="col3"><a th:href="@{/edit/sub_system/{id}(id=${target.id})}"><input type="button" value="Правка"/></a></td>
   </tr>
 </table>
-  <hr/>
-  <a th:href="@{/add/sub_system}"><input type="button" value="Добавить"/></a>
+<hr/>
+<a th:href="@{/add/sub_system}"><input type="button" value="Добавить"/></a>
 <th:block th:replace="common/page_footer"></th:block>
 <a th:href="@{/edit}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>

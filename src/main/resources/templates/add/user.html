@@ -9,36 +9,39 @@
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div>Добавить пользователя:</div>
+<div class="commonText">Добавить пользователя:</div>
 <hr/>
 <!--@thymesVar id="user" type="org.goznak.models.User"-->
 <form th:action="@{/add/user}" th:object="${user}" th:method="post" autocomplete="off">
-    <div>
-        <label for="username">Имя пользователя:</label>
-        <input type="text" th:field="*{username}" id="username" placeholder="Имя">
-        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-    </div>
-    <div>
-        <label for="password">Пароль пользователя:</label>
-        <input type="password" th:field="*{password}" id="password" placeholder="Пароль">
-        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    </div>
-    <div>
-        <label for="passwordConfirm">Повторите пароль:</label>
-        <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Подтвердите пароль">
-        <span th:text="*{passwordNotMatch() == true} ? 'Поле пароля и поле подтверждения пароля не совпадают': ''"></span>
-    </div>
-    <div>
-        <label for="role">Права пользователя:</label>
-            <select id="role" name="role" th:value="*{role}">
+    <table class="formTable">
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="username">Имя пользователя:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="text" th:field="*{username}" id="username" placeholder="Имя"></td>
+            <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="password">Пароль пользователя:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="password" th:field="*{password}" id="password" placeholder="Пароль"></td>
+            <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="passwordConfirm">Повторите пароль:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Подтвердите пароль"></td>
+            <td class="thirdFormCol"><span class="errorText" th:text="*{passwordNotMatch() == true} ? 'Поле пароля и поле подтверждения пароля не совпадают': ''"></span></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="role">Права пользователя:</label></td>
+            <td class="secondFormCol"><select class="inputText" id="role" name="role" th:value="*{role}">
                 <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:value="${roleTxt}" th:selected="${#strings.equals(roleTxt, user.role)}">text</option>
-            </select>
-    </div>
-    <div>
-        <label for="enabled">Разрешение для авторизации:</label>
-        <input type="checkbox" id="enabled" th:field="*{enabled}">
-    </div>
-    <div th:text="*{userExist() == true} ? 'Такой пользователь уже существует': ''"></div>
+            </select></td><td class="thirdFormCol"></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="enabled">Разрешение для авторизации:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="checkbox" id="enabled" th:field="*{enabled}"></td>
+            <td class="thirdFormCol"></td>
+        </tr>
+    </table>
+    <div class="errorText" th:text="*{userExist() == true} ? 'Такой пользователь уже существует': ''"></div>
     <hr/>
     <input type="submit" value="Добавить"onclick="return confirm('Подтвердить добавление пользователя?')">
 </form>

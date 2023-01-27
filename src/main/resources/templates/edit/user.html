@@ -9,34 +9,40 @@
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div>Редактировать пользователя:</div>
+<div class="commonText">Редактировать пользователя:</div>
 <!--@thymesVar id="user" type="org.goznak.models.User"-->
 <form th:action="@{/edit/user/{username}(username=*{username})}" th:object="${user}" th:method="patch" autocomplete="off">
-    <div>
-        <th:block th:text="*{'Имя пользователя: ' + username}"></th:block>
-    </div>
-    <div>
-        <label for="password">Пароль пользователя:</label>
-        <input type="password" th:field="*{password}" id="password" placeholder="Пароль">
-        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    </div>
-    <div>
-        <label for="passwordConfirm">Повторите пароль:</label>
-        <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Подтвердите пароль">
-        <span th:text="*{passwordNotMatch() == true} ? 'Поле пароля и поле подтверждения пароля не совпадают': ''"></span>
-    </div>
-    <div>
-        <label for="role">Права пользователя:</label>
-        <select id="role" name="role" th:value="*{role}">
-            <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:selected="${#strings.equals(roleTxt, user.role)}">Роль</option>
-        </select>
-    </div>
-    <div>
-        <label for="enabled">Разрешение для авторизации:</label>
-        <input type="checkbox" id="enabled" th:field="*{enabled}">
-    </div>
-    <div th:text="${oldUser != null && user.noEditUser(oldUser) == true} ? 'Эти параметры нельзя редактировать': ''"></div>
-    <div th:text="${oldUser == null && user.noDeleteUser() == true} ? 'Этого пользователя нельзя удалить': ''"></div>
+    <table class="formTable">
+        <tr>
+            <td class="firstFormCol"><span class="commonText">Имя пользователя:</span></td>
+            <td class="secondFormCol"><span class="commonText" th:text="*{username}"></span></span></td>
+            <td class="thirdFormCol"></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="password">Пароль пользователя:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="password" th:field="*{password}" id="password" placeholder="Пароль"></td>
+            <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="passwordConfirm">Повторите пароль:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Подтвердите пароль"></td>
+            <td class="thirdFormCol"><span class="errorText" th:text="*{passwordNotMatch() == true} ? 'Поле пароля и поле подтверждения пароля не совпадают': ''"></span></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="role">Права пользователя:</label></td>
+            <td class="secondFormCol"><select class="inputText" id="role" name="role" th:value="*{role}">
+                <option th:each="roleTxt: ${roles}" th:text="${roleTxt}" th:selected="${#strings.equals(roleTxt, user.role)}">Роль</option>
+            </select></td>
+            <td class="thirdFormCol"></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="enabled">Разрешение для авторизации:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="checkbox" id="enabled" th:field="*{enabled}"></td>
+            <td class="thirdFormCol"></td>
+        </tr>
+    </table>
+    <div class="errorText" th:text="${oldUser != null && user.noEditUser(oldUser) == true} ? 'Эти параметры нельзя редактировать': ''"></div>
+    <div class="errorText" th:text="${oldUser == null && user.noDeleteUser() == true} ? 'Этого пользователя нельзя удалить': ''"></div>
     <hr/>
     <input type="submit" value="Редактировать" onclick="return confirm('Подтвердить редактирование пользователя?')">
 </form>

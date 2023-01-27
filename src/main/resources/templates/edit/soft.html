@@ -9,36 +9,42 @@
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div th:text="${'Редактирование программы для системы ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
+<div class="commonText" th:text="${'Редактирование программы для системы ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
 <form id="passSlice" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:object="${passSlice}" th:method="patch" autocomplete="off">
-  <div th:text="${'Название программы: ' + passSlice.softName}"></div>
-  <div>
-    <label for="login">Логин:</label>
-    <input type="text" th:field="*{login}" id="login" placeholder="Логин">
-    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-  </div>
-  <div>
-    <label for="password">Пароль:</label>
-    <input type="text" th:field="*{password}" id="password" placeholder="Пароль" maxlength="50" size="50">
-    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-  </div>
-  <div>
-    <label for="role">Роль пользователя:</label>
-    <input list="roleList" type="text" th:field="*{role}" id="role" placeholder="Роль пользователя">
-    <datalist id="roleList" placeholder="Роль пользователя">
-      <option th:each="role: ${rolesForCredentials}" th:text="${role}"></option>
-    </datalist>
-    <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
-  </div>
-  <div>
-    <label for="comment">Комментарий:</label>
-    <textarea id="comment" th:field="*{comment}" rows="5" cols="45" name="text" placeholder="Комментарий"></textarea>
-    <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
-  </div>
-  <div th:text="*{noChange() == true} ? 'Вы не внесли никаких изменений': ''"></div>
-  <div th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
+  <table class="formTable">
+    <tr>
+      <td class="firstFormCol"><span class="commonText">Название программ:</span></td>
+      <td class="secondFormCol"><span class="commonText" th:text="${passSlice.softName}"></span></td>
+      <td class="thirdFormCol"></td>
+    </tr>
+    <tr>
+      <td class="firstFormCol"><label class="commonText" for="login">Логин:</label></td>
+      <td class="secondFormCol"><input class="inputText" type="text" th:field="*{login}" id="login" placeholder="Логин"></td>
+      <td><span class="errorText thirdFormCol" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span></td>
+    </tr>
+    <tr>
+      <td class="firstFormCol"><label class="commonText" for="password">Пароль:</label></td>
+      <td class="secondFormCol"><input class="inputText" type="text" th:field="*{password}" id="password" placeholder="Пароль" maxlength="50" size="50"></td>
+      <td><span class="errorText thirdFormCol" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
+    </tr>
+    <tr>
+      <td class="firstFormCol"><label class="commonText" for="role">Роль пользователя:</label></td>
+      <td class="secondFormCol"><input class="inputText" list="roleList" type="text" th:field="*{role}" id="role" placeholder="Роль пользователя">
+      <datalist id="roleList" placeholder="Роль пользователя">
+        <option th:each="role: ${rolesForCredentials}" th:text="${role}"></option>
+      </datalist></td>
+      <td><span class="errorText thirdFormCol" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span></td>
+    </tr>
+    <tr>
+      <td class="firstFormCol"><label class="commonText" for="comment">Комментарий:</label></td>
+      <td class="secondFormCol"><textarea class="inputText" id="comment" th:field="*{comment}" rows="3" cols="45" name="text" placeholder="Комментарий"></textarea></td>
+      <td><span class="errorText thirdFormCol" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span></td>
+    </tr>
+  </table>
+  <div class="errorText" th:text="*{noChange() == true} ? 'Вы не внесли никаких изменений': ''"></div>
+  <div class="errorText" th:text="*{softExist() == true} ? 'Программа с таким логином уже существует': ''"></div>
   <hr/>
   <input type="submit" value="Редактировать" onclick="return confirm('Подтвердить редактирование программы?')">
 </form>

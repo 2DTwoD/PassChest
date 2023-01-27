@@ -22,13 +22,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/search")
 public class Search {
-    private final int USER = 0;
-    private final int SYSTEM = 1;
-    private final int SUB_SYSTEM = 2;
-    private final int MAIN = 3;
-    private final int SOFT = 4;
-    private final int HISTORY = 5;
-    private final int NUM_OF_VISIBLE_ROWS = 15;
+    static private final int USER = 0;
+    static private final int SYSTEM = 1;
+    static private final int SUB_SYSTEM = 2;
+    static private final int MAIN = 3;
+    static private final int SOFT = 4;
+    static private final int HISTORY = 5;
+    private final int NUM_OF_VISIBLE_ROWS = 10;
     final
     UserService userService;
     final

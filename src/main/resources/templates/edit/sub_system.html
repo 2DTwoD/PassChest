@@ -9,23 +9,26 @@
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div>Редактировать подсистему:</div>
+<div class="commonText">Редактировать подсистему:</div>
+<hr/>
 <!--@thymesVar id="subSystem" type="org.goznak.models.SubSystem"-->
 <form th:action="@{/edit/sub_system/{id}(id=${subSystem.id})}" th:object="${subSystem}" th:method="patch" autocomplete="off">
-    <div>
-        <label for="systemName">Входит в систему:</label>
-        <input list="systemList" id="systemName" th:field="*{systemName}" placeholder="Название системы">
-        <datalist id="systemList" placeholder="Название родительской системы">
-            <option th:each="system: ${systems}" th:value="${system.name}" th:selected="*{systemName}">
-        </datalist>
-        <span th:text="*{systemNotExist() == true} ? 'Введите имя системы, которая занесена в БД': ''"></span>
-    </div>
-    <div>
-        <label for="name">Название:</label>
-        <input type="text" th:field="*{name}" id="name" placeholder="Название">
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    </div>
-    <div th:text="*{subSystemExist() == true} ? 'Такая подсистема уже существует': ''"></div>
+    <table class="formTable">
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="systemName">Входит в систему:</label></td>
+            <td class="secondFormCol"><input class="inputText" list="systemList" id="systemName" th:field="*{systemName}" placeholder="Название системы"></td>
+            <datalist id="systemList" placeholder="Название родительской системы">
+                <option th:each="system: ${systems}" th:value="${system.name}" th:selected="*{systemName}">
+            </datalist>
+            <td class="thirdFormCol"><span class="errorText" th:text="*{systemNotExist() == true} ? 'Введите имя системы, которая занесена в БД': ''"></span></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="name">Название:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="text" th:field="*{name}" id="name" placeholder="Название"></td>
+            <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span></td>
+        </tr>
+    </table>
+    <div class="errorText" th:text="*{subSystemExist() == true} ? 'Такая подсистема уже существует': ''"></div>
     <hr/>
     <div>
         <input type="submit" onclick="return confirm('Подтвердить редактирование подсистемы?')" value="Редактировать">

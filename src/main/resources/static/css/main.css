@@ -4,15 +4,11 @@
     src: url('../fonts/TrixieCyr-Cameo.woff2');
 }
 @font-face {
-    font-family: 'dsMoster';
-    src: url('../fonts/ds_moster.woff2');
+    font-family: OldTyperNr;
+    src: url('../fonts/a_OldTyperNr Regular.woff2') format('woff2');
 }
 @font-face {
-    font-family: 'B52';
-    src: url('../fonts/B52.woff2');
-}
-@font-face {
-    font-family: 'gostA';
+    font-family: gostA;
     src: url('../fonts/GOST_A.woff2');
 }
 hr{
@@ -47,21 +43,19 @@ button:hover, input:hover {
     box-shadow: 10px 5px 5px #402429;
 }
 table {
-    font-family: gostA, monospace;
+    font-family: OldTyperNr, monospace;
     font-size: 20px;
     font-weight: bold;
     border-collapse: collapse;
     width: 100%;
+    background-color: #fff2d4;
 }
 table td, table th {
     border: 1px solid #402429;
     padding: 3px;
 }
 table tr:nth-child(even){
-    background-color: #fff2d4;
-}
-table tr:hover {
-    background-color: #cc9675;
+    background-color: #f2db93;
 }
 table th {
     text-align: center;
@@ -72,33 +66,37 @@ table td {
     text-align: left;
 }
 .commonText {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
-    font-family: B52, monospace;
+    font-family: OldTyperNr, monospace;
     color: #402429;
 }
 .errorText {
     font-size: 16px;
-    font-weight: bold;
-    font-family: dsMoster, monospace;
+    font-family: OldTyperNr, monospace;
     color: #da2313;
 }
 .inputText {
     font-size: 20px;
-    font-weight: bold;
     font-family: gostA, monospace;
     color: #402429;
     rotate: 0deg;
     border: 1px;
     background-color: white;
-    width: 90%;
+    width: 100%;
     resize: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 #filterText {
     width: 50%;
 }
 .formTable td{
     border:none;
+}
+.searchTable{
+    font-family: gostA, monospace;
 }
 .firstFormCol {
     text-align: right;

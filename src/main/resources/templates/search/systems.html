@@ -9,20 +9,21 @@
     <script th:inline="javascript">
         const page = [[${page}]];
     </script>
+    <link th:href="@{/css/search_table_width/system.css}" rel="stylesheet"/>
 </head>
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div>Список систем:</div>
+<div class="commonText">Список систем:</div>
 <th:block th:replace="common/filter_header"></th:block>
-<table th:if="${targets.isEmpty() == false}">
+<table class="searchTable" th:if="${targets.isEmpty() == false}">
     <tr>
-        <td>Система</td>
-        <td>Действие</td>
+        <th class="col1">Система</th>
+        <th class="col2">Действие</th>
     </tr>
     <tr th:each="target: ${targets}">
-        <td th:text="${target.name}">Система</td>
-        <td><a th:href="@{/edit/system/{id}(id=${target.id})}"><input type="button" value="Правка"/></a></td>
+        <td class="col1" th:text="${target.name}">Система</td>
+        <td class="col2"><a th:href="@{/edit/system/{id}(id=${target.id})}"><input type="button" value="Правка"/></a></td>
     </tr>
 </table>
 <hr/>

@@ -1,6 +1,6 @@
 function main(){
-    const hideAllText = "Скрыть все пароли";
-    const showAllText = "Показать все пароли";
+    const hideAllText = "Скрыть все";
+    const showAllText = "Показать все";
     const secretTemplate= "******";
     const passwordFields = document.getElementsByClassName("passwordFields");
     const showAllButton = document.getElementById("showAllButton");

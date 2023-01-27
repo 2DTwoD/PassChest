@@ -3,11 +3,11 @@
     src: url('../fonts/GOST_A.woff2');
 }
 @font-face {
-    font-family: 'dsMoster';
-    src: url('../fonts/ds_moster.woff2');
+    font-family: OldTyperNr;
+    src: url('../fonts/a_OldTyperNr Regular.woff2') format('woff2');
 }
 body {
-    font-family: gostA, monospace;
+    font-family: OldTyperNr, monospace;
     font-size: 20px;
     text-align: center;
 }
