@@ -24,7 +24,7 @@
             <td class="thirdFormCol"><span class="errorText" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
         </tr>
         <tr>
-            <td class="firstFormCol"><label class="commonText" for="passwordConfirm">Повторите пароль:</label></td>
+            <td class="firstFormCol"><label class="commonText" for="passwordConfirm">Подтвердите пароль:</label></td>
             <td class="secondFormCol"><input class="inputText" type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Подтвердите пароль"></td>
             <td class="thirdFormCol"><span class="errorText" th:text="*{passwordNotMatch() == true} ? 'Поле пароля и поле подтверждения пароля не совпадают': ''"></span></td>
         </tr>

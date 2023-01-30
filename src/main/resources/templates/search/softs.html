@@ -17,7 +17,7 @@
 <th:block th:replace="common/menu_header"></th:block>
 <div class="commonText">Список паролей для системы <span class="redText" th:text="${subSystem.system.name + ', ' + subSystem.name}"></span>:</div>
 <th:block th:replace="common/filter_header"></th:block>
-<table th:if="${targets.isEmpty() == false}">
+<table class="searchTable" th:if="${targets.isEmpty() == false}">
     <tr>
         <th class="col1">Программа</th>
         <th class="col2">Логин</th>

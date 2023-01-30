@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Совершенно секретно</title>
+</head>
+<body>
+<div id="mainContainer">
+    <th:block th:replace="common/menu_header"></th:block>
+    <div class="redText">Что-то пошло не так, попробуйте вернуться назад и повторить действие</div>
+    <img class="commonText" th:src="@{/img/error.png}" alt="Не болтай!">
+    <th:block th:replace="common/slip_tongue_footer"></th:block>
+</div>
+</body>
+</html>

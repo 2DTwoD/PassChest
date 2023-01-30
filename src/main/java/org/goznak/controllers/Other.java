@@ -34,7 +34,7 @@ public class Other {
             model.addAttribute("greeting", "Доброй ночи");
         } else if(hour <= 10){
             model.addAttribute("greeting", "Доброе утро");
-        } else if(hour <= 16){
+        } else if(hour <= 15){
             model.addAttribute("greeting", "Добрый день");
         } else {
             model.addAttribute("greeting", "Добрый вечер");

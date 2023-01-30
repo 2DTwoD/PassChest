@@ -89,6 +89,7 @@ table td {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    padding: 5px;
 }
 .redText{
     font-size: 20px;

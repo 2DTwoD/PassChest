@@ -32,15 +32,18 @@ public class Edit {
     final
     PassSliceService passSliceService;
     final
+    CredentialsIdsService credentialsIdsService;
+    final
     BCryptPasswordEncoder bCryptPasswordEncoder;
     final
     CipherUtil cipherUtil;
-    public Edit(UserService userService, AuthorityService authorityService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, BCryptPasswordEncoder bCryptPasswordEncoder, CipherUtil cipherUtil) {
+    public Edit(UserService userService, AuthorityService authorityService, SystemService systemService, SubSystemService subSystemService, PassSliceService passSliceService, CredentialsIdsService credentialsIdsService, BCryptPasswordEncoder bCryptPasswordEncoder, CipherUtil cipherUtil) {
         this.userService = userService;
         this.authorityService = authorityService;
         this.systemService = systemService;
         this.subSystemService = subSystemService;
         this.passSliceService = passSliceService;
+        this.credentialsIdsService = credentialsIdsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.cipherUtil = cipherUtil;
     }
@@ -194,6 +197,8 @@ public class Edit {
     public String deleteSoft(@PathVariable long id){
         PassSlice passSliceForDelete = passSliceService.findById(id);
         passSliceService.deleteAll(passSliceForDelete.getSoftName(), passSliceForDelete.getSubSystemId());
+        CredentialsIds credentialsIds = credentialsIdsService.findById(passSliceForDelete.getCredentialsId());
+        credentialsIdsService.delete(credentialsIds);
         return "redirect:/search/" + passSliceForDelete.getSubSystemId();
     }
 }
