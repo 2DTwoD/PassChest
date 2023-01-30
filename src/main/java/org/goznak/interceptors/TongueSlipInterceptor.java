@@ -79,6 +79,6 @@ public class TongueSlipInterceptor implements HandlerInterceptor {
         }
     }
     private String getTongueSlip(){
-        return tongueSlips[(int)(Math.random() * (tongueSlips.length - 1))];
+        return tongueSlips[(int)(Math.random() * (tongueSlips.length))];
     }
 }

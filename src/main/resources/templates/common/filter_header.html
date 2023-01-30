@@ -11,10 +11,8 @@
     <input th:id="searchButton" th:type="button" value="Поиск"/>
     <input th:id="resetButton" th:type="button" value="Сброс фильтра"/>
 </div>
-<div th:if="${!#strings.isEmpty(session.filter)}" th:text="${'Результат поиска по запросу ''' + session.filter + ''':'}"></div>
+<div class="commonText" th:if="${!#strings.isEmpty(session.filter)}" th:text="${'Результат поиска по запросу ''' + session.filter + ''':'}"></div>
 <hr/>
-<div th:if="${targets.isEmpty()}">
-    Список пуст
-</div>
+<div class="commonText" th:if="${targets.isEmpty()}">Список пуст</div>
 </body>
 </html>

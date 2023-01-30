@@ -44,7 +44,14 @@ public class Other {
     @ResponseBody
     @GetMapping("/get_pass/{id}")
     String getPassword(@PathVariable long id) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
-        PassSlice passSlice = passSliceService.findById(id);
-        return cipherUtil.decryptPass(passSlice.getPassword());
+        String result = "";
+        try {
+            PassSlice passSlice = passSliceService.findById(id);
+            result = cipherUtil.decryptPass(passSlice.getPassword());
+        }
+        catch (Exception e){
+            result = "Произошла ошибка, поробуйте ещё раз";
+        }
+        return result;
     }
 }

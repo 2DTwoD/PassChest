@@ -7,31 +7,24 @@
     <link th:href="@{/css/header.css}" rel="stylesheet"/>
 </head>
 <body>
-    <div id="titleHead">Совершенно секретно</div>
+    <form th:action="@{/}">
+        <button id="titleHead">Совершенно секретно</button>
+    </form>
     <hr/>
     <div id="headerPanel">
-<!--        <form th:method="post" th:action="@{/logout}">-->
-    <!--        sec:authorize="isAnonymous()"-->
-            <form th:action="@{/login}" class="headerForm">
-                <button class="headerButton">Авторизация</button>
-            </form>
-    <!--        sec:authorize="isAuthenticated()"-->
-            <form th:method="post" th:action="@{/logout}" class="headerForm">
-                <button class="headerButton" onclick="return confirm('Выйти из под текущего пользователя?')">Выйти</button>
-            </form>
-    <!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_GUEST')"-->
-            <form th:action="@{/search}" class="headerForm">
-                <button class="headerButton">Поиск паролей</button>
-            </form>
-    <!--        sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')"-->
-            <form th:action="@{/edit}" class="headerForm">
-                <button class="headerButton">Редактирование</button>
-            </form>
-    <!--        sec:authorize="hasRole('ROLE_ADMIN')"-->
-            <form th:action="@{/search/print}" target="_blank" class="headerForm">
-                <button class="headerButton">Версия для печати</button>
-            </form>
-<!--        </form>-->
+        <form sec:authorize="isAnonymous()" th:action="@{/login}" class="headerForm">
+            <button class="headerButton">Авторизация</button>
+        </form>
+        <span class="redText" sec:authorize="isAuthenticated()" th:text="${'Здравствуйте, ' + #authentication.getPrincipal().getUsername()}"></span>
+        <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/logout}" class="headerForm">
+            <button class="headerButton" onclick="return confirm('Выйти из под текущего пользователя?')">Выйти</button>
+        </form>
+        <form sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN') || hasRole('ROLE_GUEST')" th:action="@{/search}" class="headerForm">
+            <button class="headerButton">Поиск паролей</button>
+        </form>
+        <form sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')" th:action="@{/edit}" class="headerForm">
+            <button class="headerButton">Редактирование</button>
+        </form>
     </div>
     <hr/>
 </body>

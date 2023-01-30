@@ -7,18 +7,22 @@
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<form th:action="@{/login}" th:method="post">
-    <div>
-        <label>
-            Имя пользователя: <input type="text" name="username">
-        </label>
-    </div>
-    <div>
-        <label>
-            Пароль: <input type="password" name="password">
-        </label>
-    </div>
-    <div th:if="${param.error}" th:text="${session.error}" th:unless="${session == null}"></div>
+<div class="commonText">Для авторизации введите данные:</div>
+<hr/>
+<form th:action="@{/login}" th:method="post" autocomplete="off">
+    <table class="formTable">
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="login">Имя пользователя:</label></td>
+            <td class="secondFormCol"><input class="inputText" id="login" type="text" name="username"/></td>
+            <td class="thirdFormCol"></td>
+        </tr>
+        <tr>
+            <td class="firstFormCol"><label class="commonText" for="password">Пароль:</label></td>
+            <td class="secondFormCol"><input class="inputText" type="password" name="password" id="password"></td>
+            <td class="thirdFormCol"></td>
+        </tr>
+    </table>
+    <div class="errorText" th:if="${param.error}" th:text="${session.error}" th:unless="${session == null}"></div>
     <hr/>
     <div>
         <input type="submit" value="Авторизоваться">

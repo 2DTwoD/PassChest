@@ -6,11 +6,13 @@ import org.goznak.models.*;
 import org.goznak.models.System;
 import org.goznak.services.*;
 import org.goznak.utils.CipherUtil;
+import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -28,7 +30,7 @@ public class Search {
     static private final int MAIN = 3;
     static private final int SOFT = 4;
     static private final int HISTORY = 5;
-    private final int NUM_OF_VISIBLE_ROWS = 10;
+    private final int NUM_OF_VISIBLE_ROWS = 7;
     final
     UserService userService;
     final
@@ -121,8 +123,29 @@ public class Search {
         return searchEngine(model, session, request, passSlices, "search/history", HISTORY);
     }
     @GetMapping("/print")
-    public String print(Model model) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
-        List<PassSlice> passSlices = passSliceService.findAll();
+    public String print(Model model, HttpSession session) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        List<PassSlice> passSlices;
+        String filter = (String) session.getAttribute("filter");
+        if(filter != null){
+            passSlices = passSliceService.findByFilter(filter);
+        } else {
+            model.addAttribute("all", true);
+            passSlices = passSliceService.findAll();
+        }
+        return getPrint(passSlices, model);
+    }
+    @GetMapping("/print/{id}")
+    public String printUnique(Model model, HttpSession session, @PathVariable int id) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        List<PassSlice> passSlices;
+        String filter = (String) session.getAttribute("filter");
+        if(filter != null){
+            passSlices = passSliceService.findByFilter(filter, id);
+        } else {
+            passSlices = passSliceService.findBySubSystemId(id);
+        }
+        return getPrint(passSlices, model);
+    }
+    private String getPrint(List<PassSlice> passSlices, Model model) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         for(PassSlice passSlice: passSlices){
             passSlice.setPassword(cipherUtil.decryptPass(passSlice.getPassword()));
         }

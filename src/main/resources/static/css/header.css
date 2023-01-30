@@ -18,14 +18,13 @@
     text-align: center;
     margin: 0 auto;
     background-color: #f2db93;
-    padding: 18px;
+    padding: 10px;
 }
 #titleHead{
-    font-size: 30px;
+    font-size: 28px;
     font-family: trixieCyrCameo, monospace;
     color: #402429;
     text-align: center;
-    rotate: -1deg;
 }
 a {
     text-decoration: none;

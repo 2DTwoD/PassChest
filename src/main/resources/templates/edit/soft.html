@@ -9,7 +9,7 @@
 <body>
 <div id="mainContainer">
 <th:block th:replace="common/menu_header"></th:block>
-<div class="commonText" th:text="${'Редактирование программы для системы ' + passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name + ':'}"></div>
+<div class="commonText">Редактирование программы для системы <span class="redText" th:text="${passSlice.subSystem.system.name + ', ' + passSlice.subSystem.name}"></span>:</div>
 <hr/>
 <!--@thymesVar id="passSlice" type="org.goznak.models.PassSlice"-->
 <form id="passSlice" th:action="@{/edit/soft/{id}(id=${passSlice.id})}" th:object="${passSlice}" th:method="patch" autocomplete="off">

@@ -15,7 +15,6 @@ public interface PassSliceDAO extends CrudRepository<PassSlice, Long> {
     List<PassSlice> findPassSliceBySoftName(String softName);
     List<PassSlice> findPassSliceBySoftNameAndCredentialsIdsOrderBySoftNameAscLastChangeDesc(String softName, CredentialsIds credentialsIds);
     List<PassSlice> findPassSliceBySubSystemAndSoftName(SubSystem subSystem ,String softName);
-    List<PassSlice> findBySoftNameContainsIgnoreCaseOrderBySoftName(String filter);
     PassSlice findFirstByCredentialsIdsAndLoginAndActual(CredentialsIds credentialsIds, String login, boolean actual);
     PassSlice findFirstById(long id);
     @Transactional

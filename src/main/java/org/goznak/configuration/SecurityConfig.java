@@ -37,29 +37,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.
                 authorizeHttpRequests(request -> request
-//                                .requestMatchers(HttpMethod.DELETE)
-//                                .hasRole("ADMIN")
-//
-//                                .requestMatchers("/search/users", "/add/user", "/edit/user/*", "/search/print")
-//                                .hasRole("ADMIN")
-//
-//                                .requestMatchers("/edit", "/search/systems", "/add/system", "/edit/system/*",
-//                                        "/search/sub_systems", "/add/sub_system", "/edit/sub_system/*",
-//                                        "/edit/soft/*", "/add/soft/*")
-//                                .hasAnyRole("ADMIN", "USER")
-//
-//                                .requestMatchers(HttpMethod.PATCH)
-//                                .hasAnyRole("ADMIN", "USER")
-//
-//                                .requestMatchers("/search", "/search/*", "/search/history/*", "/get_pass/*", "/css/**", "/js/**")
-//                                .hasAnyRole("ADMIN", "USER", "GUEST")
-//
-//                                .requestMatchers("/*").permitAll()
-                                .anyRequest().permitAll()
+                                .requestMatchers(HttpMethod.DELETE)
+                                .hasRole("ADMIN")
+
+                                .requestMatchers("/search/users", "/add/user", "/edit/user/*")
+                                .hasRole("ADMIN")
+
+                                .requestMatchers("/edit", "/search/systems", "/add/system", "/edit/system/*",
+                                        "/search/sub_systems", "/add/sub_system", "/edit/sub_system/*",
+                                        "/search/print", "/search/print/*", "/edit/soft/*", "/add/soft/*")
+                                .hasAnyRole("ADMIN", "USER")
+
+                                .requestMatchers(HttpMethod.PATCH)
+                                .hasAnyRole("ADMIN", "USER")
+
+                                .requestMatchers("/search", "/search/*", "/search/history/*", "/get_pass/*")
+                                .hasAnyRole("ADMIN", "USER", "GUEST")
+
+                                .requestMatchers("/*", "/css/**", "/js/**", "/fonts/**", "/img/**").permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/search")
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 )
                 .logout(logout -> logout

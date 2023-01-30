@@ -48,7 +48,22 @@ public class PassSliceService extends CommonService<PassSlice, Long> {
     }
     @Override
     public List<PassSlice> findByFilter(String filter) {
-        return passSliceDAO.findBySoftNameContainsIgnoreCaseOrderBySoftName(filter);
+        String[] splitFilterArray = filter.split(" ");
+        ArrayList<PassSlice> result = new ArrayList<>();
+        List<PassSlice> passSlices = passSliceDAO.findAllByActualOrderByIdAsc(true);
+        for(PassSlice passSlice: passSlices){
+            for(String splitFilter: splitFilterArray) {
+                splitFilter = splitFilter.toLowerCase();
+                if (passSlice.getSubSystem().getName().toLowerCase().contains(splitFilter) ||
+                    passSlice.getSubSystem().getSystem().getName().toLowerCase().contains(splitFilter)) {
+                    if(!result.contains(passSlice)) {
+                        result.add(passSlice);
+                    }
+                }
+            }
+        }
+        Collections.sort(result);
+        return result;
     }
     @Override
     public void delete(PassSlice passSlice) {

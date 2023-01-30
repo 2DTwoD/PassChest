@@ -9,7 +9,7 @@
     <link th:href="@{/css/print.css}" rel="stylesheet"/>
 </head>
 <body>
-<div th:text="${'Список паролей для печати (' + dateTime + '):'}"></div>
+<div> <span th:text="${'Список паролей для печати, дата: ' + dateTime}"></span><span th:if="${all == null}"> (Не полный)</span></div>
 <table th:if="${passSlices.isEmpty() == false}">
     <tr>
         <th>Система</th>

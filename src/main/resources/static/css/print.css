@@ -16,13 +16,14 @@ table {
     font-size: 18px;
     border-collapse: collapse;
     width: 100%;
+    background-color: lightgray;
 }
 table td, table th {
     border: 1px solid gray;
     padding: 3px;
 }
 table tr:nth-child(even){
-    background-color: lightgray;
+    background-color: white;
 }
 table tr:hover {
     background-color: yellow;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Поиск паролей:</title>
@@ -29,6 +29,10 @@
     </tr>
 </table>
 <th:block th:replace="common/page_footer"></th:block>
+<form th:if="${targets.isEmpty() == false}" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')" th:action="@{/search/print}" target="_blank" class="headerForm">
+    <button>Версия для печати</button>
+</form>
+<hr th:if="${targets.isEmpty() == false}" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')"/>
 <a th:href="@{/}"><input type="button" value="Назад"></a>
 <th:block th:replace="common/slip_tongue_footer"></th:block>
 </div>
