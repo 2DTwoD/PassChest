@@ -6,13 +6,18 @@ import java.util.stream.Collectors;
 
 public enum Roles {
     ROLE_ADMIN("Администратор"),
-    ROLE_USER("Пользователь"),
-    ROLE_GUEST("Гость");
+    ROLE_GUEST("Гость"),
+    ROLE_USER("Пользователь");
     public static final String[] rolesForCredentials = {
-            "Гость",
-            "Пользователь",
             "Администратор",
-            "Супер пользователь"
+            "Гость",
+            "Инженер",
+            "Оператор",
+            "Пользователь",
+            "Программист",
+            "Сервис",
+            "Супер пользователь",
+            "Технолог"
     };
     private final String name;
 

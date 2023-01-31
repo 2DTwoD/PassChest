@@ -1,3 +1,6 @@
+a {
+    text-decoration: none;
+}
 .headerForm {
     display: inline-block;
 }
@@ -25,19 +28,4 @@
     font-family: trixieCyrCameo, monospace;
     color: #402429;
     text-align: center;
-}
-a {
-    text-decoration: none;
-}
-.temp {
-    color: #da2313;
-}
-.temp1 {
-    color: #cc9675;
-}
-.temp2 {
-    color: #402429;
-}
-.temp3 {
-    background-color: #f2db93;
 }

@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class Login {
     @GetMapping("/login")
     public String loginPage(HttpServletRequest request, HttpSession session) {
-        session.setAttribute(
-                "error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION")
-        );
+        session.setAttribute("error", getErrorMessage(request));
         return "login";
     }
-    private String getErrorMessage(HttpServletRequest request, String key) {
-        Exception exception = (Exception) request.getSession().getAttribute(key);
-        String error = "";
+    private String getErrorMessage(HttpServletRequest request) {
+        Exception exception = (Exception) request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+        String error;
         if (exception instanceof BadCredentialsException) {
             error = "Ошибка при вводе логина или пароля";
         } else if (exception instanceof LockedException) {

@@ -17,9 +17,6 @@ hr{
 body {
     background-color: #cc9675;
 }
-table {
-    margin: 0 auto;
-}
 button, input {
     font-size: 20px;
     font-family: trixieCyrCameo, monospace;
@@ -32,15 +29,6 @@ button, input {
 button:hover, input:hover {
     color: #da2313;
 }
-#mainContainer {
-    width: 60%;
-    text-align: center;
-    margin: auto;
-    padding: 10px;
-    background-color: #f2db93;
-    border-radius: 10px;
-    box-shadow: 10px 5px 5px #402429;
-}
 table {
     font-family: OldTyperNr, monospace;
     font-size: 20px;
@@ -48,13 +36,11 @@ table {
     border-collapse: collapse;
     width: 100%;
     background-color: #fff2d4;
+    margin: 0 auto;
 }
 table td, table th {
     border: 1px solid #402429;
     padding: 3px;
-}
-table tr:nth-child(even){
-    background-color: #f2db93;
 }
 table th {
     text-align: center;
@@ -63,6 +49,9 @@ table th {
 }
 table td {
     text-align: left;
+}
+table tr:nth-child(even){
+    background-color: #f2db93;
 }
 .commonText {
     font-size: 20px;
@@ -97,14 +86,11 @@ table td {
     font-family: OldTyperNr, monospace;
     color: #da2313;
 }
-#filterText {
-    width: 50%;
+.searchTable{
+    font-family: gostA, monospace;
 }
 .formTable td{
     border:none;
-}
-.searchTable{
-    font-family: gostA, monospace;
 }
 .firstFormCol {
     text-align: right;
@@ -117,4 +103,16 @@ table td {
 .thirdFormCol {
     text-align: left;
     width: 30%;
+}
+#mainContainer {
+    width: 60%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    background-color: #f2db93;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px #402429;
+}
+#filterText {
+    width: 50%;
 }

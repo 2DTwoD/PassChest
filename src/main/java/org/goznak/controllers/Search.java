@@ -6,13 +6,11 @@ import org.goznak.models.*;
 import org.goznak.models.System;
 import org.goznak.services.*;
 import org.goznak.utils.CipherUtil;
-import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;

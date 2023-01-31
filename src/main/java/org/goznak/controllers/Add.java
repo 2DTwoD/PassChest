@@ -6,7 +6,6 @@ import org.goznak.models.System;
 import org.goznak.services.*;
 import org.goznak.utils.CipherUtil;
 import org.goznak.utils.Roles;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

@@ -73,7 +73,7 @@ public class TongueSlipInterceptor implements HandlerInterceptor {
                 "Не каждое ухо может тайну слушать (груз)",
                 "Кто в открытые ворота не войдет? (татар)"};
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         if(modelAndView != null) {
             modelAndView.getModel().put("tongueSlip", getTongueSlip());
         }

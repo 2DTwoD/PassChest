@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import java.security.InvalidKeyException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Controller
@@ -43,8 +39,8 @@ public class Other {
     }
     @ResponseBody
     @GetMapping("/get_pass/{id}")
-    String getPassword(@PathVariable long id) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
-        String result = "";
+    String getPassword(@PathVariable long id) {
+        String result;
         try {
             PassSlice passSlice = passSliceService.findById(id);
             result = cipherUtil.decryptPass(passSlice.getPassword());
